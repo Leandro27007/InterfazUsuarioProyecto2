@@ -1,0 +1,73 @@
+﻿@page "/validadorCedula"
+
+@using Proyecto2Maui.Modelos;
+@using Proyecto2Maui.Servicios;
+@using Proyecto2Maui;
+
+@inject IValidadorCedula validadorCedula;
+<div class="text-center">
+    <h1>Validador de cedula dominicana Usando API del gobierno</h1>
+</div>
+
+<h2>Ingrese la cedula que deseas validar:</h2>
+
+<div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Cedula dominicana</label>
+    <!--Lo que se escriba en este input se coloca en la propiedad cedula, esto gracias a @@bind-->
+    <input type="text" class="form-control" required @bind="cedula" aria-describedby="emailHelp">
+</div>
+
+<!--Este boton llama al metodo ValidadorDeCedula() en su propiedad onclick-->
+<button @onclick="ValidadorDeCedula" class="btn btn-primary">Submit</button>
+
+@if (cedula.Length == 11)
+{
+    //Si la propiedad cedulaValida es true, esta propiedad se ve afectada en el metodo ValidadorDeCedula
+    if (cedulaValida == true)
+    {
+        <br>
+        <br>
+        <span class="badge bg-success">Cedula Valida</span>
+        cedulaValida = null;
+        mensajeWarning = "";
+    }
+    else if (cedulaValida == false)
+    {
+        <br>
+        <br>
+        <span class="badge bg-danger">Cedula No Valida</span>
+        cedulaValida = null;
+        mensajeWarning = "";
+    }
+}
+
+<!--
+Aqui Hago validaciones algunas validaciones para mostrar mensajes
+-->
+@if (mensajeWarning != "")
+{
+    <br>
+    <br>
+    <span class="badge bg-warning text-dark">@mensajeWarning</span>
+}
+
+
+@code {
+    private string mensajeWarning = "";
+    private bool? cedulaValida;
+    private string cedula = "";
+
+    //Metodo que hace la llamada al metodo del servicio que validara la cedula
+    //Cambiara la propiedad cedulaValida a true si la cedula es valida.
+    public async Task ValidadorDeCedula()
+    {
+        if (cedula.Length == 11)
+        {
+            EstadoCedula resultado = await validadorCedula.ValidarCedula(cedula);
+            cedulaValida = resultado.valid;
+        }else
+        {
+           await App.Current.MainPage.DisplayAlert("Oops","La cedula debe contener 11 caracteres sin guiones o espacios.","Ok");
+        }
+    }
+}
