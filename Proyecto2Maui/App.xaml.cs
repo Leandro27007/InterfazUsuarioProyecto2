@@ -1,4 +1,5 @@
-﻿namespace Proyecto2Maui
+﻿
+namespace Proyecto2Maui
 {
     public partial class App : Application
     {

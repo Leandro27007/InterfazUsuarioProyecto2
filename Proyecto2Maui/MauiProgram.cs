@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Proyecto2Maui.Data;
 using Proyecto2Maui.Servicios;
+using Radzen;
 
 namespace Proyecto2Maui
 {
@@ -27,7 +28,7 @@ namespace Proyecto2Maui
             //Injecte el servicio para poder usarlo en toda mi aplicacion.
             builder.Services.AddSingleton<IValidadorCedula, ValidadorCedula>();
 
-
+            builder.Services.AddRadzenComponents();
 
             return builder.Build();
         }

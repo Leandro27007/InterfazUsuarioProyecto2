@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace Proyecto2Maui.Data
 {
     public class WeatherForecastService

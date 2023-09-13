@@ -1,10 +1,7 @@
-﻿@page "/validadorCedula"
-
-@using Proyecto2Maui.Modelos;
-@using Proyecto2Maui.Servicios;
-@using Proyecto2Maui;
+﻿@page "/validadorcedula"
 
 @inject IValidadorCedula validadorCedula;
+
 <div class="text-center">
     <h1>Validador de cedula dominicana Usando API del gobierno</h1>
 </div>
@@ -18,7 +15,8 @@
 </div>
 
 <!--Este boton llama al metodo ValidadorDeCedula() en su propiedad onclick-->
-<button @onclick="ValidadorDeCedula" class="btn btn-primary">Submit</button>
+<button @onclick="ValidadorDeCedula" class="btn btn-primary">Submits</button>
+
 
 @if (cedula.Length == 11)
 {
@@ -57,6 +55,8 @@ Aqui Hago validaciones algunas validaciones para mostrar mensajes
     private bool? cedulaValida;
     private string cedula = "";
 
+    string text = "Hi";
+
     //Metodo que hace la llamada al metodo del servicio que validara la cedula
     //Cambiara la propiedad cedulaValida a true si la cedula es valida.
     public async Task ValidadorDeCedula()
@@ -65,9 +65,11 @@ Aqui Hago validaciones algunas validaciones para mostrar mensajes
         {
             EstadoCedula resultado = await validadorCedula.ValidarCedula(cedula);
             cedulaValida = resultado.valid;
-        }else
+        }
+        else
         {
-           await App.Current.MainPage.DisplayAlert("Oops","La cedula debe contener 11 caracteres sin guiones o espacios.","Ok");
+            await App.Current.MainPage.DisplayAlert("Oops", "La cedula debe contener 11 caracteres sin guiones o espacios.", "Ok");
         }
     }
+
 }
