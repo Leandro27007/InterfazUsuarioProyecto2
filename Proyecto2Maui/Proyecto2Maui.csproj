@@ -66,19 +66,36 @@
       <None Remove="NewFolder\**" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Remove="Pages\Cajero\TurnosPendientes.razor" />
+    </ItemGroup>
+
 	<!--  <ItemGroup>
       <Content Remove="Pages\ValidarCedula.razor" />
     </ItemGroup> -->
 
     <ItemGroup>
+        <PackageReference Include="FontAwesome" Version="4.7.0" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
         <PackageReference Include="Radzen.Blazor" Version="4.15.14" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Pages\Medico\" />
-      <Folder Include="Pages\Cajero\" />
       <Folder Include="Pages\Administrador\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Cajero\TurnosPendientes.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="Pages\Cajero\TurnosPendientes.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Pages\Cajero\TurnosPendientes.razor" />
     </ItemGroup>
 
 	<!--     <ItemGroup>

@@ -23,10 +23,12 @@ namespace Proyecto2Maui
 		builder.Services.AddBlazorWebViewDeveloperTools();
 		builder.Logging.AddDebug();
 #endif
+            builder.Services.AddHttpClient();
 
             builder.Services.AddSingleton<WeatherForecastService>();
             //Injecte el servicio para poder usarlo en toda mi aplicacion.
             builder.Services.AddSingleton<IValidadorCedula, ValidadorCedula>();
+            builder.Services.AddSingleton<ITurnoServices, TurnoService>();
 
             builder.Services.AddRadzenComponents();
 

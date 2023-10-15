@@ -1,0 +1,43 @@
+﻿@using Proyecto2Maui.Modelos;
+@using Proyecto2Maui.Servicios
+@using Proyecto2Maui;
+@page "/listaTurnos"
+@inject ITurnoServices turnoService;
+
+<h3>TurnosPendientes</h3>
+
+
+@if(turnos != null)
+{
+    
+    @foreach(var item in turnos)
+    {
+        <h1>@item.pruebasLab.FirstOrDefault().nombrePrueba</h1>
+
+    }
+}
+
+
+
+@code {
+
+    public List<Turno> turnos;
+    public string error = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+       try
+        {
+            turnos = await turnoService.GetTunos();
+
+        }
+        catch (Exception ex)
+        {
+
+            await App.Current.MainPage.DisplayAlert("Oops", "Ocurrio un error al cargar los datos de la api.", "Ok");
+
+        }
+
+    }
+
+}
