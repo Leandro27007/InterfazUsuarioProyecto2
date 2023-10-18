@@ -12,7 +12,9 @@
     
     @foreach(var item in turnos)
     {
+        <h1>@item.idTurno</h1>
         <h1>@item.pruebasLab.FirstOrDefault().nombrePrueba</h1>
+        <h1>@item.pruebasLab.FirstOrDefault().precio</h1>
 
     }
 }
@@ -28,7 +30,7 @@
     {
        try
         {
-            turnos = await turnoService.GetTunos();
+            turnos = await turnoService.GetTurnos();
 
         }
         catch (Exception ex)
