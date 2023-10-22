@@ -6,14 +6,14 @@
 @inject IPruebaLabService pruebaLabServices;
 @inject ITurnoServices turnoServices;
 
-<body class="text-white rounded-3" style="background-color: #03183E">
+<body class="text-white rounded-5" style="width: 100%; height: 600px; background-color: white">
     <header>
         <h1 class="text-center mb-3 mt-3 text-uppercase"
             style="font-family: 'Courier New', Courier, monospace">
             Pruebas y Servicios disponibles
         </h1>
     </header>
-    <div class="container ">
+    <div class="container">
 
         <div class="row">
             <div class="col-md-6">
@@ -38,19 +38,17 @@
                                     @foreach (var item in itemList)
                                     {
                                         <div>
-                                            <label for="@item.nombrePrueba" class="btn text-white" style="background-color: #052B67">
-                                                <input type="checkbox" @bind="item.isChecked" name="@item.idPrueba" id="@item.nombrePrueba"
-                                                @onclick="() => AgregarItem(id:item.idPrueba, nombrePrueba: item.nombrePrueba, precio:item.precio)" />
+                                            <label for="@item.nombrePrueba" class="btn text-white text-uppercase text-start" style="background-color: #052B67; width:200px">
+                                                <input type="checkbox" @bind="item.isChecked" name="@item.idPruebaLab" id="@item.nombrePrueba"
+                                                @onclick="() => AgregarItem(id:item.idPruebaLab, nombrePrueba: item.nombrePrueba, precio:item.precio)" />
                                                 @item.nombrePrueba.ToString()
                                             </label>
                                         </div>
-
-
                                     }
                                 </div>
                             }
 
-                            <div class="d-flex justify-content-evenly">
+                            <div class="d-flex justify-content-evenly mt-4">
 
                                 <input class="btn btn-danger mb-2 mt-2"
                                 @onclick="LimpiarItems"
@@ -95,7 +93,7 @@
                             @foreach (var item in PruebasSeleccionadas)
                             {
                                 <tr>
-                                    <th scope="row"> <i class="fa-solid fa-hand-holding-heart"></i> </th>
+                                    <th scope="row"> <i class="fa-solid "></i> </th>
                                     <td>@item.nombrePrueba</td>
                                     <td>$@item.precio</td>
                                 </tr>
@@ -146,16 +144,27 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var pruebasLab = await pruebaLabServices.ObtenerPruebas();
+        try
+        {
+            var pruebasLab = await pruebaLabServices.ObtenerPruebas();
 
+            if (pruebasLab != null)
+            {
 
-        if (pruebasLab != null)
+                //Mando a dividir la lista en dos listas mas pequenas
+                var listasDeListaPruebas = DivirdirListaPruebas(pruebasLab);
+                PruebasParaMostrar = listasDeListaPruebas;
+            }
+        }
+        catch (Exception ex)
         {
 
-            //Mando a dividir la lista en dos listas mas pequenas
-            var listasDeListaPruebas = DivirdirListaPruebas(pruebasLab);
-            PruebasParaMostrar = listasDeListaPruebas;
-        }
+            await App.Current.MainPage.DisplayAlert("Oops", $"Ocurrio un error al cargar los datos de la api. ERRORCODE:{ex.Message}", "Ok");
+
+        }     
+
+
+ 
     }
 
 
@@ -170,7 +179,7 @@
 
                         pruebasLab = PruebasSeleccionadas.Select(p => new PruebalabTurnoRequest()
                         {
-                            idPruebaLab = p.idPrueba
+                            idPruebaLab = p.idPruebaLab
                         }).ToList()
                     });
                 await App.Current.MainPage.DisplayAlert("Turno Generado", $"{resultado}", "Ok");
@@ -200,13 +209,13 @@
         {
 
         }
-        PruebaLab item = PruebasSeleccionadas.FirstOrDefault(d => d.idPrueba == id);
+        PruebaLab item = PruebasSeleccionadas.FirstOrDefault(d => d.idPruebaLab == id);
 
         if (item == null)
         {
             PruebasSeleccionadas.Add(new()
                 {
-                    idPrueba = id,
+                    idPruebaLab = id,
                     nombrePrueba = nombrePrueba,
                     precio = precio
                 });
