@@ -6,7 +6,7 @@
 @inject IPruebaLabService pruebaLabServices;
 @inject ITurnoServices turnoServices;
 
-<body class="text-white rounded-5" style="width: 100%; height: 600px; background-color: white">
+<body class="text-black" style="width: 100%; height: 600px;border-radius: 10px ; background-color: white">
     <header>
         <h1 class="text-center mb-3 mt-3 text-uppercase"
             style="font-family: 'Courier New', Courier, monospace">
@@ -55,10 +55,15 @@
                                        type="button"
                                        value="Borrar selección" />
 
-                                <input class="btn btn-success ml- mb-2 mt-2"
-                                @onclick="GenerarTurno"
-                                       type="button"
-                                       value="Generar Ticket" />
+
+                                    <input class="btn btn-success ml- mb-2 mt-2"
+                                    @onclick="GenerarTurno"
+                                           type="button"
+                                           disabled=@estaCargando
+                                           value="Generar Ticket" />
+ 
+        
+
                             </div>
 
                         }
@@ -137,10 +142,11 @@
 @code
 {
 
+
     List<List<PruebaLab>> PruebasParaMostrar = null;
     decimal? Total = 0.0m;
     List<PruebaLab> PruebasSeleccionadas = new List<PruebaLab>();
-
+    bool estaCargando = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -164,7 +170,7 @@
         }     
 
 
- 
+
     }
 
 
@@ -174,6 +180,8 @@
         {
             try
             {
+
+                estaCargando = true;
                 var resultado = await turnoServices.GenerarTurno(new GenerarTurnoRequest()
                     {
 
@@ -182,8 +190,11 @@
                             idPruebaLab = p.idPruebaLab
                         }).ToList()
                     });
+
+
                 await App.Current.MainPage.DisplayAlert("Turno Generado", $"{resultado}", "Ok");
 
+                estaCargando = false;
 
             }
             catch (Exception ex)

@@ -30,6 +30,7 @@ namespace Proyecto2Maui
             builder.Services.AddSingleton<IValidadorCedula, ValidadorCedula>();
             builder.Services.AddSingleton<ITurnoServices, TurnoService>();
             builder.Services.AddSingleton<IPruebaLabService, PruebaLabService>();
+            builder.Services.AddSingleton<IReciboService, ReciboService>();
 
             builder.Services.AddRadzenComponents();
 

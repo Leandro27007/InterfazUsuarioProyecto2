@@ -1,16 +1,19 @@
 ﻿@page "/medicoFacturacion"
 @using Proyecto2Maui.Modelos;
+@using Proyecto2Maui.Modelos.Request;
 @using Proyecto2Maui.Servicios;
 @using Proyecto2Maui;
+
 @inject ITurnoServices turnoService
 @inject IPruebaLabService pruebaLabService
+@inject IReciboService reciboService
 
 
 
 <div class="container">
     <div class="row">
         <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 bg white"
-             style="border-radius: 20px">
+             style="border-radius: 10px">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 bg-white mt-3"
@@ -31,13 +34,15 @@
                                     <label for="nombre">Nombre</label>
                                 </div>
                                 <div>
-                                    <input type="email"
+                                    <input @bind="cliente.nombreCliente"
+                                           type="text"
                                            class="form-control-sm mb-2"
                                            style="
                                                         border: 1px solid
                                                             gainsboro;
                                                     "
                                            id="nombre"
+                                           required
                                            placeholder="Ingrese nombre(s)" />
                                 </div>
                             </div>
@@ -46,13 +51,15 @@
                                     <label for="apellido">Apellido</label>
                                 </div>
                                 <div>
-                                    <input type="email"
+                                    <input @bind="cliente.apellidoCliente"
+                                           type="text"
                                            class="form-control-sm mb-2"
                                            style="
                                                         border: 1px solid
                                                             gainsboro;
                                                     "
                                            id="apellido"
+                                           required
                                            placeholder="Ingrese apellido(s)" />
                                 </div>
                             </div>
@@ -61,7 +68,8 @@
                                     <label for="telefono">Teléfono</label>
                                 </div>
                                 <div>
-                                    <input type="email"
+                                    <input @bind="cliente.telefono"
+                                        type="text"
                                            class="form-control-sm mb-2"
                                            style="
                                                         border: 1px solid
@@ -76,7 +84,8 @@
                                     <label for="cedula">Cédula</label>
                                 </div>
                                 <div>
-                                    <input type="email"
+                                    <input @bind="cliente.cedula"
+                                           type="text"
                                            class="form-control-sm mb-2"
                                            style="
                                                         border: 1px solid
@@ -91,7 +100,8 @@
                                     <label for="email">Email</label>
                                 </div>
                                 <div>
-                                    <input type="email"
+                                    <input @bind="cliente.email"
+                                           type="email"
                                            class="form-control-sm mb-2"
                                            style="
                                                         border: 1px solid
@@ -115,9 +125,12 @@
                                     {
                                         foreach (var item in PruebasLab)
                                         {
-                                            <li ><a class="dropdown-item"
+                                            <li>
+                                                <a class="dropdown-item"
                                                    @onclick="() => AgregarItem(id:item.idPruebaLab, nombrePrueba: item.nombrePrueba, precio:item.precio)">
-                                                @item.nombrePrueba</a></li>
+                                                    @item.nombrePrueba
+                                                </a>
+                                            </li>
                                         }
 
                                     }
@@ -184,10 +197,10 @@
 
                                     <tr class="ms-5">
                                         <th scope="row"></th>
-                                        <td colspan="">
+                                        <td>
                                             <strong>TOTAL</strong>
                                         </td>
-                                        <td colspan="">
+                                        <td>
                                             <strong class="text-success">$@Total</strong>
                                         </td>
                                     </tr>
@@ -198,12 +211,16 @@
                         <div class=" justify-content-evenly mb-4">
                             <input class="btn btn-secondary btn mx-1 mt-1 mb-1"
                                    type="button"
-                                   value="Limpiar" 
+                                   value="Limpiar"
                                    ps-2
                                    @onclick="LimpiarItems" />
+
                             <input class="btn btn-success btn mx-1 mt-1 mb-1"
                                    type="button"
-                                   value="Generar recibo" />
+                                   disabled=@estaCargando
+                                   value="Generar recibo"
+                                   @onclick="GenerarRecibo" />
+
                         </div>
                     </div>
                 </div>
@@ -257,7 +274,7 @@
                                             "
                                                type="button"
                                                value="Ver"
-                                               @onclick="() => CargarPruebasDelTurnoParaFacturar(item.pruebasLab)"  />
+                                               @onclick="() => CargarPruebasDelTurnoParaFacturar(item.pruebasLab)" />
 
                                         <input class="btn btn-danger btn-sm mx-1 mt-1"
                                                style="
@@ -269,7 +286,7 @@
                                     </td>
                                 </tr>
                             }
-                           
+
                         }
                         else
                         {
@@ -292,6 +309,18 @@
 </div>
 
 
+<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <img src="..." class="rounded me-2" alt="...">
+        <strong class="me-auto">Bootstrap</strong>
+        <small>11 mins ago</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        Hello, world! This is a toast message.
+    </div>
+</div>
+
 
 <style>
     .dropdown-menu {
@@ -306,7 +335,9 @@
     List<Turno> TurnosPendientes = new();
     List<PruebaLab> PruebasLab = new();
     List<PruebaLab> PruebasSeleccionadas = new List<PruebaLab>();
+    ReciboRequest cliente = new();
 
+    bool estaCargando = false;
 
     decimal? Total = 0.0m;
 
@@ -314,6 +345,7 @@
     {
         try
         {
+
             var pruebasLab = await pruebaLabService.ObtenerPruebas();
 
             if (pruebasLab != null)
@@ -338,6 +370,38 @@
 
     }
 
+    private async Task GenerarRecibo()
+    {
+        if (PruebasSeleccionadas != null)
+        {
+
+            try
+            {
+                estaCargando = true;
+
+                cliente.pruebas = PruebasSeleccionadas.Select(ps => new PruebaLab()
+                    {
+                        idPruebaLab = ps.idPruebaLab,
+                        nombrePrueba = string.Empty,
+                        precio = decimal.Zero
+                    }).ToList();
+
+
+                var resultado = await reciboService.GenerarRecibo(cliente);
+
+                estaCargando = false;
+
+                await LimpiarItems();
+
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Oops", $"Ocurrio un error al cargar los datos de la api. ERRORCODE:{ex.Message}", "Ok");
+            }
+
+        }
+
+    }
 
 
     private void AgregarItem(int id, string nombrePrueba, decimal? precio)
@@ -376,8 +440,9 @@
     private Task LimpiarItems()
     {
         PruebasSeleccionadas = new();
-
         Total = 0.0m;
+        cliente = new();
+
 
         return Task.CompletedTask;
     }
@@ -387,11 +452,11 @@
         LimpiarItems();
 
         var pruebasConPrecio = pruebas.Select(p => new PruebaLab()
-        {
-            idPruebaLab = p.idPruebaLab,
-            nombrePrueba = p.nombrePrueba,
-            precio = PruebasLab.Where(pl=> pl.idPruebaLab == p.idPruebaLab).Select(pl => pl.precio).First()
-        }).ToList();
+            {
+                idPruebaLab = p.idPruebaLab,
+                nombrePrueba = p.nombrePrueba,
+                precio = PruebasLab.Where(pl => pl.idPruebaLab == p.idPruebaLab).Select(pl => pl.precio).First()
+            }).ToList();
 
         Total = pruebasConPrecio.Select(p => p.precio).Sum();
 
@@ -399,5 +464,5 @@
 
     }
 
-     
+
 }
