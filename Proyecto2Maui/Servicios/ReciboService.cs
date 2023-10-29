@@ -14,7 +14,7 @@ namespace Proyecto2Maui.Servicios
     {
 
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly string _Url = "https://localhost:7290/api/Recibo/";
+        private readonly string _Url = "https://proyecto2web.azurewebsites.net/api/Recibo/";
         public ReciboService(IHttpClientFactory httpClientFactory)
         {
             this._httpClientFactory = httpClientFactory;

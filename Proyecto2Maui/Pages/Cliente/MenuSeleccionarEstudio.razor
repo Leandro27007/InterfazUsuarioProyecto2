@@ -5,6 +5,7 @@
 
 @inject IPruebaLabService pruebaLabServices;
 @inject ITurnoServices turnoServices;
+@inject SweetAlertService Swal;
 
 <body class="text-black" style="width: 100%; height: 600px;border-radius: 10px ; background-color: white">
     <header>
@@ -56,13 +57,13 @@
                                        value="Borrar selección" />
 
 
-                                    <input class="btn btn-success ml- mb-2 mt-2"
-                                    @onclick="GenerarTurno"
-                                           type="button"
-                                           disabled=@estaCargando
-                                           value="Generar Ticket" />
- 
-        
+                                <input class="btn btn-success ml- mb-2 mt-2"
+                                @onclick="GenerarTurno"
+                                       type="button"
+                                       disabled=@estaCargando
+                                       value="Generar Ticket" />
+
+
 
                             </div>
 
@@ -167,14 +168,14 @@
 
             await App.Current.MainPage.DisplayAlert("Oops", $"Ocurrio un error al cargar los datos de la api. ERRORCODE:{ex.Message}", "Ok");
 
-        }     
+        }
 
 
 
     }
 
 
-    private async void GenerarTurno()
+    private async Task GenerarTurno()
     {
         if (PruebasSeleccionadas.Count > 0)
         {
@@ -184,31 +185,46 @@
                 estaCargando = true;
                 var resultado = await turnoServices.GenerarTurno(new GenerarTurnoRequest()
                     {
-
                         pruebasLab = PruebasSeleccionadas.Select(p => new PruebalabTurnoRequest()
                         {
                             idPruebaLab = p.idPruebaLab
                         }).ToList()
                     });
 
-
-                await App.Current.MainPage.DisplayAlert("Turno Generado", $"{resultado}", "Ok");
+                var alerta = await Swal.FireAsync(new SweetAlertOptions()
+                    {
+                        Title = "Ticket Generado",
+                        Color = "Darkblue",
+                        Html = $"<strong>{resultado}</strong>",
+                        Footer = """Imprimiendo Ticket""",
+                        Icon = SweetAlertIcon.Success,
+                        ShowConfirmButton = false,
+                        Timer = 3500
+                    });
 
                 estaCargando = false;
-
+                await LimpiarItems();
             }
             catch (Exception ex)
             {
 
-                await App.Current.MainPage.DisplayAlert("Oops", $"{ex.Message}", "Ok");
+                await Swal.FireAsync(new SweetAlertOptions()
+                    {
+                        Title = "Error",
+                        Html = $"<strong>{ex.Message}</strong>",
+                        Icon = SweetAlertIcon.Error,
+                        ShowConfirmButton = true,
+                        Timer = 10000
+                    });
+
+                estaCargando = false;
+                await LimpiarItems();
             }
 
             return;
         }
 
-        await App.Current.MainPage.DisplayAlert("Oops", $"Debes seleccionar al menos un servicio", "Ok");
-
-
+        // await App.Current.MainPage.DisplayAlert("Oops", $"Debes seleccionar al menos un servicio", "Ok");
     }
 
 
@@ -263,11 +279,6 @@
         Total = 0.0m;
 
         return Task.CompletedTask;
-    }
-
-    private void GenerarTicket()
-    {
-
     }
 
 

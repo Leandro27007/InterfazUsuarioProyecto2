@@ -7,7 +7,7 @@ namespace Proyecto2Maui.Servicios
     {
 
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly string _Url = "https://localhost:7290/api/PruebaLab/ListarPruebas";
+        private readonly string _Url = "https://proyecto2web.azurewebsites.net/api/PruebaLab/ListarPruebas";
         public PruebaLabService(IHttpClientFactory httpClientFactory)
         {
             this._httpClientFactory = httpClientFactory;

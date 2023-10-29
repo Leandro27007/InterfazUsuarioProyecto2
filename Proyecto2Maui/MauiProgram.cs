@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CurrieTechnologies.Razor.SweetAlert2;
+using Microsoft.Extensions.Logging;
 using Proyecto2Maui.Data;
 using Proyecto2Maui.Servicios;
 using Radzen;
@@ -31,6 +32,7 @@ namespace Proyecto2Maui
             builder.Services.AddSingleton<IPruebaLabService, PruebaLabService>();
             builder.Services.AddSingleton<IReciboService, ReciboService>();
 
+            builder.Services.AddSweetAlert2();
             builder.Services.AddRadzenComponents();
 
             return builder.Build();

@@ -14,7 +14,7 @@ namespace Proyecto2Maui.Servicios
     public class TurnoService : ITurnoServices
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly string _Url = "https://localhost:7290/api/Turno/";
+        private readonly string _Url = "https://proyecto2web.azurewebsites.net/api/Turno/";
         public TurnoService(IHttpClientFactory httpClientFactory)
         {
             this._httpClientFactory = httpClientFactory;
