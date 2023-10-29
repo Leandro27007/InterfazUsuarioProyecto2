@@ -27,7 +27,6 @@ namespace Proyecto2Maui
 
             builder.Services.AddSingleton<WeatherForecastService>();
             //Injecte el servicio para poder usarlo en toda mi aplicacion.
-            builder.Services.AddSingleton<IValidadorCedula, ValidadorCedula>();
             builder.Services.AddSingleton<ITurnoServices, TurnoService>();
             builder.Services.AddSingleton<IPruebaLabService, PruebaLabService>();
             builder.Services.AddSingleton<IReciboService, ReciboService>();
