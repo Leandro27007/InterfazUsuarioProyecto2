@@ -267,7 +267,10 @@
                                                 font-size: 0.7rem;
                                             "
                                                type="button"
-                                               value="Atender" />
+                                               value="Atender"
+                                               @onclick="() => AtenderTurno(item.idTurno)" />
+
+
                                         <input class="btn btn-primary btn-sm mx-1 mt-1"
                                                style="
                                                 padding: 0.2rem 0.4rem;
@@ -283,7 +286,8 @@
                                                 font-size: 0.7rem;
                                             "
                                                type="button"
-                                               value="Cancelar" />
+                                               value="Cancelar"
+                                               @onclick="() => CancelarTurno(item.idTurno)" />
                                     </td>
                                 </tr>
                             }
@@ -478,6 +482,72 @@
 
         PruebasSeleccionadas = pruebasConPrecio;
 
+    }
+
+
+    private async Task CancelarTurno(string id)
+    {
+        string resultado = await turnoService.CancelarTurno(id);
+
+        if (resultado == "true")
+        {
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Turno cancelado exitosamente",
+                    Color= "DarkYellow",
+                    Html = $"<strong>Turno numero: {id}</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Success,
+                    ShowConfirmButton = true,
+                    Timer = 10000
+                });
+
+            var turnoParaQuitar = TurnosPendientes.FirstOrDefault(t => t.idTurno == id);
+            TurnosPendientes.Remove(turnoParaQuitar);
+        }else
+        {
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Error",
+                    Html = $"<strong>{resultado}</strong>",
+                    Icon = SweetAlertIcon.Error,
+                    ShowConfirmButton = true,
+                    Timer = 10000
+                });
+        }
+    }
+
+    private async Task AtenderTurno(string id)
+    {
+        string resultado = await turnoService.CancelarTurno(id);
+
+        if (resultado == "true")
+        {
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Turno atendido exitosamente",
+                    Color = "DarkGreen",
+                    Html = $"<strong>Turno numero: {id}</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Success,
+                    ShowConfirmButton = true,
+                    Timer = 10000
+                });
+
+            var turnoParaQuitar = TurnosPendientes.FirstOrDefault(t => t.idTurno == id);
+            TurnosPendientes.Remove(turnoParaQuitar);
+        }
+        else
+        {
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Error",
+                    Html = $"<strong>{resultado}</strong>",
+                    Icon = SweetAlertIcon.Error,
+                    ShowConfirmButton = true,
+                    Timer = 10000
+                });
+        }
     }
 
 

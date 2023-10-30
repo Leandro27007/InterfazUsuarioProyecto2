@@ -72,5 +72,38 @@ namespace Proyecto2Maui.Servicios
 
 
         }
+
+        public async Task<string> CancelarTurno(string turnoId)
+        {
+            try
+            {
+                // Crea una instancia de HttpClient usando el HttpClientFactory
+                var client = _httpClientFactory.CreateClient();
+
+                // Construye la URL completa del endpoint
+                string endpointUrl = _Url+"CancelarTurno?TurnoId=" + turnoId;
+
+                // Realiza la solicitud HTTP PUT
+                var response = await client.PutAsync(endpointUrl, null);
+                // Lee el contenido de la respuesta como una cadena
+                string responseContent = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Devuelve la respuesta deserializada como una cadena
+                    return responseContent;
+                }
+                else
+                {
+                    return responseContent;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return ex.Message;
+            }
+
+        }
     }
 }
