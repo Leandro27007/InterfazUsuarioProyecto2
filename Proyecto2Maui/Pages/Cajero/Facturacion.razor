@@ -28,7 +28,11 @@
                                         ">
                                 DATOS DEL CLIENTE
                             </h5>
-                            <h4 class="text-center">T-1</h4>
+                            @if (!string.IsNullOrEmpty(idTurnoSeleccionado))
+                            {
+                                <h4 class="text-center">@idTurnoSeleccionado</h4>
+                            }
+                            
 
                             <div class="form-group">
                                 <div>
@@ -167,17 +171,18 @@
                                         overflow-y: auto;
                                         scrollbar-gutter: stable both-edges;
                                     ">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Prueba</th>
-                                    <th scope="col">Precio</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                            
                                 <!-- PRUEBA SELECCIONADA-->
                                 @if (PruebasSeleccionadas.Count() > 0)
                                 {
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Prueba</th>
+                                        <th scope="col">Precio</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     @foreach (var item in PruebasSeleccionadas)
                                     {
                                         <tr>
@@ -205,9 +210,10 @@
                                             <strong class="text-success">$@Total</strong>
                                         </td>
                                     </tr>
+                                </tbody>
                                 }
 
-                            </tbody>
+                            
                         </table>
                         <div class=" justify-content-evenly mb-4">
                             <input class="btn btn-secondary btn mx-1 mt-1 mb-1"
@@ -278,7 +284,7 @@
                                             "
                                                type="button"
                                                value="Ver"
-                                               @onclick="() => CargarPruebasDelTurnoParaFacturar(item.pruebasLab)" />
+                                               @onclick="() => CargarPruebasDelTurnoParaFacturar(item.pruebasLab, item.idTurno)" />
 
                                         <input class="btn btn-danger btn-sm mx-1 mt-1"
                                                style="
@@ -328,6 +334,7 @@
     List<PruebaLab> PruebasLab = new();
     List<PruebaLab> PruebasSeleccionadas = new List<PruebaLab>();
     ReciboRequest cliente = new();
+    string idTurnoSeleccionado;
 
     bool estaCargando = false;
 
@@ -462,14 +469,17 @@
         PruebasSeleccionadas = new();
         Total = 0.0m;
         cliente = new();
+        idTurnoSeleccionado = null;
 
 
         return Task.CompletedTask;
     }
 
-    private void CargarPruebasDelTurnoParaFacturar(List<PruebaLab> pruebas)
+    private void CargarPruebasDelTurnoParaFacturar(List<PruebaLab> pruebas, string idTurno)
     {
         LimpiarItems();
+
+        idTurnoSeleccionado = idTurno;
 
         var pruebasConPrecio = pruebas.Select(p => new PruebaLab()
             {

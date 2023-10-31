@@ -16,7 +16,7 @@
     </header>
     <div class="container">
 
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-md-6">
                 <h4 class="text-center mb-3"
                     style="
@@ -25,7 +25,7 @@
                         ">
                     Seleccione la(s) prueba(s) que desea adquirir
                 </h4>
-                <div class="container " style="font-size: 25px">
+                <div class="container" style="font-size: 25px">
                     <div class="row">
 
 
@@ -34,11 +34,10 @@
                             <!--Espero una ( List<List<Entity>> List ) En el blucle interior recorro la lista interna y pinto lis elementos-->
                             @foreach (var itemList in PruebasParaMostrar)
                             {
-                                <div class="col-6">
-
+                                <div class="col-6" style="min-height: 360px;">
                                     @foreach (var item in itemList)
                                     {
-                                        <div>
+                                        <div style="margin-bottom: 5px;">
                                             <label for="@item.nombrePrueba" class="btn text-white text-uppercase text-start" style="background-color: #052B67; width:200px">
                                                 <input type="checkbox" @bind="item.isChecked" name="@item.idPruebaLab" id="@item.nombrePrueba"
                                                 @onclick="() => AgregarItem(id:item.idPruebaLab, nombrePrueba: item.nombrePrueba, precio:item.precio)" />
@@ -51,31 +50,25 @@
 
                             <div class="d-flex justify-content-evenly mt-4">
 
-                                <input class="btn btn-danger mb-2 mt-2"
+                                <input class="btn btn-lg btn-danger mb-2 mt-2"
                                 @onclick="LimpiarItems"
                                        type="button"
                                        value="Borrar selección" />
 
 
-                                <input class="btn btn-success ml- mb-2 mt-2"
+                                <input class="btn btn-lg btn-success mb-2 mt-2"
                                 @onclick="GenerarTurno"
                                        type="button"
                                        disabled=@estaCargando
                                        value="Generar Ticket" />
-
-
-
                             </div>
 
                         }
-
                     </div>
-
-
                 </div>
             </div>
 
-            <div class="col-md-6 rounded-start-3" style="background-color: #093F6B">
+            <div class="col-md-6 rounded" style="background-color: #093F6B;">
                 <div>
                     <h4 class="text-center mb-3 text-white"
                         style="
@@ -85,47 +78,40 @@
                         Pruebas Seleccionadas
                     </h4>
                 </div>
-                <table class="table text-white">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Prueba</th>
-                            <th scope="col">Precio $</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (PruebasSeleccionadas.Count() > 0)
-                        {
-                            @foreach (var item in PruebasSeleccionadas)
+                <div style="min-height: 350px;">
+                    <table class="table text-white">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Prueba</th>
+                                <th scope="col">Precio $</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (PruebasSeleccionadas.Count() > 0)
                             {
-                                <tr>
-                                    <th scope="row"> <i class="fa-solid "></i> </th>
-                                    <td>@item.nombrePrueba</td>
-                                    <td>$@item.precio</td>
-                                </tr>
+                                @foreach (var item in PruebasSeleccionadas)
+                                {
+                                    <tr>
+                                        <th scope="row"> <i class="fa-solid "></i> </th>
+                                        <td>@item.nombrePrueba</td>
+                                        <td>$@item.precio</td>
+                                    </tr>
+                                }
+
                             }
 
-                        }
-
-                    </tbody>
-                </table>
-
-
-                <div class="alert alert-primary">
-                    <strong text-right>TOTAL</strong>
-                    <strong text-right class="text-success">$@Total</strong>
+                        </tbody>
+                    </table>
                 </div>
+                
 
+                <div class="alert alert-primary d-flex align-content-end" style="height: 58px;">
+                    <p><strong>TOTAL</strong></p>
+                    <p class="text-success"><strong>$@Total</strong></p>
+                </div>
             </div>
-
-
-
         </div>
-
-        <br />
-        <br />
-        <br />
-
     </div>
 
     <!--
@@ -137,13 +123,8 @@
 </body>
 
 
-
-
-
 @code
 {
-
-
     List<List<PruebaLab>> PruebasParaMostrar = null;
     decimal? Total = 0.0m;
     List<PruebaLab> PruebasSeleccionadas = new List<PruebaLab>();
@@ -169,9 +150,6 @@
             await App.Current.MainPage.DisplayAlert("Oops", $"Ocurrio un error al cargar los datos de la api. ERRORCODE:{ex.Message}", "Ok");
 
         }
-
-
-
     }
 
 
@@ -227,11 +205,8 @@
         // await App.Current.MainPage.DisplayAlert("Oops", $"Debes seleccionar al menos un servicio", "Ok");
     }
 
-
-
     private void AgregarItem(int id, string nombrePrueba, decimal? precio)
     {
-
         if (true)
         {
 
@@ -296,6 +271,4 @@
 
         return listaDeListaPruebas;
     }
-
-
 }
