@@ -1,5 +1,6 @@
 ﻿@page "/menuMedicoAtender"
-
+@using Proyecto2Maui.Servicios;
+@inject IMedicoService medicoService
 
 <div class="container">
     <div class="row d-flex justify-content-between">
@@ -236,5 +237,24 @@
 
 
 @code {
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        //Todos Funcionan
+
+        // var a = await medicoService.BuscarPaciente("7");
+
+        // var b = await medicoService.ObtenerEstadosRecibo();
+
+        // var c = await medicoService.CambiarEstadoRecibo("7", "Completado");
+
+        // var d = await medicoService.ObtenerPacientesPendientes();
+
+    }
+
+
+
+
 
 }

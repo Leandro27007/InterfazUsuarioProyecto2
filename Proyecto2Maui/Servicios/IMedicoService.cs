@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DTOs;
 
 namespace Proyecto2Maui.Servicios
 {
-    internal interface IMedicoService
+    public interface IMedicoService
     {
-
-
+        Task<List<PacienteDTO>> ObtenerPacientesPendientes();
+        Task<PacienteDTO> BuscarPaciente(string idRecibo);
+        Task<bool> CambiarEstadoRecibo(string idRecibo, string estado);
+        Task<List<string>> ObtenerEstadosRecibo();
     }
 }
