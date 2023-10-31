@@ -34,8 +34,6 @@ namespace Proyecto2Maui.Servicios
                 throw;
             }
 
-
-
         }
     }
 }

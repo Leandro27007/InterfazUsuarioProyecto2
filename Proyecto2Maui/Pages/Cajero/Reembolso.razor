@@ -1,0 +1,117 @@
+﻿@page "/reembolso"
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 mt-3 bg-white"
+             style="border-radius: 20px">
+            <div class="container">
+                <h3 class="text-center text-uppercase mt-2 mb-2"
+                    style="
+                                font-family: 'Courier New', Courier, monospace;
+                                font-weight: 600;
+                            ">
+                    Reembolsar
+                </h3>
+                <div class="d-flex mt-5">
+                    <label class="mx-2 mt-1" for="idrecibo"><strong>IDRecibo</strong></label>
+                    <input class="form-control form-control-sm"
+                           type="text"
+                           id="idrecibo" />
+                    <input class="btn btn-success btn-sm mx-2"
+                           type="button"
+                           value="Buscar" />
+                </div>
+                <div class="container mt-5">
+                    <label class="mb-1"><strong>Información de recibo:</strong></label>
+                    <div class="row border">
+                        <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 mt-4">
+                            <p><strong>ID:</strong> 0000001</p>
+                            <p><strong>Nombre:</strong> Carlos Alberto</p>
+                            <p><strong>Apellido:</strong> Matos Segura</p>
+                            <p><strong>Cajero:</strong> Marcos</p>
+                            <p><strong>Estado:</strong> Pendiente</p>
+                        </div>
+                        <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7">
+                            <table class="table border mt-2"
+                                   style="
+                                    display: block;
+                                    min-height: 200px;
+                                    height: 200px;
+                                    overflow-y: auto;
+                                    scrollbar-gutter: stable both-edges;
+                                ">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">
+                                            Pruebas realizadas
+                                        </th>
+                                        <th scope="col">
+                                            Precio
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> scope="row">Hemograma</td>
+                                        <td> scope="row">$200</td>
+                                    </tr>  
+                                    <tr>   
+                                        <td> scope="row">Dengue</td>
+                                        <td> scope="row">$200</td>
+                                    </tr>  
+                                    <tr>   
+                                        <td> scope="row">VIH</td>
+                                        <td> scope="row">$200</td>
+                                    </tr>  
+                                    <tr>   
+                                        <td> scope="row">Hemograma</td>
+                                        <td> scope="row">$200</td>
+                                    </tr>  
+                                    <tr>   
+                                        <td> scope="row">Dengue</td>
+                                        <td> scope="row">$200</td>
+                                    </tr>  
+                                    <tr>   
+                                        <td> scope="row">VIH</td>
+                                        <td> scope="row">$200</td>
+                                    </tr>  
+                                    <tr>   
+                                        <td> scope="row">Hemograma</td>
+                                        <td> scope="row">$200</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Dengue</td>
+                                        <td scope="row">$200</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">VIH</td>
+                                        <td scope="row">$200</td>
+                                    </tr>
+                                    <tr>
+                                        <th>TOTAL</th>
+                                        <th>$1800</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-end"><p><strong>TOTAL A REEMBOLSAR: $1800</strong></p></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex mt-2 mb-3">
+                    <label class="mx-2 mt-1" for="razonr"><strong>Razón de reembolso:</strong></label>
+
+                    <textarea id="razonr" cols="60" rows="2" style="resize: none;"></textarea>
+                    <input class="btn btn-primary btn-sm mx-2"
+                           style="height: 50px;"
+                           type="button"
+                           value="Reembolsar" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}

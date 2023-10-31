@@ -55,10 +55,20 @@
     <ItemGroup>
       <AndroidResource Remove="NewFolder\**" />
       <Compile Remove="NewFolder\**" />
+      <Compile Remove="Pages\Administrador\**" />
+      <Compile Remove="Pages\Componentes\**" />
       <Content Remove="NewFolder\**" />
+      <Content Remove="Pages\Administrador\**" />
+      <Content Remove="Pages\Componentes\**" />
       <EmbeddedResource Remove="NewFolder\**" />
+      <EmbeddedResource Remove="Pages\Administrador\**" />
+      <EmbeddedResource Remove="Pages\Componentes\**" />
       <MauiXaml Remove="NewFolder\**" />
+      <MauiXaml Remove="Pages\Administrador\**" />
+      <MauiXaml Remove="Pages\Componentes\**" />
       <None Remove="NewFolder\**" />
+      <None Remove="Pages\Administrador\**" />
+      <None Remove="Pages\Componentes\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -77,11 +87,6 @@
         <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
         <PackageReference Include="Radzen.Blazor" Version="4.15.14" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Pages\Administrador\" />
-      <Folder Include="Pages\Componentes\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -106,6 +111,14 @@
 
     <ItemGroup>
       <UpToDateCheckInput Remove="Pages\Medico\MedicoAtenderPaciente.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PRIResource Remove="Pages\Administrador\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PRIResource Remove="Pages\Componentes\**" />
     </ItemGroup>
 
 
