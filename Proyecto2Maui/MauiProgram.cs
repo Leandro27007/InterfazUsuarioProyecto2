@@ -31,6 +31,7 @@ namespace Proyecto2Maui
             builder.Services.AddSingleton<ITurnoServices, TurnoService>();
             builder.Services.AddSingleton<IPruebaLabService, PruebaLabService>();
             builder.Services.AddSingleton<IReciboService, ReciboService>();
+            builder.Services.AddSingleton<IMedicoService, MedicoService>();
 
             builder.Services.AddSweetAlert2();
             builder.Services.AddRadzenComponents();

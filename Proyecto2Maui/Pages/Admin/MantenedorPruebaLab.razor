@@ -1,11 +1,14 @@
-﻿@page "/mantenedorUsuario"
+﻿@page "/mantenedorPruebaLab"
+@using DTOs;
+@inject IPruebaLabService pruebaLabService
+
 
 <div class="container" style="padding: 0; margin-top: -10px">
     <div class="justify-content-start">
-        <NavLink class="btn btn-warning btn-sm border text-white" style="background-color: #223570;" href="mantenedorUsuario">
+        <NavLink class="btn btn-warning btn-sm border text-white" style="background-color: #1e4257;" href="mantenedorUsuario">
             <span class="" aria-hidden="true"></span> <i class="fas fa-user-alt"></i>Usuarios
         </NavLink>
-        <NavLink class="btn btn-warning btn-sm border text-white" style="background-color: #1e4257;" href="mantenedorPruebaLab">
+        <NavLink class="btn btn-warning btn-sm border text-white" style="background-color: #223570;" href="mantenedorPruebaLab">
             <span class="" aria-hidden="true"></span><i class="fas fa-toolbox"></i> Pruebas De Laboratorio
         </NavLink>
     </div>
@@ -13,7 +16,7 @@
 
 <div class="container">
     <div class="row d-flex justify-content-center">
-        <div class="col-sm-12 col-md-12 col-lg-9 col-xl-9 bg-white mt-3"
+        <div class="col-sm-12 col-md-12 col-lg-10 col-xl-10 bg-white mt-3"
              style="border-radius: 20px">
             <div>
                 <div>
@@ -23,16 +26,16 @@
                                         monospace;
                                     font-weight: 600;
                                 ">
-                        Configuración de usuarios
+                        Configuración de pruebas de Laboratorio
                     </h5>
                 </div>
                 <div class="container">
                     <div class="row d-flex justify-content-start">
-                        <div class="d-flex col-sm-12 col-md-8 col-lg-8 col-xl-8 mt-3 mb-3">
+                        <div class="d-flex col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3 mb-3">
                             <div>
                                 <label class="mt-1 mx-1"
-                                       for="nombreUsuario">
-                                    <strong>Nombre (usuario)</strong>
+                                       for="nombrePrueba">
+                                    <strong>Nombre (prueba)</strong>
                                 </label>
                             </div>
                             <div>
@@ -60,20 +63,20 @@
                             ">
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Nombre(s)</th>
-                            <th scope="col">Apellido(s)</th>
-                            <th scope="col">Rol</th>
-                            <th scope="col">Fecha Registro</th>
-                            <th scope="col"></th>
+                            <th> scope="col">ID Prueba</th>
+                            <th> scope="col">Nombre Prueba</th>
+                            <th> scope="col">Precio</th>
+                            <th> scope="col">Descripción</th>
+                            <th> scope="col">Fecha Registro</th>
+                            <th> scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Ramón Orlando</td>
-                            <td>Castillo Bermudez</td>
-                            <td>Administrador</td>
+                            <th> scope="row">1</th>
+                            <td>Hemográma</td>
+                            <td>$1500</td>
+                            <td>Evaluar los componentes sanguíneos</td>
                             <td>25/10/2019</td>
                             <td>
                                 <input class="btn btn-primary btn-sm mx-1 mt-1"
@@ -94,32 +97,9 @@
                         </tr>
                         <tr>
                             <th scope="row">2</th>
-                            <td>Antonio Sangilbert</td>
-                            <td>Rodriguez Martinez</td>
-                            <td>Cajero</td>
-                            <td>12/12/2022</td>
-                            <td>
-                                <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                       style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                       type="button"
-                                       value="Editar" />
-                                <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                       style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                       type="button"
-                                       value="Eliminar" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Ramón Orlando</td>
-                            <td>Castillo Bermudez</td>
-                            <td>Administrador</td>
+                            <td>Hemográma</td>
+                            <td>$1500</td>
+                            <td>Evaluar los componentes sanguíneos</td>
                             <td>25/10/2019</td>
                             <td>
                                 <input class="btn btn-primary btn-sm mx-1 mt-1"
@@ -139,33 +119,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">4</th>
-                            <td>Antonio Sangilbert</td>
-                            <td>Rodriguez Martinez</td>
-                            <td>Cajero</td>
-                            <td>12/12/2022</td>
-                            <td>
-                                <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                       style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                       type="button"
-                                       value="Editar" />
-                                <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                       style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                       type="button"
-                                       value="Eliminar" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">5</th>
-                            <td>Ramón Orlando</td>
-                            <td>Castillo Bermudez</td>
-                            <td>Administrador</td>
+                            <th> scope="row">3</th>
+                            <td>Hemográma</td>
+                            <td>$1500</td>
+                            <td>Evaluar los componentes sanguíneos</td>
                             <td>25/10/2019</td>
                             <td>
                                 <input class="btn btn-primary btn-sm mx-1 mt-1"
@@ -185,33 +142,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">6</th>
-                            <td>Antonio Sangilbert</td>
-                            <td>Rodriguez Martinez</td>
-                            <td>Cajero</td>
-                            <td>12/12/2022</td>
-                            <td>
-                                <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                       style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                       type="button"
-                                       value="Editar" />
-                                <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                       style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                       type="button"
-                                       value="Eliminar" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">7</th>
-                            <td>Ramón Orlando</td>
-                            <td>Castillo Bermudez</td>
-                            <td>Administrador</td>
+                            <th> scope="row">4</th>
+                            <td>Hemográma</td>
+                            <td>$1500</td>
+                            <td>Evaluar los componentes sanguíneos</td>
                             <td>25/10/2019</td>
                             <td>
                                 <input class="btn btn-primary btn-sm mx-1 mt-1"
@@ -231,33 +165,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">8</th>
-                            <td>Antonio Sangilbert</td>
-                            <td>Rodriguez Martinez</td>
-                            <td>Cajero</td>
-                            <td>12/12/2022</td>
-                            <td>
-                                <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                       style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                       type="button"
-                                       value="Editar" />
-                                <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                       style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                       type="button"
-                                       value="Eliminar" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">9</th>
-                            <td>Ramón Orlando</td>
-                            <td>Castillo Bermudez</td>
-                            <td>Administrador</td>
+                            <th> scope="row">5</th>
+                            <td>Hemográma</td>
+                            <td>$1500</td>
+                            <td>Evaluar los componentes sanguíneos</td>
                             <td>25/10/2019</td>
                             <td>
                                 <input class="btn btn-primary btn-sm mx-1 mt-1"
@@ -277,11 +188,103 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">10</th>
-                            <td>Antonio Sangilbert</td>
-                            <td>Rodriguez Martinez</td>
-                            <td>Cajero</td>
-                            <td>12/12/2022</td>
+                            <th> scope="row">6</th>
+                            <td>Hemográma</td>
+                            <td>$1500</td>
+                            <td>Evaluar los componentes sanguíneos</td>
+                            <td>25/10/2019</td>
+                            <td>
+                                <input class="btn btn-primary btn-sm mx-1 mt-1"
+                                       style="
+                                                padding: 0.2rem 0.4rem;
+                                                font-size: 0.7rem;
+                                            "
+                                       type="button"
+                                       value="Editar" />
+                                <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                       style="
+                                                padding: 0.2rem 0.4rem;
+                                                font-size: 0.7rem;
+                                            "
+                                       type="button"
+                                       value="Eliminar" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> scope="row">7</th>
+                            <td>Hemográma</td>
+                            <td>$1500</td>
+                            <td>Evaluar los componentes sanguíneos</td>
+                            <td>25/10/2019</td>
+                            <td>
+                                <input class="btn btn-primary btn-sm mx-1 mt-1"
+                                       style="
+                                                padding: 0.2rem 0.4rem;
+                                                font-size: 0.7rem;
+                                            "
+                                       type="button"
+                                       value="Editar" />
+                                <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                       style="
+                                                padding: 0.2rem 0.4rem;
+                                                font-size: 0.7rem;
+                                            "
+                                       type="button"
+                                       value="Eliminar" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> scope="row">8</th>
+                            <td>Hemográma</td>
+                            <td>$1500</td>
+                            <td>Evaluar los componentes sanguíneos</td>
+                            <td>25/10/2019</td>
+                            <td>
+                                <input class="btn btn-primary btn-sm mx-1 mt-1"
+                                       style="
+                                                padding: 0.2rem 0.4rem;
+                                                font-size: 0.7rem;
+                                            "
+                                       type="button"
+                                       value="Editar" />
+                                <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                       style="
+                                                padding: 0.2rem 0.4rem;
+                                                font-size: 0.7rem;
+                                            "
+                                       type="button"
+                                       value="Eliminar" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> scope="row">9</th>
+                            <td>Hemográma</td>
+                            <td>$1500</td>
+                            <td>Evaluar los componentes sanguíneos</td>
+                            <td>25/10/2019</td>
+                            <td>
+                                <input class="btn btn-primary btn-sm mx-1 mt-1"
+                                       style="
+                                                padding: 0.2rem 0.4rem;
+                                                font-size: 0.7rem;
+                                            "
+                                       type="button"
+                                       value="Editar" />
+                                <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                       style="
+                                                padding: 0.2rem 0.4rem;
+                                                font-size: 0.7rem;
+                                            "
+                                       type="button"
+                                       value="Eliminar" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> scope="row">10</th>
+                            <td>Hemográma</td>
+                            <td>$1500</td>
+                            <td>Evaluar los componentes sanguíneos</td>
+                            <td>25/10/2019</td>
                             <td>
                                 <input class="btn btn-primary btn-sm mx-1 mt-1"
                                        style="
@@ -305,7 +308,7 @@
             <div class="d-flex justify-content-end mb-2">
                 <input class="btn btn-success btn-sm mt-1 mb-1"
                        type="button"
-                       value="Registrar Usuario" />
+                       value="Registrar Prueba" />
             </div>
         </div>
     </div>
@@ -313,10 +316,42 @@
 
 
 @code {
+    protected async override Task OnInitializedAsync()
+    {
 
+        //TEST:  FUNCIONA   
 
+        //Todo: implementar logica de la vista
 
+        // CreacionPruebaLabDTO pruebaLab = new()
+        //     {
+        //         NombrePrueba = "Influencia",
+        //         Descripcion = "Verificar si el paciente tiene el virus",
+        //         Precio = 900m
+        //     };
 
+        // EdicionPruebaLabDTO pruebaLabEdicion = new()
+        //     {
+        //         NombrePrueba = "Influencia nivel 2",
+        //         Descripcion = "Verificar si el paciente tiene el virus",
+        //         Precio = 900m
+        //     };
 
+        // var a = await pruebaLabService.ObtenerPruebas();
+
+        // var b = await pruebaLabService.CrearPruebaLab(pruebaLab);
+
+        // pruebaLabEdicion.IdPruebaLab = b.idPruebaLab;
+
+        // var c = pruebaLabService.EditarPruebaLab(pruebaLabEdicion);
+
+        // var e = await pruebaLabService.ObtenerPruebas();
+
+        // var f = await pruebaLabService.eliminarPruebaLab(b.idPruebaLab.ToString());
+
+        // var g = await pruebaLabService.ObtenerPruebas();
+
+    }
 
 }
+
