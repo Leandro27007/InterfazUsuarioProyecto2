@@ -1,4 +1,5 @@
 ﻿@page "/menuMedicoAtender"
+@using DTOs;
 @using Proyecto2Maui.Servicios;
 @inject IMedicoService medicoService
 
@@ -21,10 +22,12 @@
                             </div>
                             <div>
                                 <input type="text"
+                                       @bind = "@pacienteSeleccionado.NombreCliente"
                                        class="form-control-sm mb-2"
                                        style="border: 1px solid gainsboro"
                                        id="nombre"
-                                       placeholder="Ingrese nombre(s)" />
+                                       placeholder="" 
+                                       disabled />
                             </div>
                         </div>
                         <div class="form-group">
@@ -33,24 +36,15 @@
                             </div>
                             <div>
                                 <input type="text"
+                                       @bind="@pacienteSeleccionado.ApellidoCliente"
                                        class="form-control-sm mb-2"
                                        style="border: 1px solid gainsboro"
                                        id="apellido"
-                                       placeholder="Ingrese apellido(s)" />
+                                       placeholder="" 
+                                       disabled />
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div>
-                                <label for="cedula">Cédula</label>
-                            </div>
-                            <div>
-                                <input type="text"
-                                       class="form-control-sm mb-2"
-                                       style="border: 1px solid gainsboro"
-                                       id="cedula"
-                                       placeholder="Ingrese la cédula" />
-                            </div>
-                        </div>
+ 
                         <hr>
                         <div class="form-group">
                             <div>
@@ -65,8 +59,8 @@
                             </div>
                         </div>
                         <div class="mt-4 d-flex justify-content-between">
-                            <input class="btn btn-danger" type="button" value="Cerrar">
-                            <input class="btn btn-success" type="button" value="Confirmar">
+                            <input class="btn btn-danger" type="button" @onclick="() => Atender()"  value="Cerrar">
+                            <input class="btn btn-success" type="button" @onclick="() => Atender()" value="Confirmar">
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -84,51 +78,23 @@
                                     ">
                             <thead>
                                 <tr>
-                                    <th scope="col">Nombre</th>
                                     <th scope="col">Código</th>
+                                    <th scope="col">Nombre</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">Hemograma</th>
-                                    <td>T-001</td>
+                                @if (pacienteSeleccionado.NombreCliente != null)
+                                {
+                                    foreach (var item in pacienteSeleccionado.Pruebas)
+                                    {
+                                        <tr>
+                                            <td>@item.IdPruebaLab</td>
+                                            <th scope="row">@item.NombrePrueba</th>
+                                        </tr>
+                                    }
 
-                                </tr>
-                                <tr>
-                                    <th scope="row">VIH</th>
-                                    <td colspan="">F-005</td>
+                                }
 
-                                </tr>
-                                <tr>
-                                    <th scope="row">Hemograma</th>
-                                    <td>T-001</td>
-
-                                </tr>
-                                <tr>
-                                    <th scope="row">VIH</th>
-                                    <td colspan="">F-005</td>
-
-                                </tr>
-                                <tr>
-                                    <th scope="row">Hemograma</th>
-                                    <td>T-001</td>
-
-                                </tr>
-                                <tr>
-                                    <th scope="row">VIH</th>
-                                    <td colspan="">F-005</td>
-
-                                </tr>
-                                <tr>
-                                    <th scope="row">Hemograma</th>
-                                    <td>T-001</td>
-
-                                </tr>
-                                <tr>
-                                    <th scope="row">VIH</th>
-                                    <td colspan="">F-005</td>
-
-                                </tr>
 
                             </tbody>
                         </table>
@@ -136,6 +102,10 @@
                 </div>
             </div>
         </div>
+
+
+
+
         <div class="col col-sm-12 col-md-5 col-lg-5 col-xl-5 mt-3 text-white" style="border-radius: 10px; background-color:#162d43ff;">
             <div class="container">
                 <h5 class="text-center text-uppercase mt-2 mb-2" style="
@@ -150,84 +120,38 @@
                         overflow-y: auto;
                         scrollbar-gutter: stable both-edges;
                     ">
-                    <div class="row mt-2 border rounded p-2 mt-4">
-                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 mt-1">
-                            <label><strong>T-001</strong></label>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 mt-1">
-                            <label>Carlos Antonio Peña</label>
-                        </div>
-                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                            <input class="btn btn-primary btn-sm"
-                                   type="button"
-                                   value="Ver" />
-                        </div>
-                    </div>
-                    <div class="row mt-2 border rounded p-2">
-                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 mt-1">
-                            <label><strong>T-002</strong></label>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 mt-1">
-                            <label>Carlos Antonio Peña</label>
-                        </div>
-                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                            <input class="btn btn-primary btn-sm"
-                                   type="button"
-                                   value="Ver" />
-                        </div>
-                    </div>
-                    <div class="row mt-2 border rounded p-2">
-                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 mt-1">
-                            <label><strong>T-003</strong></label>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 mt-1">
-                            <label>Carlos Antonio Peña</label>
-                        </div>
-                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                            <input class="btn btn-primary btn-sm"
-                                   type="button"
-                                   value="Ver" />
-                        </div>
-                    </div>
-                    <div class="row mt-2 border rounded p-2">
-                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 mt-1">
-                            <label><strong>T-004</strong></label>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 mt-1">
-                            <label>Carlos Antonio Peña</label>
-                        </div>
-                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                            <input class="btn btn-primary btn-sm"
-                                   type="button"
-                                   value="Ver" />
-                        </div>
-                    </div>
-                    <div class="row mt-2 border rounded p-2">
-                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 mt-1">
-                            <label><strong>T-005</strong></label>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 mt-1">
-                            <label>Carlos Antonio Peña</label>
-                        </div>
-                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                            <input class="btn btn-primary btn-sm"
-                                   type="button"
-                                   value="Ver" />
-                        </div>
-                    </div>
-                    <div class="row mt-2 border rounded p-2">
-                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 mt-1">
-                            <label><strong>T-006</strong></label>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 mt-1">
-                            <label>Carlos Antonio Peña</label>
-                        </div>
-                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                            <input class="btn btn-primary btn-sm"
-                                   type="button"
-                                   value="Ver" />
-                        </div>
-                    </div>
+                    @if (pacientesPendientes.Count > 0)
+                    {
+                        foreach (var item in pacientesPendientes)
+                        {
+                            <div class="row mt-2 border rounded p-2">
+                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 mt-1">
+                                    <label><strong>@item.IdRecibo</strong></label>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 mt-1">
+                                    <label>@item.NombreCliente @item.ApellidoCliente</label>
+                                </div>
+                                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                    <input class="btn btn-primary btn-sm"
+                                           type="button"
+                                           value="Ver"
+                                           @onclick="() => SeleccionarPaciente(idRecibo:item.IdRecibo)" />
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                <button class="btn btn-primary" type="button" disabled>
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Cargando...
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
                 </div>
             </div>
         </div>
@@ -237,24 +161,65 @@
 
 
 @code {
-
+    List<PacienteDTO> pacientesPendientes = new();
+    PacienteDTO pacienteSeleccionado = new();
+    string tipoEntrega;
 
     protected async override Task OnInitializedAsync()
     {
-        //Todos Funcionan
+        try
+        {
+            var pacientes = await medicoService.ObtenerPacientesPendientes();
 
-        // var a = await medicoService.BuscarPaciente("7");
+            if (pacientes != null)
+            {
+                pacientesPendientes = pacientes;
+            }
+        }
+        catch (Exception ex)
+        {
+
+        }
+
+
+        //var a = await medicoService.BuscarPaciente("7");
+
+
+        //Todos Funcionan
 
         // var b = await medicoService.ObtenerEstadosRecibo();
 
         // var c = await medicoService.CambiarEstadoRecibo("7", "Completado");
 
-        // var d = await medicoService.ObtenerPacientesPendientes();
+        //
 
     }
 
 
+    private Task SeleccionarPaciente(int idRecibo)
+    {
+        var paciente = pacientesPendientes.FirstOrDefault(p => p.IdRecibo == idRecibo);
 
+        if (paciente != null)
+        {
+            pacienteSeleccionado = paciente;
+        }
 
+        return Task.CompletedTask;
+    }
+
+    private async Task Atender()
+    {
+
+        var resultado = await medicoService.CambiarEstadoRecibo(pacienteSeleccionado.IdRecibo.ToString(), "Completado");
+
+        await Limpiar();
+    }
+
+    private Task Limpiar()
+    {
+        pacienteSeleccionado = new ();
+        return Task.CompletedTask;
+    }
 
 }

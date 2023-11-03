@@ -53,20 +53,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AndroidResource Remove="NewFolder\**" />
-      <Compile Remove="NewFolder\**" />
       <Compile Remove="Pages\Administrador\**" />
       <Compile Remove="Pages\Componentes\**" />
-      <Content Remove="NewFolder\**" />
       <Content Remove="Pages\Administrador\**" />
       <Content Remove="Pages\Componentes\**" />
-      <EmbeddedResource Remove="NewFolder\**" />
       <EmbeddedResource Remove="Pages\Administrador\**" />
       <EmbeddedResource Remove="Pages\Componentes\**" />
-      <MauiXaml Remove="NewFolder\**" />
       <MauiXaml Remove="Pages\Administrador\**" />
       <MauiXaml Remove="Pages\Componentes\**" />
-      <None Remove="NewFolder\**" />
       <None Remove="Pages\Administrador\**" />
       <None Remove="Pages\Componentes\**" />
     </ItemGroup>
