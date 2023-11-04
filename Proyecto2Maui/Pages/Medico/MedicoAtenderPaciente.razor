@@ -1,7 +1,9 @@
 ﻿@page "/menuMedicoAtender"
+@using CurrieTechnologies.Razor.SweetAlert2;
 @using DTOs;
 @using Proyecto2Maui.Servicios;
 @inject IMedicoService medicoService
+@inject SweetAlertService Swal
 
 <div class="container">
     <div class="row d-flex justify-content-between">
@@ -22,11 +24,11 @@
                             </div>
                             <div>
                                 <input type="text"
-                                       @bind = "@pacienteSeleccionado.NombreCliente"
+                                @bind="@pacienteSeleccionado.NombreCliente"
                                        class="form-control-sm mb-2"
                                        style="border: 1px solid gainsboro"
                                        id="nombre"
-                                       placeholder="" 
+                                       placeholder=""
                                        disabled />
                             </div>
                         </div>
@@ -36,32 +38,37 @@
                             </div>
                             <div>
                                 <input type="text"
-                                       @bind="@pacienteSeleccionado.ApellidoCliente"
+                                @bind="@pacienteSeleccionado.ApellidoCliente"
                                        class="form-control-sm mb-2"
                                        style="border: 1px solid gainsboro"
                                        id="apellido"
-                                       placeholder="" 
+                                       placeholder=""
                                        disabled />
                             </div>
                         </div>
- 
+
                         <hr>
                         <div class="form-group">
                             <div>
                                 <label>Entrega de resultados:</label>
                             </div>
-                            <div>
-                                <input type="radio" name="entrega" id="inmediata">
-                                <label for="inmediata">Inmediata</label>
-                                <input style="margin-left: 10px;" type="radio" name="entrega" id="luego">
-                                <label for="luego">Espera</label>
-
+                            <div class="rz-p-12 rz-text-align-center">
+                                <RadzenRadioButtonList @bind-Value=@radioButton TValue="int?" class="mb-5">
+                                    <Items>
+                                        <RadzenRadioButtonListItem Text="Entrega resultados" Value="1" TValue="int?" />
+                                        <RadzenRadioButtonListItem Text="Espera resultados" Value="2" TValue="int?" />
+                                    </Items>
+                                </RadzenRadioButtonList>
                             </div>
                         </div>
-                        <div class="mt-4 d-flex justify-content-between">
-                            <input class="btn btn-danger" type="button" @onclick="() => Atender()"  value="Cerrar">
-                            <input class="btn btn-success" type="button" @onclick="() => Atender()" value="Confirmar">
-                        </div>
+                        @if (pacienteSeleccionado.NombreCliente != null)
+                        {
+                            <div class="mt-4 d-flex justify-content-between">
+                                <input class="btn btn-danger" type="button" @onclick="() => Limpiar()" value="Cerrar">
+                                <input class="btn btn-success" type="button" @onclick="() => Atender()" value="Confirmar">
+                            </div>
+                        }
+
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                         <h5 class="text-center text-uppercase mt-2" style="
@@ -135,7 +142,7 @@
                                     <input class="btn btn-primary btn-sm"
                                            type="button"
                                            value="Ver"
-                                           @onclick="() => SeleccionarPaciente(idRecibo:item.IdRecibo)" />
+                                    @onclick="() => SeleccionarPaciente(idRecibo:item.IdRecibo)" />
                                 </div>
                             </div>
                         }
@@ -163,7 +170,7 @@
 @code {
     List<PacienteDTO> pacientesPendientes = new();
     PacienteDTO pacienteSeleccionado = new();
-    string tipoEntrega;
+    int? radioButton;
 
     protected async override Task OnInitializedAsync()
     {
@@ -210,15 +217,65 @@
 
     private async Task Atender()
     {
+        try
+        {
 
-        var resultado = await medicoService.CambiarEstadoRecibo(pacienteSeleccionado.IdRecibo.ToString(), "Completado");
+            var confirmacion = await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Confirma Despachar Paciente",
+                    Html = $"<strong>Seguro que quieres despachar al paciente: {pacienteSeleccionado.NombreCliente}</strong>",
+                    Footer = """Confirmacion""",
+                    Icon = SweetAlertIcon.Question,
+                    ShowConfirmButton = true,
+                    ShowCancelButton = true,
+                    ConfirmButtonText = "Despachar",
+                    ConfirmButtonColor = "green",
+                    CancelButtonText = "Cancelar",
+                    CancelButtonColor = "Red",
+                    Timer = 10000
+                });
+            if (confirmacion.IsConfirmed)
+            {
+                string tipoEntrega = radioButton == 1 ? "Completado" : "EnEsperaResultados";
+                var resultado = await medicoService.CambiarEstadoRecibo(pacienteSeleccionado.IdRecibo.ToString(), "Completado");
 
+                var alerta = await Swal.FireAsync(new SweetAlertOptions()
+                    {
+                        Title = "Despacho de paciente",
+                        Color = "Darkblue",
+                        Html = $"<strong>Se despacho al paciente {pacienteSeleccionado.NombreCliente} correctamente,</strong>",
+                        Footer = $"El recibo esta en estado: {tipoEntrega}",
+                        Icon = SweetAlertIcon.Success,
+                        ShowConfirmButton = false,
+                        Timer = 3500
+                    });
+
+
+                    await OnInitializedAsync();
+            }
+
+        }
+        catch (Exception ex)
+        {
+            var alerta = await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Error",
+                    Color = "Darkblue",
+                    Html = $"<strong>Ocurrio un error al intentar despachar al paciente. Mensaje de erro: {ex.Message}</strong>",
+                    Icon = SweetAlertIcon.Error,
+                    ShowConfirmButton = false,
+                    Timer = 3500
+                });
+
+
+        }
+ 
         await Limpiar();
     }
 
     private Task Limpiar()
     {
-        pacienteSeleccionado = new ();
+        pacienteSeleccionado = new();
         return Task.CompletedTask;
     }
 
