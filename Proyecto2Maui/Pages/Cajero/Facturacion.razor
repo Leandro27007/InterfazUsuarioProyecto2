@@ -28,130 +28,131 @@
                                         ">
                                 DATOS DEL CLIENTE
                             </h5>
-                            @if (!string.IsNullOrEmpty(idTurnoSeleccionado))
-                            {
-                                <h4 class="text-center">@idTurnoSeleccionado</h4>
-                            }
-                            
+                            <div style="min-height: 30px;">
+                                @if (!string.IsNullOrEmpty(idTurnoSeleccionado))
+                                {
+                                    <h4 class="text-center">@idTurnoSeleccionado</h4>
+                                }
+                            </div>
 
-                            <div class="form-group">
-                                <div>
-                                    <label for="nombre">Nombre</label>
-                                </div>
-                                <div>
-                                    <input @bind="cliente.nombreCliente"
-                                           type="text"
-                                           class="form-control-sm mb-2"
-                                           style="
+                            <form class="d-grid justify-content-center">
+                                <div class="form-group">
+                                    <div>
+                                        <label for="nombre">Nombre</label>
+                                    </div>
+                                    <div>
+                                        <input @bind="cliente.nombreCliente"
+                                               type="text"
+                                               class="form-control-sm mb-2"
+                                               style="
                                                         border: 1px solid
                                                             gainsboro;
                                                     "
-                                           id="nombre"
-                                           required
-                                           placeholder="Ingrese nombre(s)" />
+                                               id="nombre"
+                                               required
+                                               placeholder="Ingrese nombre(s)" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div>
-                                    <label for="apellido">Apellido</label>
-                                </div>
-                                <div>
-                                    <input @bind="cliente.apellidoCliente"
-                                           type="text"
-                                           class="form-control-sm mb-2"
-                                           style="
+                                <div class="form-group">
+                                    <div>
+                                        <label for="apellido">Apellido</label>
+                                    </div>
+                                    <div>
+                                        <input @bind="cliente.apellidoCliente"
+                                               type="text"
+                                               class="form-control-sm mb-2"
+                                               style="
                                                         border: 1px solid
                                                             gainsboro;
                                                     "
-                                           id="apellido"
-                                           required
-                                           placeholder="Ingrese apellido(s)" />
+                                               id="apellido"
+                                               required
+                                               placeholder="Ingrese apellido(s)" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div>
-                                    <label for="telefono">Teléfono</label>
-                                </div>
-                                <div>
-                                    <input @bind="cliente.telefono"
-                                        type="text"
-                                           class="form-control-sm mb-2"
-                                           style="
+                                <div class="form-group">
+                                    <div>
+                                        <label for="telefono">Teléfono</label>
+                                    </div>
+                                    <div>
+                                        <input @bind="cliente.telefono"
+                                               type="text"
+                                               class="form-control-sm mb-2"
+                                               style="
                                                         border: 1px solid
                                                             gainsboro;
                                                     "
-                                           id="telefono"
-                                           placeholder="Ingrese el télefono" />
+                                               id="telefono"
+                                               placeholder="Ingrese el télefono" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div>
-                                    <label for="cedula">Cédula</label>
-                                </div>
-                                <div>
-                                    <input @bind="cliente.cedula"
-                                           type="text"
-                                           class="form-control-sm mb-2"
-                                           style="
+                                <div class="form-group">
+                                    <div>
+                                        <label for="cedula">Cédula</label>
+                                    </div>
+                                    <div>
+                                        <input @bind="cliente.cedula"
+                                               type="text"
+                                               class="form-control-sm mb-2"
+                                               style="
                                                         border: 1px solid
                                                             gainsboro;
                                                     "
-                                           id="cedula"
-                                           placeholder="Ingrese la cédula" />
+                                               id="cedula"
+                                               placeholder="Ingrese la cédula" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div>
-                                    <label for="email">Email</label>
-                                </div>
-                                <div>
-                                    <input @bind="cliente.email"
-                                           type="email"
-                                           class="form-control-sm mb-2"
-                                           style="
+                                <div class="form-group">
+                                    <div>
+                                        <label for="email">Email</label>
+                                    </div>
+                                    <div>
+                                        <input @bind="cliente.email"
+                                               type="email"
+                                               class="form-control-sm mb-2"
+                                               style="
                                                         border: 1px solid
                                                             gainsboro;
                                                     "
-                                           id="email"
-                                           placeholder="Ingrese el email" />
+                                               id="email"
+                                               placeholder="Ingrese el email" />
+                                    </div>
                                 </div>
-                            </div>
-                            <h6 class="text-center pt-5">
-                                Añadir Prueba(s)
-                            </h6>
+                                <hr>
+                                <h6 class="text-center">
+                                    Añadir Prueba(s)
+                                </h6>
 
 
-                            <div class="btn-group ">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                                    Pruebas de Laboratorio
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickableInside">
-                                    @if (PruebasLab.Count > 0)
-                                    {
-                                        foreach (var item in PruebasLab)
+                                <div class="btn-group ">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                        Pruebas de Laboratorio
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickableInside">
+                                        @if (PruebasLab.Count > 0)
                                         {
-                                            <li>
-                                                <a class="dropdown-item"
-                                                   @onclick="() => AgregarItem(id:item.idPruebaLab, nombrePrueba: item.nombrePrueba, precio:item.precio)">
-                                                    @item.nombrePrueba
-                                                </a>
+                                            foreach (var item in PruebasLab)
+                                            {
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                       @onclick="() => AgregarItem(id:item.idPruebaLab, nombrePrueba: item.nombrePrueba, precio:item.precio)">
+                                                        @item.nombrePrueba
+                                                    </a>
+                                                </li>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            <li class="spinner-border text-primary" role="status">
+
+                                                <span class="visually-hidden">Loading...</span>
+
                                             </li>
                                         }
-
-                                    }
-                                    else
-                                    {
-                                        <li class="spinner-border text-primary" role="status">
-
-                                            <span class="visually-hidden">Loading...</span>
-
-                                        </li>
-                                    }
-
-                                </ul>
-                            </div>
-
-
+                                    </ul>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-7 col-lg-7 col-xl-7 bg-white mt-3"
@@ -215,7 +216,7 @@
 
                             
                         </table>
-                        <div class=" justify-content-evenly mb-4">
+                        <div class="d-flex justify-content-center mb-4">
                             <input class="btn btn-secondary btn mx-1 mt-1 mb-1"
                                    type="button"
                                    value="Limpiar"
@@ -356,7 +357,8 @@
             var turnosPendientes = await turnoService.GetTurnos();
             if (pruebasLab != null)
             {
-                TurnosPendientes = turnosPendientes;
+                var listaVolteada = Enumerable.Reverse(turnosPendientes).ToList();
+                TurnosPendientes = listaVolteada;
             }
 
         }
