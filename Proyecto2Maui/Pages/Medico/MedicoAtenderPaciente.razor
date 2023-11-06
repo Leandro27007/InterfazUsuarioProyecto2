@@ -48,27 +48,29 @@
                         </div>
 
                         <hr>
-                        <div class="form-group">
-                            <div>
-                                <label>Entrega de resultados:</label>
-                            </div>
-                            <div class="rz-p-12 rz-text-align-center">
-                                <RadzenRadioButtonList @bind-Value=@radioButton TValue="int?" class="mb-5">
-                                    <Items>
-                                        <RadzenRadioButtonListItem Text="Entrega resultados" Value="1" TValue="int?" />
-                                        <RadzenRadioButtonListItem Text="Espera resultados" Value="2" TValue="int?" />
-                                    </Items>
-                                </RadzenRadioButtonList>
-                            </div>
-                        </div>
-                        @if (pacienteSeleccionado.NombreCliente != null)
-                        {
-                            <div class="mt-4 d-flex justify-content-between">
-                                <input class="btn btn-danger" type="button" @onclick="() => Limpiar()" value="Cerrar">
-                                <input class="btn btn-success" type="button" @onclick="() => Atender()" value="Confirmar">
-                            </div>
-                        }
 
+                        <div style="min-height: 330px;">
+                            <div class="form-group">
+                                <div>
+                                    <label>Entrega de resultados:</label>
+                                </div>
+                                <div class="rz-p-12 rz-text-align-center">
+                                    <RadzenRadioButtonList @bind-Value=@radioButton TValue="int?">
+                                        <Items>
+                                            <RadzenRadioButtonListItem Text="Entrega resultados inmediata" Value="1" TValue="int?" />
+                                            <RadzenRadioButtonListItem Text="Espera resultados" Value="2" TValue="int?" />
+                                        </Items>
+                                    </RadzenRadioButtonList>
+                                </div>
+                            </div>
+                            @if (pacienteSeleccionado.NombreCliente != null)
+                            {
+                                <div class="mt-4 d-flex justify-content-between">
+                                    <input class="btn btn-danger" type="button" @onclick="() => Limpiar()" value="Cerrar">
+                                    <input class="btn btn-success" type="button" @onclick="() => Atender()" value="Confirmar">
+                                </div>
+                            }
+                        </div>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                         <h5 class="text-center text-uppercase mt-2" style="
@@ -79,7 +81,7 @@
                         <table class="table mt-4 border rounded"
                                style="
                                         display: block;
-                                        height: 400px;
+                                        height: 460px;
                                         overflow-y: auto;
                                         scrollbar-gutter: stable both-edges;
                                     ">
@@ -95,23 +97,17 @@
                                     foreach (var item in pacienteSeleccionado.Pruebas)
                                     {
                                         <tr>
-                                            <td>@item.IdPruebaLab</td>
+                                            <th>@item.IdPruebaLab</th>
                                             <th scope="row">@item.NombrePrueba</th>
                                         </tr>
                                     }
-
                                 }
-
-
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
 
         <div class="col col-sm-12 col-md-5 col-lg-5 col-xl-5 mt-3 text-white" style="border-radius: 10px; background-color:#162d43ff;">
             <div class="container">

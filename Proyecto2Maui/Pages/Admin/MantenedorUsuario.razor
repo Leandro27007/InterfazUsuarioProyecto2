@@ -1,7 +1,7 @@
 ﻿@page "/mantenedorUsuario"
 
 <div class="container" style="padding: 0; margin-top: -10px">
-    <div class="justify-content-start">
+    <div class="d-flex justify-content-center">
         <NavLink class="btn btn-warning btn-sm border text-white" style="background-color: #223570;" href="mantenedorUsuario">
             <span class="" aria-hidden="true"></span> <i class="fas fa-user-alt"></i>Usuarios
         </NavLink>
@@ -13,7 +13,7 @@
 
 <div class="container">
     <div class="row d-flex justify-content-center">
-        <div class="col-sm-12 col-md-12 col-lg-9 col-xl-9 bg-white mt-3"
+        <div class="col-sm-12 col-md-12 col-lg-10 col-xl-10 bg-white mt-3"
              style="border-radius: 20px">
             <div>
                 <div>
@@ -50,298 +50,532 @@
                     </div>
                 </div>
 
-                <table class="table table-fixed mx-auto"
-                       style="
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-fixed mx-auto"
+                           style="
                                 display: block;
+                                padding-right: 15px;
                                 min-height: 400px;
                                 height: 400px;
                                 overflow-y: auto;
                                 scrollbar-gutter: stable both-edges;
                             ">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Nombre(s)</th>
-                            <th scope="col">Apellido(s)</th>
-                            <th scope="col">Rol</th>
-                            <th scope="col">Fecha Registro</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Ramón Orlando</td>
-                            <td>Castillo Bermudez</td>
-                            <td>Administrador</td>
-                            <td>25/10/2019</td>
-                            <td>
-                                <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                       style="
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">Opciones</th>
+                                <th class="text-center" scope="col">Cédula</th>
+                                <th class="text-center" scope="col">Nombre(s)</th>
+                                <th class="text-center" scope="col">Apellido(s)</th>
+                                <th class="text-center" scope="col">UserName</th>
+                                <th class="text-center" scope="col">Rol</th>
+                                <th class="text-center" scope="col">Telefono</th>
+                                <th class="text-center" scope="col">Email</th>
+                                <th class="text-center" scope="col">Fecha Registro</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Editar" />
-                                <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Editar"
+                                           data-bs-toggle="modal"
+                                           data-bs-target="#editarUsuario"
+                                           data-bs-whatever=""/>
+                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Eliminar" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Antonio Sangilbert</td>
-                            <td>Rodriguez Martinez</td>
-                            <td>Cajero</td>
-                            <td>12/12/2022</td>
-                            <td>
-                                <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Eliminar" />
+                                </td>
+                                <th scope="row">1</th>
+                                <td>Ramón Orlando</td>
+                                <td>Castillo Bermudez</td>
+                                <td>usuario001</td>
+                                
+                                <td>Administrador</td>
+                                <td>829-893-3728</td>
+                                <td>usuario@gmail.com</td>
+                                <td>25/10/2019</td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Editar" />
-                                <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Editar" />
+                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Eliminar" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Ramón Orlando</td>
-                            <td>Castillo Bermudez</td>
-                            <td>Administrador</td>
-                            <td>25/10/2019</td>
-                            <td>
-                                <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Eliminar" />
+                                </td>
+                                <th scope="row">2</th>
+                                <td>Antonio Sangilbert</td>
+                                <td>Rodriguez Martinez</td>
+                                <td>usuario001</td>
+                                
+                                <td>Administrador</td>
+                                <td>829-893-3728</td>
+                                <td>usuario@gmail.com</td>
+                                <td>12/12/2022</td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Editar" />
-                                <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Editar" />
+                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Eliminar" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td>Antonio Sangilbert</td>
-                            <td>Rodriguez Martinez</td>
-                            <td>Cajero</td>
-                            <td>12/12/2022</td>
-                            <td>
-                                <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Eliminar" />
+                                </td>
+                                <th scope="row">3</th>
+                                <td>Ramón Orlando</td>
+                                <td>Castillo Bermudez</td>
+                                <td>usuario001</td>
+                                
+                                <td>Administrador</td>
+                                <td>829-893-3728</td>
+                                <td>usuario@gmail.com</td>
+                                <td>25/10/2019</td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="btn btn-primary btn-sm  mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Editar" />
-                                <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Editar" />
+                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Eliminar" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">5</th>
-                            <td>Ramón Orlando</td>
-                            <td>Castillo Bermudez</td>
-                            <td>Administrador</td>
-                            <td>25/10/2019</td>
-                            <td>
-                                <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Eliminar" />
+                                </td>
+                                <th scope="row">4</th>
+                                <td>Antonio Sangilbert</td>
+                                <td>Rodriguez Martinez</td>
+                                <td>usuario001</td>
+                                
+                                <td>Administrador</td>
+                                <td>829-893-3728</td>
+                                <td>usuario@gmail.com</td>
+                                <td>12/12/2022</td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Editar" />
-                                <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Editar" />
+                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Eliminar" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">6</th>
-                            <td>Antonio Sangilbert</td>
-                            <td>Rodriguez Martinez</td>
-                            <td>Cajero</td>
-                            <td>12/12/2022</td>
-                            <td>
-                                <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Eliminar" />
+                                </td>
+                                <th scope="row">5</th>
+                                <td>Ramón Orlando</td>
+                                <td>Castillo Bermudez</td>
+                                <td>usuario001</td>
+                               
+                                <td>Administrador</td>
+                                <td>829-893-3728</td>
+                                <td>usuario@gmail.com</td>
+                                <td>25/10/2019</td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Editar" />
-                                <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Editar" />
+                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Eliminar" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">7</th>
-                            <td>Ramón Orlando</td>
-                            <td>Castillo Bermudez</td>
-                            <td>Administrador</td>
-                            <td>25/10/2019</td>
-                            <td>
-                                <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Eliminar" />
+                                </td>
+                                <th scope="row">6</th>
+                                <td>Antonio Sangilbert</td>
+                                <td>Rodriguez Martinez</td>
+                                <td>usuario001</td>
+                                
+                                <td>Administrador</td>
+                                <td>829-893-3728</td>
+                                <td>usuario@gmail.com</td>
+                                <td>12/12/2022</td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Editar" />
-                                <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Editar" />
+                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Eliminar" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">8</th>
-                            <td>Antonio Sangilbert</td>
-                            <td>Rodriguez Martinez</td>
-                            <td>Cajero</td>
-                            <td>12/12/2022</td>
-                            <td>
-                                <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Eliminar" />
+                                </td>
+                                <th scope="row">7</th>
+                                <td>Ramón Orlando</td>
+                                <td>Castillo Bermudez</td>
+                                <td>usuario001</td>
+                                
+                                <td>Administrador</td>
+                                <td>829-893-3728</td>
+                                <td>usuario@gmail.com</td>
+                                <td>25/10/2019</td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Editar" />
-                                <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Editar" />
+                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Eliminar" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">9</th>
-                            <td>Ramón Orlando</td>
-                            <td>Castillo Bermudez</td>
-                            <td>Administrador</td>
-                            <td>25/10/2019</td>
-                            <td>
-                                <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Eliminar" />
+                                </td>
+                                <th scope="row">8</th>
+                                <td>Antonio Sangilbert</td>
+                                <td>Rodriguez Martinez</td>
+                                <td>usuario001</td>
+                                
+                                <td>Administrador</td>
+                                <td>829-893-3728</td>
+                                <td>usuario@gmail.com</td>
+                                <td>12/12/2022</td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Editar" />
-                                <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Editar" />
+                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Eliminar" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">10</th>
-                            <td>Antonio Sangilbert</td>
-                            <td>Rodriguez Martinez</td>
-                            <td>Cajero</td>
-                            <td>12/12/2022</td>
-                            <td>
-                                <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Eliminar" />
+                                </td>
+                                <th scope="row">9</th>
+                                <td>Ramón Orlando</td>
+                                <td>Castillo Bermudez</td>
+                                <td>usuario001</td>
+                                
+                                <td>Administrador</td>
+                                <td>829-893-3728</td>
+                                <td>usuario@gmail.com</td>
+                                <td>25/10/2019</td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Editar" />
-                                <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                       style="
+                                           type="button"
+                                           value="Editar" />
+                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                           style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                       type="button"
-                                       value="Eliminar" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                           type="button"
+                                           value="Eliminar" />
+                                </td>
+                                <th scope="row">10</th>
+                                <td>Antonio Sangilbert</td>
+                                <td>Rodriguez Martinez</td>
+                                <td>usuario001</td>
+                                
+                                <td>Administrador</td>
+                                <td>829-893-3728</td>
+                                <td>usuario@gmail.com</td>
+                                <td>12/12/2022</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
             <div class="d-flex justify-content-end mb-2">
                 <input class="btn btn-success btn-sm mt-1 mb-1"
                        type="button"
-                       value="Registrar Usuario" />
+                       value="Registrar Usuario"
+                       data-bs-toggle="modal"
+                       data-bs-target="#registrarUsuario"
+                       data-bs-whatever="" />
             </div>
         </div>
     </div>
 </div>
 
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="">Open modal for do</button>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="">Open modal for </button>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="">Open modal for </button>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Recipient:</label>
-                        <input type="text" class="form-control" id="recipient-name">
+<div
+            class="modal fade"
+            id="registrarUsuario"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Nuevo Usuario
+                        </h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
                     </div>
-                    <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Message:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="usuario-nombre"
+                                       class="col-form-label">Nombre(s):</label>
+                                <input type="text"
+                                       class="form-control form-control-sm"
+                                       id="usuario-nombre"
+                                       required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="usuario-apellido"
+                                       class="col-form-label">Apellido(s):</label>
+                                <input type="text"
+                                       class="form-control form-control-sm"
+                                       id="usuario-apellido"
+                                       required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="usuario-userName"
+                                       class="col-form-label">Nombre de usuario:</label>
+                                <input type="text"
+                                       class="form-control form-control-sm"
+                                       id="usuario-userName"
+                                       required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="usuario-contraseña"
+                                       class="col-form-label">Contraseña:</label>
+                                <input type="password"
+                                       class="form-control form-control-sm"
+                                       id="usuario-contraseña"
+                                       required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="usuario-rol"
+                                       class="col-form-label">Rol:</label>
+                                <select class="form-control form-control-sm"
+                                        id="usuario-rol"
+                                        required>
+                                    <option value="">(Seleccione el rol)</option>
+                                    <option value="Administrador">Administrador</option>
+                                    <option value="Cajero">Cajero</option>
+                                    <option value="Paciente">Paciente</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="usuario-telefono"
+                                       class="col-form-label">Teléfono:</label>
+                                <input type="text"
+                                       class="form-control form-control-sm"
+                                       id="usuario-telefono"
+                                       required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="usuario-email"
+                                       class="col-form-label">Email:</label>
+                                <input type="email"
+                                       class="form-control form-control-sm"
+                                       id="usuario-email"
+                                       required>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            data-bs-dismiss="modal"
+                        >
+                            Cerrar
+                        </button>
+                        <button type="button" class="btn btn-success">
+                            Crear nuevo usuario
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+
+        <div
+            class="modal fade"
+            id="editarUsuario"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Editar usuario
+                        </h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="usuario-nombre"
+                                       class="col-form-label">
+                                    Nombre(s):
+                                </label>
+                                <input type="text"
+                                       class="form-control form-control-sm"
+                                       id="usuario-nombre"
+                                       required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="usuario-apellido"
+                                       class="col-form-label">Apellido(s):</label>
+                                <input type="text"
+                                       class="form-control form-control-sm"
+                                       id="usuario-apellido"
+                                       required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="usuario-userName"
+                                       class="col-form-label">Nombre de usuario:</label>
+                                <input type="text"
+                                       class="form-control form-control-sm"
+                                       id="usuario-userName"
+                                       required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="usuario-contraseña"
+                                       class="col-form-label">Nueva Contraseña:</label>
+                                <input type="password"
+                                       class="form-control form-control-sm"
+                                       id="usuario-contraseña"
+                                       required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="usuario-rol"
+                                       class="col-form-label">Rol:</label>
+                                <select class="form-control form-control-sm"
+                                        id="usuario-rol"
+                                        required>
+                                    <option value="">(Seleccione el rol)</option>
+                                    <option value="Administrador">Administrador</option>
+                                    <option value="Cajero">Cajero</option>
+                                    <option value="Paciente">Paciente</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="usuario-telefono"
+                                       class="col-form-label">Teléfono:</label>
+                                <input type="text"
+                                       class="form-control form-control-sm"
+                                       id="usuario-telefono"
+                                       required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="usuario-email"
+                                       class="col-form-label">Email:</label>
+                                <input type="email"
+                                       class="form-control form-control-sm"
+                                       id="usuario-email"
+                                       required />
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            data-bs-dismiss="modal"
+                        >
+                            Cerrar
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                            Editar usuario
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 @code {
