@@ -172,10 +172,10 @@
                                         overflow-y: auto;
                                         scrollbar-gutter: stable both-edges;
                                     ">
-                            
-                                <!-- PRUEBA SELECCIONADA-->
-                                @if (PruebasSeleccionadas.Count() > 0)
-                                {
+
+                            <!-- PRUEBA SELECCIONADA-->
+                            @if (PruebasSeleccionadas.Count() > 0)
+                            {
                                 <thead>
                                     <tr>
                                         <th scope="col">Prueba</th>
@@ -212,9 +212,9 @@
                                         </td>
                                     </tr>
                                 </tbody>
-                                }
+                            }
 
-                            
+
                         </table>
                         <div class="d-flex justify-content-center mb-4">
                             <input class="btn btn-secondary btn mx-1 mt-1 mb-1"
@@ -236,7 +236,7 @@
         </div>
 
 
-  
+
         <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 mt-3"
              style="border-radius: 10px; background-color:#162d43ff">
             <div>
@@ -373,63 +373,107 @@
 
     private async Task GenerarRecibo()
     {
-        if (PruebasSeleccionadas != null)
+
+        if (ValidarDatosCliente())
         {
-
-            try
+            if (PruebasSeleccionadas != null)
             {
-                estaCargando = true;
-
-                cliente.pruebas = PruebasSeleccionadas.Select(ps => new PruebaLab()
-                    {
-                        idPruebaLab = ps.idPruebaLab,
-                        nombrePrueba = string.Empty,
-                        precio = decimal.Zero
-                    }).ToList();
-
-                var confirmacion = await Swal.FireAsync(new SweetAlertOptions()
-                    {
-                        Title = "Confirma Generar Recibo",
-                        Html = $"<strong>Seguro que quieres generar el recibo?</strong>",
-                        Footer = """Confirmacion""",
-                        Icon = SweetAlertIcon.Question,
-                        ShowConfirmButton = true,
-                        ShowCancelButton = true,
-                        ConfirmButtonText ="Generar",
-                        ConfirmButtonColor = "green",
-                        CancelButtonText = "Cancelar",
-                        CancelButtonColor = "Red",
-                        Timer = 10000
-                    });
-
-                if (confirmacion.IsConfirmed)
+                try
                 {
-                    var resultado = await reciboService.GenerarRecibo(cliente);
-
-
-                    var alerta = await Swal.FireAsync(new SweetAlertOptions()
+                    estaCargando = true;
+                    cliente.pruebas = PruebasSeleccionadas.Select(ps => new PruebaLab()
                         {
-                            Title = "Facturacion Exitosa",
-                            Color = "Darkblue",
-                            Html = $"<strong>Total: {resultado.total}$</strong>",
-                            Footer = """Imprimiendo Recibo""",
-                            Icon = SweetAlertIcon.Success,
-                            ShowConfirmButton = false,
-                            Timer = 2500
+                            idPruebaLab = ps.idPruebaLab,
+                            nombrePrueba = string.Empty,
+                            precio = decimal.Zero
+                        }).ToList();
+
+                    var confirmacion = await Swal.FireAsync(new SweetAlertOptions()
+                        {
+                            Title = "Confirma Generar Recibo",
+                            Html = $"<strong>Seguro que quieres generar el recibo?</strong>",
+                            Footer = """Confirmacion""",
+                            Icon = SweetAlertIcon.Question,
+                            ShowConfirmButton = true,
+                            ShowCancelButton = true,
+                            ConfirmButtonText = "Generar",
+                            ConfirmButtonColor = "green",
+                            CancelButtonText = "Cancelar",
+                            CancelButtonColor = "Red",
+                            Timer = 10000
                         });
 
-                    estaCargando = false;
-                    await LimpiarItems();
-                }
-                estaCargando = false;
-            }
-            catch (Exception ex)
-            {
-                await App.Current.MainPage.DisplayAlert("Oops", $"Ocurrio un error al cargar los datos de la api. ERRORCODE:{ex.Message}", "Ok");
-            }
+                    if (confirmacion.IsConfirmed)
+                    {
+                        var resultado = await reciboService.GenerarRecibo(cliente);
 
+
+                        var alerta = await Swal.FireAsync(new SweetAlertOptions()
+                            {
+                                Title = "Facturacion Exitosa",
+                                Color = "Darkblue",
+                                Html = $"<strong>Total: {resultado.total}$</strong>",
+                                Footer = """Imprimiendo Recibo""",
+                                Icon = SweetAlertIcon.Success,
+                                ShowConfirmButton = false,
+                                Timer = 2500
+                            });
+
+                        estaCargando = false;
+                        await LimpiarItems();
+                    }
+                    estaCargando = false;
+                }
+                catch (Exception ex)
+                {
+                    await Swal.FireAsync(new SweetAlertOptions()
+                        {
+                            Title = "Error ",
+                            Color = "DarkRed",
+                            Html = $"<strong>Mensaje de error: {ex.Message}</strong>",
+                            Toast = true,
+                            Icon = SweetAlertIcon.Warning,
+                            Timer = 2000
+                        });
+                }
+
+            }
         }
 
+
+
+    }
+
+    private bool ValidarDatosCliente()
+    {
+        string propiedadRequerida = null;
+
+        @if (cliente.nombreCliente == null)
+        {
+            propiedadRequerida = "Nombre";
+        }
+        else if (cliente.apellidoCliente == null)
+        {
+            propiedadRequerida = "Apellido";
+        }
+
+        if (propiedadRequerida != null)
+        {
+            Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Error ",
+                    Color = "DarkRed",
+                    Html = $"<strong>El {propiedadRequerida} del cliente no puede ser vacio</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Warning,
+                    Timer = 2000
+                });
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
 
@@ -506,7 +550,7 @@
             await Swal.FireAsync(new SweetAlertOptions()
                 {
                     Title = "Turno cancelado exitosamente",
-                    Color= "DarkYellow",
+                    Color = "DarkYellow",
                     Html = $"<strong>Turno numero: {id}</strong>",
                     Toast = true,
                     Icon = SweetAlertIcon.Success,
@@ -516,7 +560,8 @@
 
             var turnoParaQuitar = TurnosPendientes.FirstOrDefault(t => t.idTurno == id);
             TurnosPendientes.Remove(turnoParaQuitar);
-        }else
+        }
+        else
         {
             await Swal.FireAsync(new SweetAlertOptions()
                 {

@@ -44,17 +44,12 @@ namespace Proyecto2Maui.Servicios
 
                 var response = JsonSerializer.Deserialize<ReciboResponse>(respuestaARetornar);
 
-
                 return response;
             }
             catch (Exception ex)
             {
                 throw;
             }
-
-
-
-
 
         }
     }

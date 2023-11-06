@@ -24,7 +24,7 @@
                             </div>
                             <div>
                                 <input type="text"
-                                @bind="@pacienteSeleccionado.NombreCliente"
+                                       @bind="@pacienteSeleccionado.NombreCliente"
                                        class="form-control-sm mb-2"
                                        style="border: 1px solid gainsboro"
                                        id="nombre"
@@ -38,7 +38,7 @@
                             </div>
                             <div>
                                 <input type="text"
-                                @bind="@pacienteSeleccionado.ApellidoCliente"
+                                       @bind="@pacienteSeleccionado.ApellidoCliente"
                                        class="form-control-sm mb-2"
                                        style="border: 1px solid gainsboro"
                                        id="apellido"
@@ -48,29 +48,27 @@
                         </div>
 
                         <hr>
-
-                        <div style="min-height: 330px;">
-                            <div class="form-group">
-                                <div>
-                                    <label>Entrega de resultados:</label>
-                                </div>
-                                <div class="rz-p-12 rz-text-align-center">
-                                    <RadzenRadioButtonList @bind-Value=@radioButton TValue="int?">
-                                        <Items>
-                                            <RadzenRadioButtonListItem Text="Entrega resultados inmediata" Value="1" TValue="int?" />
-                                            <RadzenRadioButtonListItem Text="Espera resultados" Value="2" TValue="int?" />
-                                        </Items>
-                                    </RadzenRadioButtonList>
-                                </div>
+                        <div class="form-group">
+                            <div>
+                                <label>Entrega de resultados:</label>
                             </div>
-                            @if (pacienteSeleccionado.NombreCliente != null)
-                            {
-                                <div class="mt-4 d-flex justify-content-between">
-                                    <input class="btn btn-danger" type="button" @onclick="() => Limpiar()" value="Cerrar">
-                                    <input class="btn btn-success" type="button" @onclick="() => Atender()" value="Confirmar">
-                                </div>
-                            }
+                            <div class="rz-p-12 ">
+                                <RadzenRadioButtonList @bind-Value=@radioButton TValue="int?" class="mb-5">
+                                    <Items>
+                                        <RadzenRadioButtonListItem Text="Entrega resultados" Value="1" TValue="int?" />
+                                        <RadzenRadioButtonListItem Text="Espera resultados" Value="2" TValue="int?" />
+                                    </Items>
+                                </RadzenRadioButtonList>
+                            </div>
                         </div>
+                        @if (pacienteSeleccionado.NombreCliente != null)
+                        {
+                            <div class="mt-4 d-flex justify-content-between">
+                                <input class="btn btn-danger" type="button" @onclick="() => Limpiar()" value="Cerrar">
+                                <input class="btn btn-success" type="button" @onclick="() => Atender()" value="Despachar">
+                            </div>
+                        }
+
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                         <h5 class="text-center text-uppercase mt-2" style="
@@ -138,22 +136,38 @@
                                     <input class="btn btn-primary btn-sm"
                                            type="button"
                                            value="Ver"
-                                    @onclick="() => SeleccionarPaciente(idRecibo:item.IdRecibo)" />
+                                           @onclick="() => SeleccionarPaciente(idRecibo:item.IdRecibo)" />
                                 </div>
                             </div>
                         }
                     }
                     else
                     {
+
                         <tr>
                             <td>
                                 <button class="btn btn-primary" type="button" disabled>
                                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                    Cargando...
+                                    Buscando pacientes...
                                 </button>
                             </td>
                         </tr>
                     }
+
+                    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 mt-3">
+                        @if (!refrescando)
+                        {
+                            <input class="btn btn-primary btn-sm"
+                                   type="button"
+                                   value="Refrescar"
+                                   @onclick="() => Refrescar()" />
+                        }
+                        else
+                        {
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
+                        }
+                    </div>
 
                 </div>
             </div>
@@ -166,7 +180,8 @@
 @code {
     List<PacienteDTO> pacientesPendientes = new();
     PacienteDTO pacienteSeleccionado = new();
-    int? radioButton;
+    int? radioButton = 1;
+    bool refrescando = false;
 
     protected async override Task OnInitializedAsync()
     {
@@ -184,20 +199,14 @@
 
         }
 
-
-        //var a = await medicoService.BuscarPaciente("7");
-
-
-        //Todos Funcionan
-
-        // var b = await medicoService.ObtenerEstadosRecibo();
-
-        // var c = await medicoService.CambiarEstadoRecibo("7", "Completado");
-
-        //
-
     }
 
+    private async Task Refrescar()
+    {
+        refrescando = true;
+        await OnInitializedAsync();
+        refrescando = false;
+    }
 
     private Task SeleccionarPaciente(int idRecibo)
     {
@@ -216,39 +225,62 @@
         try
         {
 
-            var confirmacion = await Swal.FireAsync(new SweetAlertOptions()
-                {
-                    Title = "Confirma Despachar Paciente",
-                    Html = $"<strong>Seguro que quieres despachar al paciente: {pacienteSeleccionado.NombreCliente}</strong>",
-                    Footer = """Confirmacion""",
-                    Icon = SweetAlertIcon.Question,
-                    ShowConfirmButton = true,
-                    ShowCancelButton = true,
-                    ConfirmButtonText = "Despachar",
-                    ConfirmButtonColor = "green",
-                    CancelButtonText = "Cancelar",
-                    CancelButtonColor = "Red",
-                    Timer = 10000
-                });
-            if (confirmacion.IsConfirmed)
+            @if (pacienteSeleccionado != null && radioButton > 0)
             {
                 string tipoEntrega = radioButton == 1 ? "Completado" : "EnEsperaResultados";
-                var resultado = await medicoService.CambiarEstadoRecibo(pacienteSeleccionado.IdRecibo.ToString(), "Completado");
+                string tipoEntregaMensaje = tipoEntrega == "Completado" ? "Entrega Inmediata" : "Resultados Pendientes";
 
-                var alerta = await Swal.FireAsync(new SweetAlertOptions()
+                var confirmacion = await Swal.FireAsync(new SweetAlertOptions()
                     {
-                        Title = "Despacho de paciente",
-                        Color = "Darkblue",
-                        Html = $"<strong>Se despacho al paciente {pacienteSeleccionado.NombreCliente} correctamente,</strong>",
-                        Footer = $"El recibo esta en estado: {tipoEntrega}",
+                        Title = "Confirma Despachar Paciente",
+                        Html = $@"<strong>Seguro que quieres despachar al paciente?</strong>
+                              <br/><strong>Nombre del paciente:</strong> {pacienteSeleccionado.NombreCliente} {pacienteSeleccionado.ApellidoCliente}",
+                        Footer = $"Tipo de entrega resultados:{tipoEntregaMensaje}",
+                        Icon = SweetAlertIcon.Question,
+                        ShowConfirmButton = true,
+                        ShowCancelButton = true,
+                        ConfirmButtonText = "Despachar",
+                        ConfirmButtonColor = "green",
+                        CancelButtonText = "Cancelar",
+                        CancelButtonColor = "Red",
+                        Timer = 10000
+                    });
+                if (confirmacion.IsConfirmed)
+                {
+                    var resultado = await medicoService.CambiarEstadoRecibo(pacienteSeleccionado.IdRecibo.ToString(), "Completado");
+
+                    var alerta = await Swal.FireAsync(new SweetAlertOptions()
+                        {
+                            Title = "Despacho de paciente",
+                            Color = "Darkblue",
+                            Html = $"<strong>Se despacho al paciente correctamente,</strong>",
+                            Footer = $"El recibo esta en estado: {tipoEntrega}",
+                            Icon = SweetAlertIcon.Success,
+                            ShowConfirmButton = false,
+                            Timer = 3500
+                        });
+
+
+                    await Limpiar();
+                    await OnInitializedAsync();
+                }
+            }else
+            {
+                await Swal.FireAsync(new SweetAlertOptions()
+                    {
+                        Title = "Error ",
+                        Color = "DarkRed",
+                        Html = $"<strong>Debes seleccionar un paciente para despachar</strong>",
+                        Toast = true,
                         Icon = SweetAlertIcon.Success,
-                        ShowConfirmButton = false,
-                        Timer = 3500
+                        Timer = 3000
                     });
 
-
-                    await OnInitializedAsync();
             }
+
+
+
+
 
         }
         catch (Exception ex)
@@ -265,8 +297,7 @@
 
 
         }
- 
-        await Limpiar();
+
     }
 
     private Task Limpiar()
