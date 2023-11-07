@@ -1,4 +1,10 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Proyecto2Maui.Authentication
+@using Windows.Services.Maps;
+@inject AuthenticationStateProvider authStateProvider
+@inject NavigationManager NavManager
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Laboratorio Sistema</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -9,42 +15,93 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
+
+
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="listaTurnos">
-                <span class="oi oi-document" aria-hidden="true"></span> Lista Turnos
-            </NavLink>
-        </div>      
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="menuSeleccionPruebas">
-                <span class="oi oi-document" aria-hidden="true"></span> Seleccion Pruebas
-            </NavLink>
-        </div>      
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="medicoFacturacion">
-                <span class="oi oi-document" aria-hidden="true"></span> Facturacion
-            </NavLink>
-        </div>       
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="menuMedicoAtender">
-                <span class="oi oi-document" aria-hidden="true"></span> Pacientes
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="mantenedorUsuario">
-                <span class="oi oi-document" aria-hidden="true"></span> Mantenedor
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="reembolso">
-                <span class="oi oi-document" aria-hidden="true"></span> Reembolso
-            </NavLink>
-        </div>
+        <AuthorizeView Roles="Administrador">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="mantenedorUsuario" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> Usuarios
+                    </NavLink>
+                </div>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="mantenedorPruebaLab">
+                        <span class="oi oi-document" aria-hidden="true"></span> Pruebas Laboratorio
+                    </NavLink>
+                </div>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="menuSeleccionPruebas">
+                        <span class="oi oi-document" aria-hidden="true"></span> Seleccion Pruebas
+                    </NavLink>
+                </div>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="menuMedicoAtender">
+                        <span class="oi oi-document" aria-hidden="true"></span> Pacientes
+                    </NavLink>
+                </div>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="menuFacturacion">
+                        <span class="oi oi-document" aria-hidden="true"></span> Facturacion
+                    </NavLink>
+                </div>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="reembolso">
+                        <span class="oi oi-document" aria-hidden="true"></span> Reembolso
+                    </NavLink>
+                </div>
+
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="Usuario">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="menuSeleccionPruebas">
+                        <span class="oi oi-document" aria-hidden="true"></span> Seleccion Pruebas
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="Medico">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="menuMedicoAtender">
+                        <span class="oi oi-document" aria-hidden="true"></span> Pacientes
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+
+        <AuthorizeView Roles="Cajero">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="menuFacturacion">
+                        <span class="oi oi-document" aria-hidden="true"></span> Facturacion
+                    </NavLink>
+                </div>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="reembolso">
+                        <span class="oi oi-document" aria-hidden="true"></span> Reembolso
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+
 
     </nav>
 </div>
@@ -58,4 +115,5 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
+
 }

@@ -1,5 +1,7 @@
 ﻿using CurrieTechnologies.Razor.SweetAlert2;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Logging;
+using Proyecto2Maui.Authentication;
 using Proyecto2Maui.Data;
 using Proyecto2Maui.Servicios;
 using Radzen;
@@ -25,6 +27,9 @@ namespace Proyecto2Maui
 		builder.Logging.AddDebug();
 #endif
             builder.Services.AddHttpClient();
+            builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+            builder.Services.AddAuthorizationCore();
+
 
             builder.Services.AddSingleton<WeatherForecastService>();
             //Injecte el servicio para poder usarlo en toda mi aplicacion.

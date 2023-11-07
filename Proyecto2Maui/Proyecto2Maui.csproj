@@ -68,6 +68,7 @@
     <ItemGroup>
       <Content Remove="Pages\Cajero\Facturacion.razor" />
       <Content Remove="Pages\Cajero\TurnosPendientes.razor" />
+      <Content Remove="Pages\Login\LoginComponent.razor" />
       <Content Remove="Pages\Medico\MedicoAtenderPaciente.razor" />
     </ItemGroup>
 
@@ -78,21 +79,25 @@
     <ItemGroup>
         <PackageReference Include="CurrieTechnologies.Razor.SweetAlert2" Version="5.5.0" />
         <PackageReference Include="FontAwesome" Version="4.7.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.13" />
         <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="Radzen.Blazor" Version="4.15.14" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.3" />
     </ItemGroup>
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Pages\Cajero\Facturacion.razor" />
       <_ContentIncludedByDefault Remove="Pages\Cajero\TurnosPendientes.razor" />
+      <_ContentIncludedByDefault Remove="Pages\Login\LoginComponent.razor" />
       <_ContentIncludedByDefault Remove="Pages\Medico\MedicoAtenderPaciente.razor" />
     </ItemGroup>
 
     <ItemGroup>
       <None Include="Pages\Cajero\Facturacion.razor" />
       <None Include="Pages\Cajero\TurnosPendientes.razor" />
+      <None Include="Pages\Login\LoginComponent.razor" />
       <None Include="Pages\Medico\MedicoAtenderPaciente.razor" />
     </ItemGroup>
 
@@ -118,6 +123,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\DTOs\DTOs.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Pages\Login\LoginComponent.razor" />
     </ItemGroup>
 
 

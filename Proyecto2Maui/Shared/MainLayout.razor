@@ -1,4 +1,9 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Components.Authorization
+@using Proyecto2Maui.Authentication
+@using Windows.Services.Maps;
+@inject AuthenticationStateProvider authStateProvider
+@inject NavigationManager NavManager
 
 <div class="page">
 
@@ -8,7 +13,27 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+
+
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" style="cursor:pointer" @onclick="LogoutAsync">
+                        <span class="oi oi-plus" aria-hidden="true"></span> Logout
+                    </NavLink>
+                </div>
+            </Authorized>
+            <NotAuthorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="login">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> Login
+                    </NavLink>
+                </div>
+            </NotAuthorized>
+        </AuthorizeView>
+
+
+
         </div>
 
         <article class="content px-4">
@@ -17,3 +42,12 @@
     </main>
 </div>
 
+
+@code {
+    public async Task LogoutAsync()
+    {
+        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+        await customAuthStateProvider.UpdateAuthenticationState(new UserSession());
+        NavManager.NavigateTo("/login", replace: true);
+    }
+}
