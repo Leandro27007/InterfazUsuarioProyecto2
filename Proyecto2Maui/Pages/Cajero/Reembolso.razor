@@ -1,7 +1,8 @@
 ﻿@page "/reembolso"
 @using DTOs;
+@using Proyecto2Maui.Modelos.Request;
 @inject IReciboService reciboService
-
+@inject SweetAlertService Swal
 
 <div class="container">
     <div class="row d-flex justify-content-center">
@@ -18,116 +19,197 @@
 
                 <div class="d-flex mt-2 mb-3">
                     <label class="mx-2 mt-1" for="idrecibo"><strong>Numero de recibo:</strong></label>
-                    <EditForm Model=@recibo OnValidSubmit="BuscarRecibo">
+                    <EditForm Model=@reciboBusqueda OnValidSubmit="BuscarRecibo">
                         <DataAnnotationsValidator />
                         <div class="form-group">
-                            <InputText @bind-Value=recibo.NumeroRecibo class="form-control mx-2 mt-1" id="Name" />
+                            <InputText @bind-Value=reciboBusqueda.NumeroRecibo class="form-control mx-2 mt-1" id="Name" />
                             <br />
                             <input class="btn btn-primary btn-sm mx-2"
                                    type="submit"
-                                   value="Reembolsar" />
+                                   value="Buscar" />
                         </div>
                     </EditForm>
 
 
                 </div>
-                <div class="container mt-5">
-                    <label class="mb-1"><strong>Información de recibo:</strong></label>
-                    <div class="row border">
-                        <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 mt-4">
-                            <p><strong>ID:</strong> 0000001</p>
-                            <p><strong>Nombre:</strong> Carlos Alberto</p>
-                            <p><strong>Apellido:</strong> Matos Segura</p>
-                            <p><strong>Cajero:</strong> Marcos</p>
-                            <p><strong>Estado:</strong> Pendiente</p>
-                        </div>
-                        <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7">
-                            <table class="table border mt-2"
-                                   style="
+
+                @if (reciboSeleccionado != null)
+                {
+                    <div class="container mt-5">
+
+                        <label class="mb-1"><strong>Información de recibo:</strong></label>
+                        <div class="row border">
+                            <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 mt-4">
+                                <p><strong>ID:</strong> @reciboSeleccionado.idRecibo!</p>
+                                <p><strong>Nombre:</strong> @reciboSeleccionado.nombreCliente</p>
+                                <p><strong>Cajero:</strong> @reciboSeleccionado.nombreCajero</p>
+                                <p><strong>Estado:</strong> @reciboSeleccionado.estado</p>
+                            </div>
+
+                            <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7">
+                                <table class="table border mt-2"
+                                       style="
                                     display: block;
                                     min-height: 200px;
                                     height: 200px;
                                     overflow-y: auto;
                                     scrollbar-gutter: stable both-edges;
                                 ">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">
-                                            Pruebas realizadas
-                                        </th>
-                                        <th scope="col">
-                                            Precio
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td scope="row">Hemograma</td>
-                                        <td scope="row">$200</td>
-                                    </tr>  
-                                    <tr>   
-                                        <td scope="row">Dengue</td>
-                                        <td scope="row">$200</td>
-                                    </tr>  
-                                    <tr>   
-                                        <td scope="row">VIH</td>
-                                        <td scope="row">$200</td>
-                                    </tr>  
-                                    <tr>   
-                                        <td scope="row">Hemograma</td>
-                                        <td scope="row">$200</td>
-                                    </tr>  
-                                    <tr>   
-                                        <td scope="row">Dengue</td>
-                                        <td scope="row">$200</td>
-                                    </tr>  
-                                    <tr>   
-                                        <td scope="row">VIH</td>
-                                        <td scope="row">$200</td>
-                                    </tr>  
-                                    <tr>   
-                                        <td scope="row">Hemograma</td>
-                                        <td scope="row">$200</td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">Dengue</td>
-                                        <td scope="row">$200</td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">VIH</td>
-                                        <td scope="row">$200</td>
-                                    </tr>
-                                    <tr>
-                                        <th>TOTAL</th>
-                                        <th>$1800</th>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="d-flex justify-content-end"><p><strong>TOTAL A REEMBOLSAR: $1800</strong></p></div>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">
+                                                Pruebas realizadas
+                                            </th>
+                                            <th scope="col">
+                                                Precio
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+
+                                    <tbody>
+                                        @if (reciboSeleccionado.pruebas.Count > 0)
+                                        {
+                                            @foreach (var item in reciboSeleccionado.pruebas)
+                                            {
+                                                <tr>
+                                                    <td scope="row">@item.nombrePrueba</td>
+                                                    <td scope="row">@item.precio</td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                                <div class="d-flex justify-content-end"><p><strong>TOTAL A REEMBOLSAR: @reciboSeleccionado.total</strong></p></div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="d-flex mt-2 mb-3">
-                    <label class="mx-2 mt-1" for="razonr"><strong>Razón de reembolso:</strong></label>
 
-                    <textarea id="razonr" cols="60" rows="2" style="resize: none;"></textarea>
-                    <input class="btn btn-primary btn-sm mx-2"
-                           style="height: 50px;"
-                           type="button"
-                           value="Reembolsar" />
-                </div>
+                    <div class="d-flex mt-2 mb-3">
+                        <label class="mx-2 mt-1" for="razonr"><strong>Razón de reembolso:</strong></label>
+
+                        <EditForm Model=@reembolsoRequest OnValidSubmit="Reembolsar">
+                            <DataAnnotationsValidator />
+                            <div class="form-group">
+                                <InputText @bind-Value=reembolsoRequest.notaModificacion class="form-control mx-2 mt-1" id="Name" />
+                                <ValidationMessage For=@( () => reembolsoRequest.notaModificacion ) />
+                                <br />
+                                <input class="btn btn-primary btn-sm mx-2"
+                                       type="submit"
+                                       value="Reembolsar" />
+                            </div>
+                        </EditForm>
+
+                    </div>
+                }
+
+
+
             </div>
         </div>
     </div>
 </div>
 
 @code {
-    ReciboBusquedaCancelacionDTO recibo = new();
+    ReciboBusquedaCancelacionDTO reciboBusqueda = new();
+    ReciboDTO reciboSeleccionado = null;
+    List<ReciboDTO> recibos = new();
+    ReembolsoRequest reembolsoRequest = new();
 
-    private void BuscarRecibo()
+
+    protected async override Task OnInitializedAsync()
     {
+        recibos = await reciboService.ListarRecibos();
 
     }
+
+
+    private async Task BuscarRecibo()
+    {
+        reciboSeleccionado = recibos.FirstOrDefault(r => r.idRecibo.ToString() == reciboBusqueda.NumeroRecibo);
+
+        if (reciboSeleccionado == null)
+        {
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Info ",
+                    Color = "DarkBlue",
+                    Html = $"<strong>No se encontro el recibo</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Warning,
+                    Timer = 2000
+                });
+            return;
+        }
+    }
+
+    private async Task Reembolsar()
+    {
+        if (reciboSeleccionado.idRecibo == 0)
+        {
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Error ",
+                    Color = "DarkRed",
+                    Html = $"<strong>Debes seleccionar al menos un servicio a facturar</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Warning,
+                    Timer = 2000
+                });
+            return;
+        }
+
+        if (reciboSeleccionado.estado != "Pendiente")
+        {
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Error ",
+                    Color = "DarkRed",
+                    Html = $"<strong>No se puede cancelar este recibo por que se encuentra en un estado de: {reciboSeleccionado.estado}</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Warning,
+                    Timer = 4000
+                });
+            return;
+        }
+
+        reembolsoRequest.IdRecibo = reciboSeleccionado.idRecibo.ToString();
+        bool seCancelo = await reciboService.Reembolsar(reembolsoRequest);
+
+        if (!seCancelo)
+        {
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Error ",
+                    Color = "DarkRed",
+                    Html = $"<strong>Ocurrio un error interno al intententar cancelar este recibo</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Warning,
+                    Timer = 4000
+                });
+            return;
+        }
+
+        if (seCancelo)
+        {
+            reciboSeleccionado = null;
+
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Operacion realizada con exito",
+                    Color = "DarkGreen",
+                    Html = $"<strong>Cancelacion exitosa</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Success,
+                    Timer = 2000
+                });
+            return;
+        }
+
+        await OnInitializedAsync();
+
+    }
+
 
 }

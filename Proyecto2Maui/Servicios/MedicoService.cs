@@ -69,7 +69,7 @@ namespace Proyecto2Maui.Servicios
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
                 // Construye la URL completa para la solicitud POST
-                string apiUrl = $"{_Url}CambiarEstadoRecibo";
+                string apiUrl = $"{_Url}DespacharPacientePorNumeroRecibo";
 
                 // Crea un objeto HttpRequestMessage para especificar la solicitud
                 var request = new HttpRequestMessage(HttpMethod.Post, apiUrl);

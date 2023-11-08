@@ -55,8 +55,8 @@
                             <div class="rz-p-12 ">
                                 <RadzenRadioButtonList @bind-Value=@radioButton TValue="int?" class="mb-5">
                                     <Items>
-                                        <RadzenRadioButtonListItem Text="Entrega resultados" Value="1" TValue="int?" />
-                                        <RadzenRadioButtonListItem Text="Espera resultados" Value="2" TValue="int?" />
+                                        <RadzenRadioButtonListItem Text="Entrega inmedita de resultados" Value="1" TValue="int?" />
+                                        <RadzenRadioButtonListItem Text="Entrepa pendiende de resultados" Value="2" TValue="int?" />
                                     </Items>
                                 </RadzenRadioButtonList>
                             </div>
@@ -247,7 +247,7 @@
                     });
                 if (confirmacion.IsConfirmed)
                 {
-                    var resultado = await medicoService.CambiarEstadoRecibo(pacienteSeleccionado.IdRecibo.ToString(), "Completado");
+                    var resultado = await medicoService.CambiarEstadoRecibo(pacienteSeleccionado.IdRecibo.ToString(), tipoEntrega);
 
                     var alerta = await Swal.FireAsync(new SweetAlertOptions()
                         {
