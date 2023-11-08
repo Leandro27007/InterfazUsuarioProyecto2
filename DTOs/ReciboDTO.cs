@@ -2,12 +2,12 @@
 {
     public class ReciboDTO
     {
-        public int IdRecibo { get; set; }
-        public string NombreCliente { get; set; }
-        public string? NombreCajero { get; set; }
-        public string Estado { get; set; }
-        public List<PruebaReciboDTO>? Pruebas { get; set; }
-        public decimal? Total { get; set; }
+        public int idRecibo { get; set; }
+        public string nombreCliente { get; set; }
+        public string? nombreCajero { get; set; }
+        public string estado { get; set; }
+        public List<PruebaReciboDTO>? pruebas { get; set; } = new();
+        public decimal? total { get; set; }
 
     }
 }
