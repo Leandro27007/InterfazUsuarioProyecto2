@@ -1,4 +1,4 @@
-﻿@page "/menuFacturacion"
+@page "/menuFacturacion"
 @using CurrieTechnologies.Razor.SweetAlert2;
 @using Proyecto2Maui.Modelos;
 @using Proyecto2Maui.Modelos.Request;
@@ -35,71 +35,44 @@
                                 }
                             </div>
 
-                            <form class="d-grid justify-content-center">
+
+                            <EditForm Model="cliente" OnValidSubmit="GenerarRecibo">
+                                <DataAnnotationsValidator />
                                 <div class="form-group">
                                     <div>
                                         <label for="nombre">Nombre</label>
                                     </div>
                                     <div>
-                                        <input @bind="cliente.nombreCliente"
-                                               type="text"
-                                               class="form-control-sm mb-2"
-                                               style="
-                                                        border: 1px solid
-                                                            gainsboro;
-                                                    "
-                                               id="nombre"
-                                               required
-                                               placeholder="Ingrese nombre(s)" />
+                                        <InputText @bind-Value=cliente.nombreCliente class="form-control-sm" id="Name" />
+                                        <ValidationMessage For=@( () => cliente.nombreCliente ) />
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     <div>
                                         <label for="apellido">Apellido</label>
                                     </div>
                                     <div>
-                                        <input @bind="cliente.apellidoCliente"
-                                               type="text"
-                                               class="form-control-sm mb-2"
-                                               style="
-                                                        border: 1px solid
-                                                            gainsboro;
-                                                    "
-                                               id="apellido"
-                                               required
-                                               placeholder="Ingrese apellido(s)" />
+                                        <InputText @bind-Value=cliente.apellidoCliente class="form-control-sm" id="Name" />
+                                        <ValidationMessage For=@( () => cliente.apellidoCliente ) />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div>
-                                        <label for="telefono">Teléfono</label>
+                                        <label for="telefono">Tel�fono</label>
                                     </div>
                                     <div>
-                                        <input @bind="cliente.telefono"
-                                               type="text"
-                                               class="form-control-sm mb-2"
-                                               style="
-                                                        border: 1px solid
-                                                            gainsboro;
-                                                    "
-                                               id="telefono"
-                                               placeholder="Ingrese el télefono" />
+                                        <InputText @bind-Value=cliente.telefono class="form-control-sm" id="Name" />
+                                        <ValidationMessage For=@( () => cliente.telefono ) />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div>
-                                        <label for="cedula">Cédula</label>
+                                        <label for="cedula">C�dula</label>
                                     </div>
                                     <div>
-                                        <input @bind="cliente.cedula"
-                                               type="text"
-                                               class="form-control-sm mb-2"
-                                               style="
-                                                        border: 1px solid
-                                                            gainsboro;
-                                                    "
-                                               id="cedula"
-                                               placeholder="Ingrese la cédula" />
+                                        <InputText @bind-Value=cliente.cedula class="form-control-sm" id="Name" />
+                                        <ValidationMessage For=@( () => cliente.cedula ) />
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -107,52 +80,60 @@
                                         <label for="email">Email</label>
                                     </div>
                                     <div>
-                                        <input @bind="cliente.email"
-                                               type="email"
-                                               class="form-control-sm mb-2"
-                                               style="
-                                                        border: 1px solid
-                                                            gainsboro;
-                                                    "
-                                               id="email"
-                                               placeholder="Ingrese el email" />
+                                        <InputText @bind-Value=cliente.email class="form-control-sm" id="Name" />
+                                        <ValidationMessage For=@( () => cliente.email ) />
                                     </div>
                                 </div>
-                                <hr>
-                                <h6 class="text-center">
-                                    Añadir Prueba(s)
-                                </h6>
+
+                                <div class="d-flex mb-4" style="min-height: 2px; min-width: 5px;">
+                                    <input class="btn btn-secondary btn mx-1 mt-1 mb-1"
+                                           type="button"
+                                           value="Limpiar"
+                                           ps-2
+                                    @onclick="LimpiarItems" />
+
+                                    <input class="btn btn-success btn mx-1 mt-1 mb-1"
+                                           type="submit"
+                                           disabled=@estaCargando
+                                           value="Generar recibo" />
+                                </div>
+                            </EditForm>
+
+                            <hr>
+                            <h6 class="text-center">
+                                A�adir Prueba(s)
+                            </h6>
 
 
-                                <div class="btn-group ">
-                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                                        Pruebas de Laboratorio
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickableInside">
-                                        @if (PruebasLab.Count > 0)
+                            <div class="btn-group ">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                    Pruebas de Laboratorio
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickableInside">
+                                    @if (PruebasLab.Count > 0)
+                                    {
+                                        foreach (var item in PruebasLab)
                                         {
-                                            foreach (var item in PruebasLab)
-                                            {
-                                                <li>
-                                                    <a class="dropdown-item"
-                                                       @onclick="() => AgregarItem(id:item.idPruebaLab, nombrePrueba: item.nombrePrueba, precio:item.precio)">
-                                                        @item.nombrePrueba
-                                                    </a>
-                                                </li>
-                                            }
-
-                                        }
-                                        else
-                                        {
-                                            <li class="spinner-border text-primary" role="status">
-
-                                                <span class="visually-hidden">Loading...</span>
-
+                                            <li>
+                                                <a class="dropdown-item"
+                                                @onclick="() => AgregarItem(id:item.idPruebaLab, nombrePrueba: item.nombrePrueba, precio:item.precio)">
+                                                    @item.nombrePrueba
+                                                </a>
                                             </li>
                                         }
-                                    </ul>
-                                </div>
-                            </form>
+
+                                    }
+                                    else
+                                    {
+                                        <li class="spinner-border text-primary" role="status">
+
+                                            <span class="visually-hidden">Loading...</span>
+
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-7 col-lg-7 col-xl-7 bg-white mt-3"
@@ -195,7 +176,7 @@
                                                         padding: 0.2rem 0.4rem;
                                                         font-size: 0.7rem;
                                                     "
-                                                       @onclick="() => AgregarItem(id:item.idPruebaLab, nombrePrueba: item.nombrePrueba, precio:item.precio)"
+                                                @onclick="() => AgregarItem(id:item.idPruebaLab, nombrePrueba: item.nombrePrueba, precio:item.precio)"
                                                        type="button"
                                                        value="Quitar" />
                                             </td>
@@ -216,20 +197,7 @@
 
 
                         </table>
-                        <div class="d-flex justify-content-center mb-4">
-                            <input class="btn btn-secondary btn mx-1 mt-1 mb-1"
-                                   type="button"
-                                   value="Limpiar"
-                                   ps-2
-                                   @onclick="LimpiarItems" />
 
-                            <input class="btn btn-success btn mx-1 mt-1 mb-1"
-                                   type="button"
-                                   disabled=@estaCargando
-                                   value="Generar recibo"
-                                   @onclick="GenerarRecibo" />
-
-                        </div>
                     </div>
                 </div>
             </div>
@@ -275,7 +243,7 @@
                                             "
                                                type="button"
                                                value="Atender"
-                                               @onclick="() => AtenderTurno(item.idTurno)" />
+                                        @onclick="() => AtenderTurno(item.idTurno)" />
 
 
                                         <input class="btn btn-primary btn-sm mx-1 mt-1"
@@ -285,7 +253,7 @@
                                             "
                                                type="button"
                                                value="Ver"
-                                               @onclick="() => CargarPruebasDelTurnoParaFacturar(item.pruebasLab, item.idTurno)" />
+                                        @onclick="() => CargarPruebasDelTurnoParaFacturar(item.pruebasLab, item.idTurno)" />
 
                                         <input class="btn btn-danger btn-sm mx-1 mt-1"
                                                style="
@@ -294,7 +262,7 @@
                                             "
                                                type="button"
                                                value="Cancelar"
-                                               @onclick="() => CancelarTurno(item.idTurno)" />
+                                        @onclick="() => CancelarTurno(item.idTurno)" />
                                     </td>
                                 </tr>
                             }
@@ -376,68 +344,65 @@
 
         if (ValidarDatosCliente())
         {
-            if (PruebasSeleccionadas != null)
+            try
             {
-                try
-                {
-                    estaCargando = true;
-                    cliente.pruebas = PruebasSeleccionadas.Select(ps => new PruebaLab()
-                        {
-                            idPruebaLab = ps.idPruebaLab,
-                            nombrePrueba = string.Empty,
-                            precio = decimal.Zero
-                        }).ToList();
-
-                    var confirmacion = await Swal.FireAsync(new SweetAlertOptions()
-                        {
-                            Title = "Confirma Generar Recibo",
-                            Html = $"<strong>Seguro que quieres generar el recibo?</strong>",
-                            Footer = """Confirmacion""",
-                            Icon = SweetAlertIcon.Question,
-                            ShowConfirmButton = true,
-                            ShowCancelButton = true,
-                            ConfirmButtonText = "Generar",
-                            ConfirmButtonColor = "green",
-                            CancelButtonText = "Cancelar",
-                            CancelButtonColor = "Red",
-                            Timer = 10000
-                        });
-
-                    if (confirmacion.IsConfirmed)
+                estaCargando = true;
+                cliente.pruebas = PruebasSeleccionadas.Select(ps => new PruebaLab()
                     {
-                        var resultado = await reciboService.GenerarRecibo(cliente);
+                        idPruebaLab = ps.idPruebaLab,
+                        nombrePrueba = string.Empty,
+                        precio = decimal.Zero
+                    }).ToList();
 
+                var confirmacion = await Swal.FireAsync(new SweetAlertOptions()
+                    {
+                        Title = "Confirma Generar Recibo",
+                        Html = $"<strong>Seguro que quieres generar el recibo?</strong>",
+                        Footer = """Confirmacion""",
+                        Icon = SweetAlertIcon.Question,
+                        ShowConfirmButton = true,
+                        ShowCancelButton = true,
+                        ConfirmButtonText = "Generar",
+                        ConfirmButtonColor = "green",
+                        CancelButtonText = "Cancelar",
+                        CancelButtonColor = "Red",
+                        Timer = 10000
+                    });
 
-                        var alerta = await Swal.FireAsync(new SweetAlertOptions()
-                            {
-                                Title = "Facturacion Exitosa",
-                                Color = "Darkblue",
-                                Html = $"<strong>Total: {resultado.total}$</strong>",
-                                Footer = """Imprimiendo Recibo""",
-                                Icon = SweetAlertIcon.Success,
-                                ShowConfirmButton = false,
-                                Timer = 2500
-                            });
-
-                        estaCargando = false;
-                        await LimpiarItems();
-                    }
-                    estaCargando = false;
-                }
-                catch (Exception ex)
+                if (confirmacion.IsConfirmed)
                 {
-                    await Swal.FireAsync(new SweetAlertOptions()
-                        {
-                            Title = "Error ",
-                            Color = "DarkRed",
-                            Html = $"<strong>Mensaje de error: {ex.Message}</strong>",
-                            Toast = true,
-                            Icon = SweetAlertIcon.Warning,
-                            Timer = 2000
-                        });
-                }
+                    var resultado = await reciboService.GenerarRecibo(cliente);
 
+
+                    var alerta = await Swal.FireAsync(new SweetAlertOptions()
+                        {
+                            Title = "Facturacion Exitosa",
+                            Color = "Darkblue",
+                            Html = $"<strong>Total: {resultado.total}$</strong>",
+                            Footer = """Imprimiendo Recibo""",
+                            Icon = SweetAlertIcon.Success,
+                            ShowConfirmButton = false,
+                            Timer = 2500
+                        });
+
+                    estaCargando = false;
+                    await LimpiarItems();
+                }
+                estaCargando = false;
             }
+            catch (Exception ex)
+            {
+                await Swal.FireAsync(new SweetAlertOptions()
+                    {
+                        Title = "Error ",
+                        Color = "DarkRed",
+                        Html = $"<strong>Mensaje de error: {ex.Message}</strong>",
+                        Toast = true,
+                        Icon = SweetAlertIcon.Warning,
+                        Timer = 2000
+                    });
+            }
+
         }
 
 
@@ -446,24 +411,14 @@
 
     private bool ValidarDatosCliente()
     {
-        string propiedadRequerida = null;
 
-        @if (cliente.nombreCliente == null)
-        {
-            propiedadRequerida = "Nombre";
-        }
-        else if (cliente.apellidoCliente == null)
-        {
-            propiedadRequerida = "Apellido";
-        }
-
-        if (propiedadRequerida != null)
+        if (PruebasSeleccionadas != null && PruebasSeleccionadas.Count < 1)
         {
             Swal.FireAsync(new SweetAlertOptions()
                 {
                     Title = "Error ",
                     Color = "DarkRed",
-                    Html = $"<strong>El {propiedadRequerida} del cliente no puede ser vacio</strong>",
+                    Html = $"<strong>Debes seleccionar al menos un servicio a facturar</strong>",
                     Toast = true,
                     Icon = SweetAlertIcon.Warning,
                     Timer = 2000

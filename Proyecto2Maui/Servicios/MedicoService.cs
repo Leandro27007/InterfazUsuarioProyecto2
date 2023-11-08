@@ -1,5 +1,7 @@
 ﻿using DTOs;
+using Microsoft.AspNetCore.Components.Authorization;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace Proyecto2Maui.Servicios
 {
@@ -8,17 +10,24 @@ namespace Proyecto2Maui.Servicios
 
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly string _Url = "https://proyecto2web.azurewebsites.net/api/Medico/";
-        public MedicoService(IHttpClientFactory httpClientFactory)
+        private readonly AuthenticationStateProvider _authenticationStateProvider;
+        public MedicoService(IHttpClientFactory httpClientFactory, AuthenticationStateProvider authenticationStateProvider)
         {
             this._httpClientFactory = httpClientFactory;
+            this._authenticationStateProvider = authenticationStateProvider;
         }
         public async Task<PacienteDTO> BuscarPaciente(string idRecibo)
         {
-
+            var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            var accessTokenClaim = user.FindFirst("access_token");
+            var accessToken = accessTokenClaim.Value!;
             try
             {
                 // Crea una instancia de HttpClient utilizando la fábrica
                 var httpClient = _httpClientFactory.CreateClient();
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
                 // Construye la URL completa para la solicitud GET
                 string apiUrl = $"{_Url}BuscarPacientePorIdRecibo {idRecibo}";
@@ -41,16 +50,23 @@ namespace Proyecto2Maui.Servicios
             catch (Exception ex)
             {
 
-                throw ex;
+                throw ;
             }
         }
 
         public async Task<bool> CambiarEstadoRecibo(string idRecibo, string estado)
         {
+
+            var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            var accessTokenClaim = user.FindFirst("access_token");
+            var accessToken = accessTokenClaim.Value!;
             try
             {
                 // Crea una instancia de HttpClient utilizando la fábrica
                 var httpClient = _httpClientFactory.CreateClient();
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
                 // Construye la URL completa para la solicitud POST
                 string apiUrl = $"{_Url}CambiarEstadoRecibo";
@@ -79,19 +95,24 @@ namespace Proyecto2Maui.Servicios
             }
             catch (Exception ex)
             {
-                // Manejo de errores generales
-                // Aquí puedes registrar el error o tomar medidas específicas
-                throw ex;
+
+                throw ;
             }
         }
 
         public async Task<List<string>> ObtenerEstadosRecibo()
         {
+            var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            var accessTokenClaim = user.FindFirst("access_token");
+            var accessToken = accessTokenClaim.Value!;
+
             try
             {
                 // Crea una instancia de HttpClient utilizando la fábrica
                 var httpClient = _httpClientFactory.CreateClient();
 
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
                 // Construye la URL completa para la solicitud GET
                 string apiUrl = $"{_Url}EstadosDeRecibo";
 
@@ -114,19 +135,24 @@ namespace Proyecto2Maui.Servicios
             }
             catch (Exception ex)
             {
-                // Manejo de errores generales
-                // Aquí puedes registrar el error o tomar medidas específicas
-                throw ex;
+
+                throw ;
             }
         }
 
         public async Task<List<PacienteDTO>> ObtenerPacientesPendientes()
         {
+            var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            var accessTokenClaim = user.FindFirst("access_token");
+            var accessToken = accessTokenClaim.Value!;
+
             try
             {
                 // Crea una instancia de HttpClient utilizando la fábrica
                 var httpClient = _httpClientFactory.CreateClient();
 
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
                 // Construye la URL completa para la solicitud GET
                 string apiUrl = $"{_Url}PacientesPendientes";
 
@@ -149,9 +175,8 @@ namespace Proyecto2Maui.Servicios
             }
             catch (Exception ex)
             {
-                // Manejo de errores generales
-                // Aquí puedes registrar el error o tomar medidas específicas
-                throw ex;
+
+                throw ;
             }
         }
     }

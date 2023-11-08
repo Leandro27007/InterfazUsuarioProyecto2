@@ -1,8 +1,11 @@
 ﻿@page "/reembolso"
+@using DTOs;
+@inject IReciboService reciboService
+
 
 <div class="container">
     <div class="row d-flex justify-content-center">
-        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 mt-3 bg-white"
+        <div class="col-sm-12 col-md-10 col-lg-10 col-xl-10 mt-3 bg-white"
              style="border-radius: 20px">
             <div class="container">
                 <h3 class="text-center text-uppercase mt-2 mb-2"
@@ -10,16 +13,23 @@
                                 font-family: 'Courier New', Courier, monospace;
                                 font-weight: 600;
                             ">
-                    Reembolsar
+                    Cancelacion de recibos
                 </h3>
-                <div class="d-flex mt-5">
-                    <label class="mx-2 mt-1" for="idrecibo"><strong>IDRecibo</strong></label>
-                    <input class="form-control form-control-sm"
-                           type="text"
-                           id="idrecibo" />
-                    <input class="btn btn-success btn-sm mx-2"
-                           type="button"
-                           value="Buscar" />
+
+                <div class="d-flex mt-2 mb-3">
+                    <label class="mx-2 mt-1" for="idrecibo"><strong>Numero de recibo:</strong></label>
+                    <EditForm Model=@recibo OnValidSubmit="BuscarRecibo">
+                        <DataAnnotationsValidator />
+                        <div class="form-group">
+                            <InputText @bind-Value=recibo.NumeroRecibo class="form-control mx-2 mt-1" id="Name" />
+                            <br />
+                            <input class="btn btn-primary btn-sm mx-2"
+                                   type="submit"
+                                   value="Reembolsar" />
+                        </div>
+                    </EditForm>
+
+
                 </div>
                 <div class="container mt-5">
                     <label class="mb-1"><strong>Información de recibo:</strong></label>
@@ -113,5 +123,11 @@
 </div>
 
 @code {
+    ReciboBusquedaCancelacionDTO recibo = new();
+
+    private void BuscarRecibo()
+    {
+
+    }
 
 }

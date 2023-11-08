@@ -21,6 +21,7 @@ namespace Proyecto2Maui.Authentication
                 var DesrializedUserSession = JsonSerializer.Deserialize<UserSession>(getUserSessionFromStorage);
                 var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
                 {
+                    new Claim("access_token", DesrializedUserSession.Token!),
                     new Claim(ClaimTypes.Name, DesrializedUserSession.UserName!),
                     new Claim(ClaimTypes.Email, DesrializedUserSession.Email!),
                     new Claim(ClaimTypes.Role, DesrializedUserSession.UserRole!)
@@ -44,7 +45,7 @@ namespace Proyecto2Maui.Authentication
                 claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, userSession.UserName!),
-                    new Claim(ClaimTypes.Email, userSession.Email!),
+                    new Claim(ClaimTypes.Email, userSession.Email),
                     new Claim(ClaimTypes.Role, userSession.UserRole!)
                 }));
             }

@@ -66,7 +66,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Remove="Pages\Cajero\Facturacion.razor" />
       <Content Remove="Pages\Cajero\TurnosPendientes.razor" />
       <Content Remove="Pages\Login\LoginComponent.razor" />
       <Content Remove="Pages\Medico\MedicoAtenderPaciente.razor" />
@@ -88,14 +87,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <_ContentIncludedByDefault Remove="Pages\Cajero\Facturacion.razor" />
       <_ContentIncludedByDefault Remove="Pages\Cajero\TurnosPendientes.razor" />
       <_ContentIncludedByDefault Remove="Pages\Login\LoginComponent.razor" />
       <_ContentIncludedByDefault Remove="Pages\Medico\MedicoAtenderPaciente.razor" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="Pages\Cajero\Facturacion.razor" />
       <None Include="Pages\Cajero\TurnosPendientes.razor" />
       <None Include="Pages\Login\LoginComponent.razor" />
       <None Include="Pages\Medico\MedicoAtenderPaciente.razor" />
@@ -103,10 +100,6 @@
 
     <ItemGroup>
       <UpToDateCheckInput Remove="Pages\Cajero\TurnosPendientes.razor" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <UpToDateCheckInput Remove="Pages\Cajero\Facturacion.razor" />
     </ItemGroup>
 
     <ItemGroup>

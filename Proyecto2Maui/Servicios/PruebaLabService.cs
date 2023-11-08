@@ -1,8 +1,11 @@
 ﻿using DTOs;
+using Microsoft.AspNetCore.Components.Authorization;
 using Newtonsoft.Json;
 using Proyecto2Maui.Modelos;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using Windows.Media.Protection.PlayReady;
 
 namespace Proyecto2Maui.Servicios
 {
@@ -11,17 +14,28 @@ namespace Proyecto2Maui.Servicios
 
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly string _Url = "https://proyecto2web.azurewebsites.net/api/PruebaLab/";
-        public PruebaLabService(IHttpClientFactory httpClientFactory)
+        private readonly AuthenticationStateProvider _authenticationStateProvider;
+        public PruebaLabService(IHttpClientFactory httpClientFactory, AuthenticationStateProvider authenticationStateProvider)
         {
             this._httpClientFactory = httpClientFactory;
+            this._authenticationStateProvider = authenticationStateProvider;
+
         }
 
         public async Task<PruebaLab> CrearPruebaLab(CreacionPruebaLabDTO creacionPruebaLabDTO)
         {
+            var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            var accessTokenClaim = user.FindFirst("access_token");
+            var accessToken = accessTokenClaim.Value!;
+
             try
             {
                 // Crea una instancia de HttpClient utilizando la fábrica
                 var httpClient = _httpClientFactory.CreateClient();
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
 
                 // Construye la URL completa para la solicitud POST
                 string apiUrl = $"{_Url}CrearPruebaLab";
@@ -59,10 +73,18 @@ namespace Proyecto2Maui.Servicios
 
         public async Task<bool> EditarPruebaLab(EdicionPruebaLabDTO edicionPruebaLabDTO)
         {
+            var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            var accessTokenClaim = user.FindFirst("access_token");
+            var accessToken = accessTokenClaim.Value!;
+
             try
             {
                 // Crea una instancia de HttpClient utilizando la fábrica
                 var httpClient = _httpClientFactory.CreateClient();
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
 
                 // Construye la URL completa para la solicitud PUT
                 string apiUrl = $"{_Url}EditarPruebaLab";
@@ -98,10 +120,17 @@ namespace Proyecto2Maui.Servicios
 
         public async Task<bool> eliminarPruebaLab(string idPruebalab)
         {
+            var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            var accessTokenClaim = user.FindFirst("access_token");
+            var accessToken = accessTokenClaim.Value!;
+
             try
             {
                 // Crea una instancia de HttpClient utilizando la fábrica
                 var httpClient = _httpClientFactory.CreateClient();
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
                 // Construye la URL completa para la solicitud DELETE con el id en el path
                 string apiUrl = $"{_Url}EliminarPruebaLab {idPruebalab}";
@@ -131,11 +160,21 @@ namespace Proyecto2Maui.Servicios
 
         public async Task<IEnumerable<PruebaLab>> ObtenerPruebas()
         {
+            var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            var accessTokenClaim = user.FindFirst("access_token");
+            var accessToken = accessTokenClaim.Value!;
+
+
+
             try
             {
                 using var client = _httpClientFactory.CreateClient();
 
-                var respuesta = await client.GetAsync(this._Url+ "ListarPruebas");
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+                var respuesta = await client.GetAsync(this._Url + "ListarPruebas");
 
                 var contenido = await respuesta.Content.ReadAsStringAsync();
 
