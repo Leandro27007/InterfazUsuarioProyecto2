@@ -10,6 +10,7 @@ namespace DTOs
     {
         public int idPruebaLab { get; set; }
         public string NombrePrueba { get; set; }
-        public decimal Precio { get; set; }
+        public string Descripcion { get; set; }
+        public decimal? Precio { get; set; }
     }
 }

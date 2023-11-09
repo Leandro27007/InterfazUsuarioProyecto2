@@ -1,17 +1,8 @@
 ﻿@page "/mantenedorPruebaLab"
 @using DTOs;
 @inject IPruebaLabService pruebaLabService
-
-@* <div class="container" style="padding: 0; margin-top: -10px">
-    <div class="d-flex justify-content-center">
-        <NavLink class="btn btn-warning btn-sm border text-white" style="background-color: #1e4257;" href="mantenedorUsuario">
-            <span class="" aria-hidden="true"></span> <i class="fas fa-user-alt"></i>Usuarios
-        </NavLink>
-        <NavLink class="btn btn-warning btn-sm border text-white" style="background-color: #223570;" href="mantenedorPruebaLab">
-            <span class="" aria-hidden="true"></span><i class="fas fa-toolbox"></i> Pruebas De Laboratorio
-        </NavLink>
-    </div>
-</div> *@
+@inject SweetAlertService Swal
+@inject IJSRuntime JSRuntime
 
 <div class="container">
     <div class="row d-flex justify-content-center">
@@ -30,7 +21,7 @@
                 </div>
                 <div class="container">
                     <div class="row d-flex justify-content-start">
-                        <div class="d-flex col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3 mb-3">
+@*                         <div class="d-flex col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3 mb-3">
                             <div>
                                 <label class="mt-1 mx-1"
                                        for="nombrePrueba">
@@ -48,7 +39,7 @@
                                        type="button"
                                        value="Buscar" />
                             </div>
-                        </div>
+                        </div> *@
                     </div>
                 </div>
 
@@ -65,252 +56,63 @@
                         <thead>
                             <tr class="text-center">
                                 <th scope="col">Opciones</th>
-                                <th scope="col">ID Prueba</th>
                                 <th scope="col">Nombre Prueba</th>
-                                <th scope="col">Precio</th>
                                 <th scope="col">Descripción</th>
+                                <th scope="col">Precio</th>
                                 <th scope="col">Fecha Registro</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Editar" 
-                                           data-bs-toggle="modal"
-                                           data-bs-target="#editarPrueba"
-                                           data-bs-whatever="" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <td scope="row">1</td>
-                                <td>Hemográma</td>
-                                <td>$1500</td>
-                                <td>Evaluar los componentes sanguíneos</td>
-                                <td>25/10/2019</td>
+                            @if (pruebasLaboratorio.Count() > 0)
+                            {
+                                @foreach (var item in pruebasLaboratorio)
+                                {
+                                    <tr>
 
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
+                                        <td>
+                                            <input class="btn btn-primary btn-sm mx-1 mt-1"
+                                                   style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
+                                                   type="button"
+                                                   value="Editar"
+                                                   data-bs-toggle="modal"
+                                                   data-bs-target="#editarPrueba"
+                                                   data-bs-whatever=""
+                                            @onclick="() => SeleccionarPruebaEdicion(item.idPruebaLab.ToString())" />
+
+                                            <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                                   style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <td scope="row">2</td>
-                                <td>Hemográma</td>
-                                <td>$1500</td>
-                                <td>Evaluar los componentes sanguíneos</td>
-                                <td>25/10/2019</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <td scope="row">3</td>
-                                <td>Hemográma</td>
-                                <td>$1500</td>
-                                <td>Evaluar los componentes sanguíneos</td>
-                                <td>25/10/2019</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <td scope="row">4</td>
-                                <td>Hemográma</td>
-                                <td>$1500</td>
-                                <td>Evaluar los componentes sanguíneos</td>
-                                <td>25/10/2019</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <td scope="row">5</td>
-                                <td>Hemográma</td>
-                                <td>$1500</td>
-                                <td>Evaluar los componentes sanguíneos</td>
-                                <td>25/10/2019</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <td scope="row">6</td>
-                                <td>Hemográma</td>
-                                <td>$1500</td>
-                                <td>Evaluar los componentes sanguíneos</td>
-                                <td>25/10/2019</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <td scope="row">7</td>
-                                <td>Hemográma</td>
-                                <td>$1500</td>
-                                <td>Evaluar los componentes sanguíneos</td>
-                                <td>25/10/2019</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <td scope="row">8</td>
-                                <td>Hemográma</td>
-                                <td>$1500</td>
-                                <td>Evaluar los componentes sanguíneos</td>
-                                <td>25/10/2019</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <td scope="row">9</td>
-                                <td>Hemográma</td>
-                                <td>$1500</td>
-                                <td>Evaluar los componentes sanguíneos</td>
-                                <td>25/10/2019</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <td scope="row">10</td>
-                                <td>Hemográma</td>
-                                <td>$1500</td>
-                                <td>Evaluar los componentes sanguíneos</td>
-                                <td>25/10/2019</td>
-                            </tr>
+                                                   type="button"
+                                                   value="Eliminar"
+                                            @onclick="() => EliminarPruebaLab(item.idPruebaLab.ToString())" />
+                                        </td>
+                                        <td>@item.NombrePrueba</td>
+                                        <td>@item.Descripcion</td>
+                                        <td class="text-success">$@item.Precio</td>
+                                        <td>09/12/2023</td>
+                                    </tr>
+                                }
+
+                            }else
+                            {
+                                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                    <span class="visually-hidden">Cargando...</span>
+                                </div>
+                                <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+                                    <span class="visually-hidden">Cargando...</span>
+                                </div>
+                            }
+
+
                         </tbody>
                     </table>
                 </div>
-                
+
             </div>
             <div class="d-flex justify-content-end mb-2">
                 <input class="btn btn-success btn-sm mt-1 mb-1"
@@ -324,133 +126,136 @@
     </div>
 </div>
 
-<div
-            class="modal fade"
-            id="registrarPrueba"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-        >
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
-                            Nueva Prueba de Laboratorio
-                        </h5>
-                        <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
+<div class="modal fade"
+     id="registrarPrueba"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true"
+     >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Nueva Prueba de Laboratorio
+                </h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <EditForm Model="creacionPuebaLab" OnValidSubmit="CrearPruebaLab">
+                    <DataAnnotationsValidator />
+                    <div class="mb-3">
+                        <label for="prueba-nombre"
+                               class="col-form-label">
+                            Nombre prueba:
+                        </label>
+                        <input type="text"
+                        @bind-value="creacionPuebaLab.nombrePrueba"
+                               class="form-control form-control-sm"
+                               id="prueba-nombre"
+                                />
+                        <ValidationMessage For=@( () => creacionPuebaLab.nombrePrueba ) />
                     </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="prueba-nombre"
-                                       class="col-form-label">
-                                    Nombre prueba:
-                                </label>
-                                <input type="text"
-                                       class="form-control form-control-sm"
-                                       id="prueba-nombre"
-                                       required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="prueba-precio"
-                                       class="col-form-label">Precio:</label>
-                                <input type="text"
-                                       class="form-control form-control-sm"
-                                       id="prueba-precio"
-                                       required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="prueba-descripcion"
-                                       class="col-form-label">Descripción:</label>
-                                <textarea class="form-control form-control-sm" id="prueba-descripcion"></textarea>
-                            </div>
-                        </form>
+                    <div class="mb-3">
+                        <label for="prueba-precio"
+                               class="col-form-label">Precio:</label>
+                        <input type="text"
+                        @bind-value="creacionPuebaLab.precio"
+                               class="form-control form-control-sm"
+                               id="prueba-precio"
+                                />
                     </div>
+                    <div class="mb-3">
+                        <label for="prueba-descripcion"
+                               class="col-form-label">Descripción:</label>
+                        <textarea class="form-control form-control-sm" @bind="creacionPuebaLab.descripcion" id="prueba-descripcion"></textarea>
+                        <ValidationMessage For=@( () => creacionPuebaLab.descripcion ) />
+                    </div>
+
                     <div class="modal-footer">
-                        <button
-                            type="button"
-                            class="btn btn-danger"
-                            data-bs-dismiss="modal"
-                        >
+                        <button type="button"
+                                class="btn btn-danger"
+                                data-bs-dismiss="modal">
                             Cerrar
                         </button>
-                        <button type="button" class="btn btn-success">
+                        <button type="submit" class="btn btn-success" >
                             Crear prueba
                         </button>
                     </div>
-                </div>
+                </EditForm>
             </div>
+
         </div>
+    </div>
+</div>
 
 
 
-        <div
-            class="modal fade"
-            id="editarPrueba"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-        >
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
-                            Editar Prueba de Laboratorio
-                        </h5>
-                        <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
+<div class="modal fade"
+     id="editarPrueba"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Prueba de Laboratorio
+                </h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <EditForm Model="edicionPruebaLab" OnValidSubmit="EditarPruebaLab">
+                    <DataAnnotationsValidator />
+                    <div class="mb-3">
+                        <label for="prueba-nombre"
+                               class="col-form-label">
+                            Nombre prueba:
+                        </label>
+                        <input type="text"
+                        @bind-value="edicionPruebaLab.nombrePrueba"
+                               class="form-control form-control-sm"
+                               id="prueba-nombre"
+                               required />
+                        <ValidationMessage For=@( () => edicionPruebaLab.nombrePrueba ) />
                     </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="prueba-nombre"
-                                       class="col-form-label">
-                                    Nombre prueba:
-                                </label>
-                                <input type="text"
-                                       class="form-control form-control-sm"
-                                       id="prueba-nombre"
-                                       required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="prueba-precio"
-                                       class="col-form-label">Precio:</label>
-                                <input type="text"
-                                       class="form-control form-control-sm"
-                                       id="prueba-precio"
-                                       required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="prueba-descripcion"
-                                       class="col-form-label">Descripción:</label>
-                                <textarea class="form-control form-control-sm" id="prueba-descripcion"></textarea>
-                            </div>
-                        </form>
+                    <div class="mb-3">
+                        <label for="prueba-precio"
+                               class="col-form-label">Precio:</label>
+                        <input type="text"
+                        @bind-value="edicionPruebaLab.precio"
+                               class="form-control form-control-sm"
+                               id="prueba-precio"
+                               required />
                     </div>
+                    <div class="mb-3">
+                        <label for="prueba-descripcion"
+                               class="col-form-label">Descripción:</label>
+                        <textarea class="form-control form-control-sm" @bind="edicionPruebaLab.descripcion" id="prueba-descripcion"></textarea>
+                        <ValidationMessage For=@( () => edicionPruebaLab.descripcion ) />
+                    </div>
+
                     <div class="modal-footer">
-                        <button
-                            type="button"
-                            class="btn btn-danger"
-                            data-bs-dismiss="modal"
-                        >
+                        <button type="button"
+                                class="btn btn-danger"
+                                data-bs-dismiss="modal">
                             Cerrar
                         </button>
-                        <button type="button" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary">
                             Editar prueba
                         </button>
                     </div>
-                </div>
+                </EditForm>
             </div>
+
         </div>
+    </div>
+</div>
 
 
 
@@ -461,10 +266,26 @@
 
 
 @code {
+    EdicionPruebaLabDTO edicionPruebaLab = new();
+    CreacionPruebaLabDTO creacionPuebaLab = new();
+    List<PruebaLabDTO> pruebasLaboratorio = new();
+
     protected async override Task OnInitializedAsync()
     {
+        var pruebaslab = await pruebaLabService.ObtenerPruebas();
 
-        //TEST:  FUNCIONA   
+        if (pruebaslab.Count() > 0)
+        {
+            pruebasLaboratorio = pruebaslab.Select(p => new PruebaLabDTO()
+                {
+                    idPruebaLab = p.idPruebaLab,
+                    NombrePrueba = p.nombrePrueba,
+                    Descripcion = p.descripcion,
+                    Precio = p.precio
+                }).ToList();
+        }
+
+        //TEST:  FUNCIONA
 
         //Todo: implementar logica de la vista
 
@@ -482,21 +303,113 @@
         //         Precio = 900m
         //     };
 
-        // var a = await pruebaLabService.ObtenerPruebas();
+
 
         // var b = await pruebaLabService.CrearPruebaLab(pruebaLab);
 
         // pruebaLabEdicion.IdPruebaLab = b.idPruebaLab;
 
-        // var c = pruebaLabService.EditarPruebaLab(pruebaLabEdicion);
 
         // var e = await pruebaLabService.ObtenerPruebas();
 
         // var f = await pruebaLabService.eliminarPruebaLab(b.idPruebaLab.ToString());
 
         // var g = await pruebaLabService.ObtenerPruebas();
+    }
+
+    private void SeleccionarPruebaEdicion(string idPruebaLab)
+    {
+        edicionPruebaLab = pruebasLaboratorio.Where(p => p.idPruebaLab.ToString() == idPruebaLab).Select(pl => new EdicionPruebaLabDTO()
+            {
+                idPruebaLab = pl.idPruebaLab,
+                nombrePrueba = pl.NombrePrueba,
+                descripcion = pl.Descripcion,
+                precio = pl.Precio
+            }).FirstOrDefault();
+    }
+
+
+    private async Task EditarPruebaLab()
+    {
+        var resultado = await pruebaLabService.EditarPruebaLab(edicionPruebaLab);
+
+        if (resultado)
+        {
+            edicionPruebaLab = new();
+            await OnInitializedAsync();
+
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Info",
+                    Color = "DarkGreen",
+                    Html = $"<strong>Se edito con exito</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Success,
+                    Timer = 2000
+                });
+        }
+
+    }
+    private async Task CrearPruebaLab()
+    {
+
+        var resultado = await pruebaLabService.CrearPruebaLab(creacionPuebaLab);
+
+
+        if (resultado != null)
+        {
+            creacionPuebaLab = new();
+            await OnInitializedAsync();
+
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Info",
+                    Color = "DarkGreen",
+                    Html = $"<strong>Se creo con exito</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Success,
+                    Timer = 2000
+                });
+        }
+    }
+
+    private async  Task EliminarPruebaLab(string idPrueba)
+    {
+
+        var confirmacion = await Swal.FireAsync(new SweetAlertOptions()
+            {
+                Title = "Confirma Eliminar Prueba Laboratorio",
+                Html = $"<strong>Seguro que quieres eliminar la prueba de laboratorio?</strong>",
+                Footer = """Confirmacion""",
+                Icon = SweetAlertIcon.Question,
+                ShowConfirmButton = true,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Si",
+                ConfirmButtonColor = "green",
+                CancelButtonText = "No",
+                CancelButtonColor = "Red",
+                Timer = 10000
+            });
+        if (confirmacion.IsConfirmed)
+        {
+           var resultado = await pruebaLabService.eliminarPruebaLab(idPrueba);
+            await OnInitializedAsync();
+
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Info",
+                    Color = "DarkGreen",
+                    Html = $"<strong>Se elimino la prueba de laboratorio con exito</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Success,
+                    Timer = 2000
+                });
+        }
 
     }
 
+
 }
+
+
 
