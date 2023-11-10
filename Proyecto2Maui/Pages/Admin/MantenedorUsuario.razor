@@ -1,16 +1,8 @@
 ﻿@page "/mantenedorUsuario"
+@using DTOs;
+@inject SweetAlertService Swal
+@inject IUsuarioServices UsuarioService
 
-@* <div class="container" style="padding: 0; margin-top: -10px">
-    <div class="d-flex justify-content-center">
-        <NavLink class="btn btn-warning btn-sm border text-white" style="background-color: #223570;" href="mantenedorUsuario">
-            <span class="" aria-hidden="true"></span> <i class="fas fa-user-alt"></i>Usuarios
-        </NavLink>
-        <NavLink class="btn btn-warning btn-sm border text-white" style="background-color: #1e4257;" href="mantenedorPruebaLab">
-            <span class="" aria-hidden="true"></span><i class="fas fa-toolbox"></i> Pruebas De Laboratorio
-        </NavLink>
-    </div>
-</div>
- *@
 <div class="container">
     <div class="row d-flex justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-10 col-xl-10 bg-white mt-3"
@@ -70,293 +62,46 @@
                                 <th class="text-center" scope="col">Rol</th>
                                 <th class="text-center" scope="col">Telefono</th>
                                 <th class="text-center" scope="col">Email</th>
-                                <th class="text-center" scope="col">Fecha Registro</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
+                            @if (usuarios.Count() > 0)
+                            {
+                                foreach (var item in usuarios)
+                                {
+                                    <tr>
+                                        <td>
+                                            <input class="btn btn-primary btn-sm mx-1 mt-1"
+                                                   style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                           type="button"
-                                           value="Editar"
-                                           data-bs-toggle="modal"
-                                           data-bs-target="#editarUsuario"
-                                           data-bs-whatever=""/>
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <th scope="row">1</th>
-                                <td>Ramón Orlando</td>
-                                <td>Castillo Bermudez</td>
-                                <td>usuario001</td>
-                                
-                                <td>Administrador</td>
-                                <td>829-893-3728</td>
-                                <td>usuario@gmail.com</td>
-                                <td>25/10/2019</td>
+                                                   type="button"
+                                                   value="Editar"
+                                                   data-bs-toggle="modal"
+                                                   data-bs-target="#editarUsuario"
+                                                   data-bs-whatever=""
+                                            @onclick="() => SeleccionarUsuarioEdicion(item.cedula)" />
 
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
+                                            <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                                   style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <th scope="row">2</th>
-                                <td>Antonio Sangilbert</td>
-                                <td>Rodriguez Martinez</td>
-                                <td>usuario001</td>
-                                
-                                <td>Administrador</td>
-                                <td>829-893-3728</td>
-                                <td>usuario@gmail.com</td>
-                                <td>12/12/2022</td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <th scope="row">3</th>
-                                <td>Ramón Orlando</td>
-                                <td>Castillo Bermudez</td>
-                                <td>usuario001</td>
-                                
-                                <td>Administrador</td>
-                                <td>829-893-3728</td>
-                                <td>usuario@gmail.com</td>
-                                <td>25/10/2019</td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm  mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <th scope="row">4</th>
-                                <td>Antonio Sangilbert</td>
-                                <td>Rodriguez Martinez</td>
-                                <td>usuario001</td>
-                                
-                                <td>Administrador</td>
-                                <td>829-893-3728</td>
-                                <td>usuario@gmail.com</td>
-                                <td>12/12/2022</td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <th scope="row">5</th>
-                                <td>Ramón Orlando</td>
-                                <td>Castillo Bermudez</td>
-                                <td>usuario001</td>
-                               
-                                <td>Administrador</td>
-                                <td>829-893-3728</td>
-                                <td>usuario@gmail.com</td>
-                                <td>25/10/2019</td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <th scope="row">6</th>
-                                <td>Antonio Sangilbert</td>
-                                <td>Rodriguez Martinez</td>
-                                <td>usuario001</td>
-                                
-                                <td>Administrador</td>
-                                <td>829-893-3728</td>
-                                <td>usuario@gmail.com</td>
-                                <td>12/12/2022</td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <th scope="row">7</th>
-                                <td>Ramón Orlando</td>
-                                <td>Castillo Bermudez</td>
-                                <td>usuario001</td>
-                                
-                                <td>Administrador</td>
-                                <td>829-893-3728</td>
-                                <td>usuario@gmail.com</td>
-                                <td>25/10/2019</td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <th scope="row">8</th>
-                                <td>Antonio Sangilbert</td>
-                                <td>Rodriguez Martinez</td>
-                                <td>usuario001</td>
-                                
-                                <td>Administrador</td>
-                                <td>829-893-3728</td>
-                                <td>usuario@gmail.com</td>
-                                <td>12/12/2022</td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <th scope="row">9</th>
-                                <td>Ramón Orlando</td>
-                                <td>Castillo Bermudez</td>
-                                <td>usuario001</td>
-                                
-                                <td>Administrador</td>
-                                <td>829-893-3728</td>
-                                <td>usuario@gmail.com</td>
-                                <td>25/10/2019</td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="btn btn-primary btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Editar" />
-                                    <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                           style="
-                                                padding: 0.2rem 0.4rem;
-                                                font-size: 0.7rem;
-                                            "
-                                           type="button"
-                                           value="Eliminar" />
-                                </td>
-                                <th scope="row">10</th>
-                                <td>Antonio Sangilbert</td>
-                                <td>Rodriguez Martinez</td>
-                                <td>usuario001</td>
-                                
-                                <td>Administrador</td>
-                                <td>829-893-3728</td>
-                                <td>usuario@gmail.com</td>
-                                <td>12/12/2022</td>
-
-                            </tr>
+                                                   type="button"
+                                                   value="Inhabilitar"
+                                            @onclick="() => EliminarUsuario(item.cedula)" />
+                                        </td>
+                                        <th scope="row">@item.cedula</th>
+                                        <td>@item.nombre</td>
+                                        <td>@item.apellido</td>
+                                        <td>@item.userName</td>
+                                        <td>@item.nombreRol</td>
+                                        <td>@item.telefono</td>
+                                        <td>@item.email</td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -375,207 +120,258 @@
 </div>
 
 
-<div
-            class="modal fade"
-            id="registrarUsuario"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-        >
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
-                            Nuevo Usuario
-                        </h5>
-                        <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="usuario-nombre"
-                                       class="col-form-label">Nombre(s):</label>
-                                <input type="text"
-                                       class="form-control form-control-sm"
-                                       id="usuario-nombre"
-                                       required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="usuario-apellido"
-                                       class="col-form-label">Apellido(s):</label>
-                                <input type="text"
-                                       class="form-control form-control-sm"
-                                       id="usuario-apellido"
-                                       required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="usuario-userName"
-                                       class="col-form-label">Nombre de usuario:</label>
-                                <input type="text"
-                                       class="form-control form-control-sm"
-                                       id="usuario-userName"
-                                       required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="usuario-contraseña"
-                                       class="col-form-label">Contraseña:</label>
-                                <input type="password"
-                                       class="form-control form-control-sm"
-                                       id="usuario-contraseña"
-                                       required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="usuario-rol"
-                                       class="col-form-label">Rol:</label>
-                                <select class="form-control form-control-sm"
-                                        id="usuario-rol"
-                                        required>
-                                    <option value="">(Seleccione el rol)</option>
-                                    <option value="Administrador">Administrador</option>
-                                    <option value="Cajero">Cajero</option>
-                                    <option value="Paciente">Paciente</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="usuario-telefono"
-                                       class="col-form-label">Teléfono:</label>
-                                <input type="text"
-                                       class="form-control form-control-sm"
-                                       id="usuario-telefono"
-                                       required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="usuario-email"
-                                       class="col-form-label">Email:</label>
-                                <input type="email"
-                                       class="form-control form-control-sm"
-                                       id="usuario-email"
-                                       required>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button
-                            type="button"
-                            class="btn btn-danger"
-                            data-bs-dismiss="modal"
-                        >
-                            Cerrar
-                        </button>
-                        <button type="button" class="btn btn-success">
-                            Crear nuevo usuario
-                        </button>
-                    </div>
-                </div>
+<div class="modal fade"
+     id="registrarUsuario"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Nuevo Usuario
+                </h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
             </div>
-        </div>
+            <div class="modal-body">
+                <EditForm Model="creacionUsuario" OnValidSubmit="CrearUsuario">
+                    <DataAnnotationsValidator />
+                    <div class="mb-3">
+                        <label for="usuario-nombre"
+                               class="col-form-label">
+                            Nombre(s):
+                        </label>
+                        <input type="text"
+                               class="form-control form-control-sm"
+                               id="usuario-nombre"
+                        @bind-value="creacionUsuario.nombre" />
+                        <ValidationMessage For=@( () => creacionUsuario.nombre ) />
+                    </div>
+                    <div class="mb-3">
+                        <label for="usuario-apellido"
+                               class="col-form-label">Apellido(s):</label>
+                        <input type="text"
+                               class="form-control form-control-sm"
+                               id="usuario-apellido"
+                        @bind-value="creacionUsuario.apellido" />
 
-        <div
-            class="modal fade"
-            id="editarUsuario"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-        >
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
-                            Editar usuario
-                        </h5>
-                        <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
+                        <ValidationMessage For=@( () => creacionUsuario.apellido ) />
                     </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="usuario-nombre"
-                                       class="col-form-label">
-                                    Nombre(s):
-                                </label>
-                                <input type="text"
-                                       class="form-control form-control-sm"
-                                       id="usuario-nombre"
-                                       required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="usuario-apellido"
-                                       class="col-form-label">Apellido(s):</label>
-                                <input type="text"
-                                       class="form-control form-control-sm"
-                                       id="usuario-apellido"
-                                       required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="usuario-userName"
-                                       class="col-form-label">Nombre de usuario:</label>
-                                <input type="text"
-                                       class="form-control form-control-sm"
-                                       id="usuario-userName"
-                                       required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="usuario-contraseña"
-                                       class="col-form-label">Nueva Contraseña:</label>
-                                <input type="password"
-                                       class="form-control form-control-sm"
-                                       id="usuario-contraseña"
-                                       required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="usuario-rol"
-                                       class="col-form-label">Rol:</label>
-                                <select class="form-control form-control-sm"
-                                        id="usuario-rol"
-                                        required>
-                                    <option value="">(Seleccione el rol)</option>
-                                    <option value="Administrador">Administrador</option>
-                                    <option value="Cajero">Cajero</option>
-                                    <option value="Paciente">Paciente</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="usuario-telefono"
-                                       class="col-form-label">Teléfono:</label>
-                                <input type="text"
-                                       class="form-control form-control-sm"
-                                       id="usuario-telefono"
-                                       required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="usuario-email"
-                                       class="col-form-label">Email:</label>
-                                <input type="email"
-                                       class="form-control form-control-sm"
-                                       id="usuario-email"
-                                       required />
-                            </div>
-                        </form>
+
+                    <div class="mb-3">
+                        <label for="usuario-nombre"
+                               class="col-form-label">
+                            Cedula:
+                        </label>
+                        <input type="text"
+                               class="form-control form-control-sm"
+                               id="usuario-nombre"
+                        @bind-value="creacionUsuario.cedula" />
+                        <ValidationMessage For=@( () => creacionUsuario.cedula ) />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="usuario-userName"
+                               class="col-form-label">Nombre de usuario:</label>
+                        <input type="text"
+                               class="form-control form-control-sm"
+                               id="usuario-userName"
+                        @bind-value="creacionUsuario.username" />
+
+                        <ValidationMessage For=@( () => creacionUsuario.username ) />
+                    </div>
+                    <div class="mb-3">
+                        <label for="usuario-contraseña"
+                               class="col-form-label">Contraseña:</label>
+                        <input type="password"
+                               class="form-control form-control-sm"
+                               id="usuario-contraseña"
+                        @bind-value="creacionUsuario.password" />
+
+                        <ValidationMessage For=@( () => creacionUsuario.password ) />
+                    </div>
+                    <div class="mb-3">
+                        <label for="usuario-rol"
+                               class="col-form-label">Rol:</label>
+
+                        <select class="form-control form-control-sm"
+                                id="usuario-rol"
+                        @bind="creacionUsuario.idRol">
+                            <option value="">(Seleccione el rol)</option>
+                            <option value="1">Usuario</option>
+                            <option value="2">Medico</option>
+                            <option value="3">Cajero</option>
+                            <option value="4">Administrador</option>
+                        </select>
+
+
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="usuario-telefono"
+                               class="col-form-label">Teléfono:</label>
+                        <input type="text"
+                               class="form-control form-control-sm"
+                               id="usuario-telefono"
+                        @bind-value="creacionUsuario.telefono" />
+
+                        <ValidationMessage For=@( () => creacionUsuario.telefono ) />
+                    </div>
+                    <div class="mb-3">
+                        <label for="usuario-email"
+                               class="col-form-label">Email:</label>
+                        <input type="email"
+                               class="form-control form-control-sm"
+                               id="usuario-email"
+                        @bind-value="creacionUsuario.email" />
+
+                        <ValidationMessage For=@( () => creacionUsuario.email ) />
                     </div>
                     <div class="modal-footer">
-                        <button
-                            type="button"
-                            class="btn btn-danger"
-                            data-bs-dismiss="modal"
-                        >
+                        <button type="button"
+                                class="btn btn-danger"
+                                data-bs-dismiss="modal">
                             Cerrar
                         </button>
-                        <button type="button" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary">
+                            Crear usuario
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade"
+     id="editarUsuario"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Editar usuario
+                </h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <EditForm Model="edicionUsuario" OnValidSubmit="EditarUsuario">
+                    <DataAnnotationsValidator />
+                    <div class="mb-3">
+                        <label for="usuario-nombre"
+                               class="col-form-label">
+                            Nombre(s):
+                        </label>
+                        <input type="text"
+                               class="form-control form-control-sm"
+                               id="usuario-nombre"
+                        @bind-value="edicionUsuario.nombre" />
+                        <ValidationMessage For=@( () => edicionUsuario.nombre )/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="usuario-apellido"
+                               class="col-form-label">Apellido(s):</label>
+                        <input type="text"
+                               class="form-control form-control-sm"
+                               id="usuario-apellido"
+                        @bind-value="edicionUsuario.apellido" />
+                               
+                        <ValidationMessage For=@( () => edicionUsuario.apellido ) />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="usuario-nombre"
+                               class="col-form-label">
+                            Cedula:
+                        </label>
+                        <input type="text"
+                               class="form-control form-control-sm"
+                               id="usuario-nombre"
+                        @bind-value="edicionUsuario.cedula" />
+                        <ValidationMessage For=@( () => edicionUsuario.cedula ) />
+                    </div>
+                    <div class="mb-3">
+                        <label for="usuario-userName"
+                               class="col-form-label">Nombre de usuario:</label>
+                        <input type="text"
+                               class="form-control form-control-sm"
+                               id="usuario-userName"
+                        @bind-value="edicionUsuario.userName" />
+                               
+                        <ValidationMessage For=@( () => edicionUsuario.userName ) />
+                    </div>
+                    <div class="mb-3">
+                        <label for="usuario-contraseña"
+                               class="col-form-label">Nueva Contraseña:</label>
+                        <input type="password"
+                               class="form-control form-control-sm"
+                               id="usuario-contraseña"
+                        @bind-value="edicionUsuario.password" />
+                                
+                        <ValidationMessage For=@( () => edicionUsuario.password ) />
+                    </div>
+                    <div class="mb-3">
+                        <label for="usuario-rol"
+                               class="col-form-label">Rol:</label>
+
+                        <select class="form-control form-control-sm"
+                                id="usuario-rol"
+                                @bind="edicionUsuario.rolId"
+                                >
+                            <option value="">(Seleccione el rol)</option>
+                            <option value="1">Usuario</option>
+                            <option value="2">Medico</option>
+                            <option value="3">Cajero</option>
+                            <option value="4">Administrador</option>
+                        </select>
+
+        
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="usuario-telefono"
+                               class="col-form-label">Teléfono:</label>
+                        <input type="text"
+                               class="form-control form-control-sm"
+                               id="usuario-telefono"
+                        @bind-value="edicionUsuario.telefono" />
+                                
+                        <ValidationMessage For=@( () => edicionUsuario.telefono ) />
+                    </div>
+                    <div class="mb-3">
+                        <label for="usuario-email"
+                               class="col-form-label">Email:</label>
+                        <input type="email"
+                               class="form-control form-control-sm"
+                               id="usuario-email"
+                        @bind-value="edicionUsuario.email" />
+                                
+                        <ValidationMessage For=@( () => edicionUsuario.email ) />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button"
+                                class="btn btn-danger"
+                                data-bs-dismiss="modal">
+                            Cerrar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
                             Editar usuario
                         </button>
                     </div>
-                </div>
+                </EditForm>
             </div>
+ 
         </div>
+    </div>
+</div>
 
 
 @* No borrar esta parte, en caso de ser borrada no funcionaran los modals *@
@@ -585,10 +381,149 @@
 
 
 @code {
+    List<UsuarioDTO> usuarios = new();
+    UsuarioEdicionDTO edicionUsuario = new();
+    UsuarioCreacionDTO creacionUsuario = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        usuarios = await UsuarioService.ObtenerUsuarios();
+    }
 
 
 
+    private void SeleccionarUsuarioEdicion(string cedula)
+    {
+        edicionUsuario = usuarios.Where(u => u.cedula == cedula).Select(u => new UsuarioEdicionDTO()
+            {
+                cedula = u.cedula,
+                nombre = u.nombre,
+                apellido = u.apellido,
+                rolId = roles.FirstOrDefault(r => r.NombreRol == u.nombreRol).IdRol,
+                email = u.email,
+                telefono = u.telefono,
+                userName = u.userName
+            }).FirstOrDefault();
+    }
+
+    private async Task CrearUsuario()
+    {
+        try
+        {
+        var resultado = await UsuarioService.CrearUsuario(creacionUsuario);
 
 
+        if (resultado != null)
+        {
+            creacionUsuario = new();
+            await OnInitializedAsync();
 
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Info",
+                    Color = "DarkGreen",
+                    Html = $"<strong>Se creo con exito</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Success,
+                    Timer = 2000
+                });
+        }
+        }
+        catch (Exception ex)
+        {
+
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Ocurrio un error",
+                    Color = "DarkGreen",
+                    Html = $"<strong>Error: {ex.Message}</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Error,
+                    Timer = 2000
+                });
+        }
+
+    }
+
+    private async Task EditarUsuario()
+    {
+        var resultado = await UsuarioService.Editar(edicionUsuario);
+
+        if (resultado)
+        {
+            edicionUsuario = new();
+            await OnInitializedAsync();
+
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Info",
+                    Color = "DarkGreen",
+                    Html = $"<strong>Se edito con exito</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Success,
+                    Timer = 2000
+                });
+        }
+
+    }
+
+    private async Task EliminarUsuario(string cedula)
+    {
+
+        var confirmacion = await Swal.FireAsync(new SweetAlertOptions()
+            {
+                Title = "Confirma Eliminar usuario",
+                Html = $"<strong>Seguro que quieres eliminar la prueba de laboratorio?</strong>",
+                Footer = """Confirmacion""",
+                Icon = SweetAlertIcon.Question,
+                ShowConfirmButton = true,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Si",
+                ConfirmButtonColor = "green",
+                CancelButtonText = "No",
+                CancelButtonColor = "Red",
+                Timer = 10000
+            });
+        if (confirmacion.IsConfirmed)
+        {
+            // var resultado = await UsuarioService.Eliminar(cedula);
+            await OnInitializedAsync();
+
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Info",
+                    Color = "DarkGreen",
+                    Html = $"<strong>Actualmente esta funcion esta inhabilitada, estamos trabajando en ella.</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Warning,
+                    Timer = 2000
+                });
+        }
+
+    }
+
+
+    List<RolObtencionDTO> roles = new()
+    {
+        new RolObtencionDTO()
+        {
+            IdRol =1,
+            NombreRol ="Usuario"
+        },
+               new RolObtencionDTO()
+        {
+            IdRol =2,
+            NombreRol ="Medico"
+        },
+               new RolObtencionDTO()
+        {
+            IdRol =3,
+            NombreRol ="Cajero"
+        },
+               new RolObtencionDTO()
+        {
+            IdRol =4,
+            NombreRol ="Administrador"
+        }
+    };
 }

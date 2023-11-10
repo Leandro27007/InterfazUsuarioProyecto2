@@ -120,8 +120,23 @@
 
     protected async override Task OnInitializedAsync()
     {
-        recibos = await reciboService.ListarRecibos();
-
+        try
+        {
+            recibos = await reciboService.ListarRecibos();
+        }
+        catch (Exception ex)
+        {
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = $"Ocurrio un error",
+                    Color = "DarkBlue",
+                    Html = $"<strong>Error: {ex.Message}</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Warning,
+                    Timer = 2000
+                });
+            return;
+        }
     }
 
 
