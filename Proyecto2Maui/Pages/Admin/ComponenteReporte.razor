@@ -1,0 +1,141 @@
+﻿@page "/reporte"
+@inject IReporteService ReporteService
+@inject IJSRuntime JS
+@inject SweetAlertService Swal
+@using DTOs;
+@using Proyecto2Maui.Helpers;
+
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3 bg-white"
+             style="border-radius: 20px">
+            <div class="container">
+                <h3 class="text-center text-uppercase mt-2 mb-2"
+                    style="
+                                font-family: 'Courier New', Courier, monospace;
+                                font-weight: 600;
+                            ">
+                    Reportes de ventas
+                </h3>
+
+                <Grid TItem="ReciboDTO"
+                      Class="table table-hover table-bordered table-striped table-striped"
+                      DataProvider="EmployeesDataProvider"
+                      AllowPaging="true"
+                      PageSize="5"
+                      PaginationAlignment="Alignment.End"
+                      Responsive="true">
+
+                    <GridColumn TItem="ReciboDTO" HeaderText="Numero Recibo">
+                        @context.idRecibo
+                    </GridColumn>
+                    <GridColumn TItem="ReciboDTO" HeaderText="Cajero">
+                        @context.nombreCajero
+                    </GridColumn>
+                    <GridColumn TItem="ReciboDTO" HeaderText="Cliente">
+                        @context.nombreCliente
+                    </GridColumn>
+                    <GridColumn TItem="ReciboDTO" HeaderText="Total venta">
+                        @context.total
+                    </GridColumn>
+                    <GridColumn TItem="ReciboDTO" HeaderText="Fecha">
+                        @context.fecha
+                    </GridColumn>
+                    <GridColumn TItem="ReciboDTO" HeaderText="Estado Recibo">
+                        @context.estado
+                    </GridColumn>
+                </Grid>
+
+                <Button Color="ButtonColor.Success" @onclick="() => ExportarExcel()">Guardar reporte Excel</Button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+@code {
+    ReporteDTO reporte;
+    private IEnumerable<ReciboDTO> recibos = default;
+    private Button saveButton;
+
+
+    protected async override Task OnInitializedAsync()
+    {
+
+    }
+
+    private async Task<IEnumerable<ReciboDTO>> CargarDatos()
+    {
+        string fechaInicio = "2023/11/05";
+        string fechaFinal = "2023/11/12";
+        var resultado = await ReporteService.ObtenerReporte(fechaInicio, fechaFinal);
+
+        reporte = resultado;
+        return resultado.recibos;
+    }
+
+    private async Task<GridDataProviderResult<ReciboDTO>> EmployeesDataProvider(GridDataProviderRequest<ReciboDTO> request)
+    {
+        if (recibos is null)
+            recibos = await CargarDatos();
+
+        return await Task.FromResult(request.ApplyTo(recibos));
+    }
+
+
+
+    private async Task ExportarExcel()
+    {
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        using (var package = new ExcelPackage())
+        {
+            var worksheet = package.Workbook.Worksheets.Add("recibos");
+
+            var tableBody = worksheet.Cells["A1:A1"].LoadFromCollection(
+                                                                        from f in recibos
+                                                                        select new
+                                                                        {
+                                                                            f.idRecibo,
+                                                                            f.nombreCajero,
+                                                                            f.nombreCliente,
+                                                                            f.total,
+                                                                            f.estado,
+                                                                            f.fecha.Date
+                                                                        }, true);
+
+            var header = worksheet.Cells["A1:B1"];
+            worksheet.DefaultColWidth = 25;
+            tableBody.Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+            tableBody.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            tableBody.Style.Fill.BackgroundColor.SetColor(Color.WhiteSmoke);
+            tableBody.Style.Border.BorderAround(ExcelBorderStyle.Medium);
+            header.Style.Font.Bold = true;
+            header.Style.Font.Color.SetColor(Color.White);
+            header.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            header.Style.Fill.BackgroundColor.SetColor(Color.DarkBlue);
+
+            JS.GuardarComo($"Reporte{DateTime.Now.ToString()}.xlsx", package.GetAsByteArray());
+
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Operacion exitosa",
+                    Color = "Green",
+                    Html = $"<strong>Se descargo el reporte en formato Excel correctamente</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Success,
+                    Timer = 2000
+                });
+
+        }
+
+    }
+
+
+}

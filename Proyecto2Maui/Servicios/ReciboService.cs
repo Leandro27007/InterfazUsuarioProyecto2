@@ -2,15 +2,9 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Proyecto2Maui.Modelos.Request;
 using Proyecto2Maui.Modelos.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using Windows.Web.Http;
 
 namespace Proyecto2Maui.Servicios
 {
