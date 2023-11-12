@@ -31,12 +31,14 @@
                                 <input class="form-control form-control-sm"
                                        style="font-size: 15px"
                                        type="text"
-                                       id="nombreUsuario" />
+                                       id="nombreUsuario"
+                                       />
                             </div>
                             <div>
                                 <input class="btn btn-success btn-sm mx-2"
                                        type="button"
-                                       value="Buscar" />
+                                       value="Buscar"
+                                       @onclick="BuscarUsuario" />
                             </div>
                         </div>
                     </div>
@@ -384,6 +386,8 @@
     List<UsuarioDTO> usuarios = new();
     UsuarioEdicionDTO edicionUsuario = new();
     UsuarioCreacionDTO creacionUsuario = new();
+    string cedulaUsuarioABuscar;
+    UsuarioDTO usuarioBuscado = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -410,15 +414,15 @@
     {
         try
         {
-        var resultado = await UsuarioService.CrearUsuario(creacionUsuario);
+            var resultado = await UsuarioService.CrearUsuario(creacionUsuario);
 
 
-        if (resultado != null)
-        {
-            creacionUsuario = new();
-            await OnInitializedAsync();
+            if (resultado != null)
+            {
+                creacionUsuario = new();
+                await OnInitializedAsync();
 
-            await Swal.FireAsync(new SweetAlertOptions()
+                await Swal.FireAsync(new SweetAlertOptions()
                 {
                     Title = "Info",
                     Color = "DarkGreen",
@@ -427,7 +431,7 @@
                     Icon = SweetAlertIcon.Success,
                     Timer = 2000
                 });
-        }
+            }
         }
         catch (Exception ex)
         {
@@ -465,6 +469,24 @@
                 });
         }
 
+    }
+
+    private async Task BuscarUsuario()
+    {
+
+
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "En desarrollo",
+                    Color = "DarkBlue",
+                    Html = $"<strong>Estamos trabajando en esta funcionalidad, pronto estara disponible</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Warning,
+                    Timer = 2000
+                });
+
+   
+    
     }
 
     private async Task EliminarUsuario(string cedula)

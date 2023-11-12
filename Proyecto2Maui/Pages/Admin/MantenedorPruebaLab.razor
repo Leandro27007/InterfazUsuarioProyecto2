@@ -21,7 +21,7 @@
                 </div>
                 <div class="container">
                     <div class="row d-flex justify-content-start">
-@*                         <div class="d-flex col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3 mb-3">
+                        <div class="d-flex col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3 mb-3">
                             <div>
                                 <label class="mt-1 mx-1"
                                        for="nombrePrueba">
@@ -37,9 +37,10 @@
                             <div>
                                 <input class="btn btn-success btn-sm mx-2"
                                        type="button"
-                                       value="Buscar" />
+                                       value="Buscar"
+                                @onclick="BuscarPruebaLab" />
                             </div>
-                        </div> *@
+                        </div>
                     </div>
                 </div>
 
@@ -94,7 +95,7 @@
                                         <td>@item.NombrePrueba</td>
                                         <td>@item.Descripcion</td>
                                         <td class="text-success">$@item.Precio</td>
-                                        <td>09/12/2023</td>
+                                        <td>10/11/2023</td>
                                     </tr>
                                 }
 
@@ -342,6 +343,26 @@
                 });
         }
     }
+
+
+    private async Task BuscarPruebaLab()
+    {
+
+
+        await Swal.FireAsync(new SweetAlertOptions()
+            {
+                Title = "En desarrollo",
+                Color = "DarkBlue",
+                Html = $"<strong>Estamos trabajando en esta funcionalidad, pronto estara disponible</strong>",
+                Toast = true,
+                Icon = SweetAlertIcon.Warning,
+                Timer = 2000
+            });
+
+
+
+    }
+
 
     private async  Task EliminarPruebaLab(string idPrueba)
     {
