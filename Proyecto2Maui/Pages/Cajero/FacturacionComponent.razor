@@ -13,7 +13,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9 bg white"
+        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 bg white"
              style="border-radius: 10px">
             <div class="container">
                 <div class="row">
@@ -43,7 +43,7 @@
                                         <label for="nombre">Nombre</label>
                                     </div>
                                     <div>
-                                        <InputText @bind-Value=cliente.nombreCliente class="form-control-sm" id="Name" />
+                                        <InputText style="border-width: 1px;" @bind-Value=cliente.nombreCliente class="form-control-sm" id="Name" />
                                         <ValidationMessage For=@( () => cliente.nombreCliente ) />
                                     </div>
                                 </div>
@@ -53,7 +53,7 @@
                                         <label for="apellido">Apellido</label>
                                     </div>
                                     <div>
-                                        <InputText @bind-Value=cliente.apellidoCliente class="form-control-sm" id="Name" />
+                                        <InputText style="border-width: 1px;" @bind-Value=cliente.apellidoCliente class="form-control-sm" id="Name" />
                                         <ValidationMessage For=@( () => cliente.apellidoCliente ) />
                                     </div>
                                 </div>
@@ -62,7 +62,7 @@
                                         <label for="telefono">Teléfono</label>
                                     </div>
                                     <div>
-                                        <InputText @bind-Value=cliente.telefono class="form-control-sm" id="Name" />
+                                        <InputText style="border-width: 1px;" @bind-Value=cliente.telefono class="form-control-sm" id="Name" />
                                         <ValidationMessage For=@( () => cliente.telefono ) />
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@
                                         <label for="cedula">Cédula</label>
                                     </div>
                                     <div>
-                                        <InputText @bind-Value=cliente.cedula class="form-control-sm" id="Name" />
+                                        <InputText style="border-width: 1px;" @bind-Value=cliente.cedula class="form-control-sm" id="Name" />
                                         <ValidationMessage For=@( () => cliente.cedula ) />
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@
                                         <label for="email">Email</label>
                                     </div>
                                     <div>
-                                        <InputText @bind-Value=cliente.email class="form-control-sm" id="Name" />
+                                        <InputText style="border-width: 1px;" @bind-Value=cliente.email class="form-control-sm" id="Name" />
                                         <ValidationMessage For=@( () => cliente.email ) />
                                     </div>
                                 </div>
@@ -205,7 +205,7 @@
 
 
 
-        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 mt-3"
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 mt-3"
              style="border-radius: 10px; background-color:#162d43ff">
             <div>
                 <div>
