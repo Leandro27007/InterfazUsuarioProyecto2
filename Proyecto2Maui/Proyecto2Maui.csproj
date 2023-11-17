@@ -77,6 +77,8 @@
 
     <ItemGroup>
         <PackageReference Include="Blazor.Bootstrap" Version="1.10.3" />
+        <PackageReference Include="BlazorStrap" Version="5.1.102.51923" />
+        <PackageReference Include="BlazorStrap.V5" Version="5.1.102.51723" />
         <PackageReference Include="CsvHelper" Version="30.0.1" />
         <PackageReference Include="CurrieTechnologies.Razor.SweetAlert2" Version="5.5.0" />
         <PackageReference Include="EPPlus" Version="7.0.1" />
