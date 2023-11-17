@@ -1,4 +1,5 @@
-﻿using CurrieTechnologies.Razor.SweetAlert2;
+﻿using BlazorStrap;
+using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Logging;
 using Proyecto2Maui.Authentication;
@@ -44,6 +45,7 @@ namespace Proyecto2Maui
             builder.Services.AddSweetAlert2();
             builder.Services.AddRadzenComponents();
             builder.Services.AddBlazorBootstrap();
+            builder.Services.AddBlazorStrap();
 
             return builder.Build();
         }

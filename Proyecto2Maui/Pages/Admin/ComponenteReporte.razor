@@ -2,6 +2,7 @@
 @inject IReporteService ReporteService
 @inject IJSRuntime JS
 @inject SweetAlertService Swal
+@using BlazorStrap;
 @using DTOs;
 @using Proyecto2Maui.Helpers;
 
@@ -19,33 +20,57 @@
                     Reportes de ventas
                 </h3>
 
-                <Grid TItem="ReciboDTO"
-                      Class="table table-hover table-bordered table-striped table-striped"
-                      DataProvider="EmployeesDataProvider"
-                      AllowPaging="true"
-                      PageSize="5"
-                      PaginationAlignment="Alignment.End"
-                      Responsive="true">
 
-                    <GridColumn TItem="ReciboDTO" HeaderText="Numero Recibo">
-                        @context.idRecibo
-                    </GridColumn>
-                    <GridColumn TItem="ReciboDTO" HeaderText="Cajero">
-                        @context.nombreCajero
-                    </GridColumn>
-                    <GridColumn TItem="ReciboDTO" HeaderText="Cliente">
-                        @context.nombreCliente
-                    </GridColumn>
-                    <GridColumn TItem="ReciboDTO" HeaderText="Total venta">
-                        @context.total
-                    </GridColumn>
-                    <GridColumn TItem="ReciboDTO" HeaderText="Fecha">
-                        @context.fecha
-                    </GridColumn>
-                    <GridColumn TItem="ReciboDTO" HeaderText="Estado Recibo">
-                        @context.estado
-                    </GridColumn>
-                </Grid>
+                <BSContainer>
+                    <BSRow>
+                        <BSCol Column="4"><span class="input-group-text">Filtrado por fecha</span></BSCol>
+                        <BSCol Column="4">
+                            <BSLabel>Fecha inicial</BSLabel>
+                            <BSInput InputType="InputType.Date" placeholder="FechaInicial" ValueChanged="async (DateTime? e) => await FiltrarFechaInicial(e)" UpdateOnInput="true" Value="_filtroFechaInicial" />
+                        </BSCol>
+                        <BSCol Column="4">
+                            <BSLabel>Fecha final</BSLabel>
+                            <BSInput InputType="InputType.Date" placeholder="FechaFinal" ValueChanged="async (DateTime? e) => await FiltrarFechaFinal(e)" UpdateOnInput="true" Value="_filtroFechaFinal" />
+                        </BSCol>
+                    </BSRow>
+                </BSContainer>
+
+                <BSDataTable FetchItems="ObtenerResumenAlmacen" IsStriped="true" PaginationBottom="true" StartPage="_startPage" RowsPerPage="20" Context="item" @ref="_tableRef">
+                    <Header>
+                        <BSDataTableHead TValue="ReciboDTO" Column="@(nameof(ReciboDTO.idRecibo))">Numero Recibo</BSDataTableHead>
+                        <BSDataTableHead TValue="ReciboDTO" Column="@(nameof(ReciboDTO.nombreCajero))">Cajero</BSDataTableHead>
+                        <BSDataTableHead TValue="ReciboDTO" Column="@(nameof(ReciboDTO.nombreCliente))">Cliente</BSDataTableHead>
+                        <BSDataTableHead TValue="ReciboDTO" Column="@(nameof(ReciboDTO.total))">Total venta</BSDataTableHead>
+                        <BSDataTableHead TValue="ReciboDTO" Column="@(nameof(ReciboDTO.estado))">Estado Recibo</BSDataTableHead>
+                        <BSDataTableHead TValue="ReciboDTO" Column="@(nameof(ReciboDTO.fecha))">Fecha</BSDataTableHead>
+                        <BSDataTableHead TValue="ReciboDTO"></BSDataTableHead>
+
+                    </Header>
+                    <Body>
+                        <BSDataTableRow Color="BSColor.Secondary">
+                            <BSTD>
+                                @item.idRecibo
+                            </BSTD>
+                            <BSTD>
+                                @item.nombreCajero
+                            </BSTD>
+                            <BSTD>
+                                @item.nombreCliente
+                            </BSTD>
+                            <BSTD>
+                                @item.total
+                            </BSTD>
+                            <BSTD>
+                                @item.estado
+                            </BSTD>
+                            <BSTD>
+                                @item.fecha
+                            </BSTD>
+                        </BSDataTableRow>
+                    </Body>
+                </BSDataTable>
+
+
 
                 <Button Color="ButtonColor.Success" @onclick="() => ExportarExcel()">Guardar reporte Excel</Button>
 
@@ -56,37 +81,69 @@
 
 
 
-
-
-
-
 @code {
     ReporteDTO reporte;
     private IEnumerable<ReciboDTO> recibos = default;
     private Button saveButton;
 
+    int _startPage = 1;
 
-    protected async override Task OnInitializedAsync()
+    private DateTime? _filtroFechaInicial = null;
+    private DateTime? _filtroFechaFinal = null;
+
+    private BSDataTable<ReciboDTO> _tableRef = new BSDataTable<ReciboDTO>();
+
+    private async Task<(IEnumerable<ReciboDTO>, int)> ObtenerResumenAlmacen(DataRequest dataRequest)
     {
 
+        if (dataRequest.Page < 1)
+        {
+            dataRequest.Page = 1;
+        }
+        var fechaInicial = _filtroFechaInicial;
+        var fechaFinal = _filtroFechaFinal;
+
+        if (fechaFinal == null)
+        {
+            fechaFinal = DateTime.Now;
+        }
+
+        if (fechaInicial == null)
+        {
+            fechaInicial = DateTime.MinValue;
+        }
+
+        DateTime fechaInicioParaFormatear = DateTime.MinValue;
+        DateTime fechaFinalParaFormatear = DateTime.MinValue;
+
+        fechaInicioParaFormatear = (DateTime)fechaInicial!;
+
+        fechaFinalParaFormatear = (DateTime)fechaFinal;
+
+
+        string fechaInicioFormateada = fechaInicioParaFormatear.ToString("MM-dd-yyyy");
+        string fechaFinalFormateada = fechaFinalParaFormatear.ToString("MM-dd-yyyy");
+
+
+        var respuesta = await ReporteService.ObtenerReporte(fechaInicioFormateada, fechaFinalFormateada);
+
+        reporte = respuesta;
+        recibos = reporte.recibos;
+
+        var count = recibos.Count();
+
+        return (recibos, count);
     }
 
-    private async Task<IEnumerable<ReciboDTO>> CargarDatos()
+    private async Task FiltrarFechaInicial(DateTime? e)
     {
-        string fechaInicio = "2023/11/05";
-        string fechaFinal = "2023/11/12";
-        var resultado = await ReporteService.ObtenerReporte(fechaInicio, fechaFinal);
-
-        reporte = resultado;
-        return resultado.recibos;
+        _filtroFechaInicial = e;
+        await _tableRef.Refresh();
     }
-
-    private async Task<GridDataProviderResult<ReciboDTO>> EmployeesDataProvider(GridDataProviderRequest<ReciboDTO> request)
+    private async Task FiltrarFechaFinal(DateTime? e)
     {
-        if (recibos is null)
-            recibos = await CargarDatos();
-
-        return await Task.FromResult(request.ApplyTo(recibos));
+        _filtroFechaFinal = e;
+        await _tableRef.Refresh();
     }
 
 
@@ -132,10 +189,6 @@
                     Icon = SweetAlertIcon.Success,
                     Timer = 2000
                 });
-
         }
-
     }
-
-
 }
