@@ -1,4 +1,5 @@
 ﻿@page "/mantenedorPruebaLab"
+@using BlazorStrap;
 @using DTOs;
 @inject IPruebaLabService pruebaLabService
 @inject SweetAlertService Swal
@@ -29,17 +30,9 @@
                                 </label>
                             </div>
                             <div>
-                                <input class="form-control form-control-sm"
-                                       style="font-size: 15px"
-                                       type="text"
-                                       id="nombreUsuario" />
+                                <BSInput InputType="InputType.Text" placeholder="Busqueda" ValueChanged="async (string e) => await BuscarPruebaLab(e)" UpdateOnInput="true" Value="Busqueda" />
                             </div>
-                            <div>
-                                <input class="btn btn-success btn-sm mx-2"
-                                       type="button"
-                                       value="Buscar"
-                                @onclick="BuscarPruebaLab" />
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -68,6 +61,18 @@
                             {
                                 @foreach (var item in pruebasLaboratorio)
                                 {
+                                    @if (!string.IsNullOrEmpty(Busqueda))
+                                    {
+                                        @if (item.NombrePrueba != Busqueda)
+                                        {
+                                            if (!(item.NombrePrueba.Contains(Busqueda)))
+                                            {
+                                                continue;
+                                            }
+
+                                        }
+                                    }
+                                   
                                     <tr>
 
                                         <td>
@@ -270,6 +275,7 @@
     EdicionPruebaLabDTO edicionPruebaLab = new();
     CreacionPruebaLabDTO creacionPuebaLab = new();
     List<PruebaLabDTO> pruebasLaboratorio = new();
+    string Busqueda = "";
 
     protected async override Task OnInitializedAsync()
     {
@@ -345,20 +351,10 @@
     }
 
 
-    private async Task BuscarPruebaLab()
+    private async Task BuscarPruebaLab(string nombrePrueba)
     {
 
-
-        await Swal.FireAsync(new SweetAlertOptions()
-            {
-                Title = "En desarrollo",
-                Color = "DarkBlue",
-                Html = $"<strong>Estamos trabajando en esta funcionalidad, pronto estara disponible</strong>",
-                Toast = true,
-                Icon = SweetAlertIcon.Warning,
-                Timer = 2000
-            });
-
+        Busqueda = nombrePrueba;
 
 
     }
