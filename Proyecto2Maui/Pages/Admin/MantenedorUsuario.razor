@@ -63,6 +63,21 @@
                             {
                                 foreach (var item in usuarios)
                                 {
+
+                                    @if (!string.IsNullOrEmpty(Busqueda))
+                                    {
+                                        @if (item.nombre != Busqueda)
+                                        {
+                                            if (!(item.nombre.Contains(Busqueda)))
+                                            {
+                                                continue;
+                                            }
+
+                                        }
+                                    }
+
+
+
                                     <tr>
                                         <td>
                                             <input class="btn btn-primary btn-sm mx-1 mt-1"
