@@ -156,17 +156,19 @@
         {
             var worksheet = package.Workbook.Worksheets.Add("recibos");
 
-            var tableBody = worksheet.Cells["A1:A1"].LoadFromCollection(
-                                                                        from f in recibos
-                                                                        select new
-                                                                        {
-                                                                            f.idRecibo,
-                                                                            f.nombreCajero,
-                                                                            f.nombreCliente,
-                                                                            f.total,
-                                                                            f.estado,
-                                                                            f.fecha.Date
-                                                                        }, true);
+
+
+            var recibosParaExcel = recibos.Select(a => new
+            {
+                Numero_Recibo = a.idRecibo,
+                Nombre_Cajero = a.nombreCajero,
+                Nombre_Cliente = a.nombreCliente,
+                Total = a.total,
+                Estado = a.estado,
+                Fecha = a.fecha.ToString("dd-MM-yyyy")
+             });
+
+            var tableBody = worksheet.Cells["A1:A1"].LoadFromCollection(recibosParaExcel, true);
 
             var header = worksheet.Cells["A1:B1"];
             worksheet.DefaultColWidth = 25;
