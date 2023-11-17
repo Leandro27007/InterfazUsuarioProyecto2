@@ -56,6 +56,7 @@
                                 <th class="text-center" scope="col">Rol</th>
                                 <th class="text-center" scope="col">Telefono</th>
                                 <th class="text-center" scope="col">Email</th>
+                                <th class="text-center" scope="col">Estado</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -92,14 +93,31 @@
                                                    data-bs-whatever=""
                                             @onclick="() => SeleccionarUsuarioEdicion(item.cedula)" />
 
-                                            <input class="btn btn-danger btn-sm mx-1 mt-1"
-                                                   style="
+                                            @if (item.estado == "Inactivo")
+                                            {
+                                                <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                                       style="
                                                 padding: 0.2rem 0.4rem;
                                                 font-size: 0.7rem;
                                             "
-                                                   type="button"
-                                                   value="Inhabilitar"
-                                            @onclick="() => EliminarUsuario(item.cedula)" />
+                                                       type="button"
+                                                       value="Inhabilitar"
+                                                       disabled
+                                                @onclick="() => EliminarUsuario(item.cedula)" />
+                                            }else
+                                            {
+                                                <input class="btn btn-danger btn-sm mx-1 mt-1"
+                                                       style="
+                                                padding: 0.2rem 0.4rem;
+                                                font-size: 0.7rem;
+                                            "
+                                                       type="button"
+                                                       value="Inhabilitar"
+                                                @onclick="() => EliminarUsuario(item.cedula)" />
+                                            }
+
+
+
                                         </td>
                                         <th scope="row">@item.cedula</th>
                                         <td>@item.nombre</td>
@@ -108,6 +126,7 @@
                                         <td>@item.nombreRol</td>
                                         <td>@item.telefono</td>
                                         <td>@item.email</td>
+                                        <td>@item.estado</td>
                                     </tr>
                                 }
                             }
@@ -216,7 +235,18 @@
                             <option value="4">Administrador</option>
                         </select>
 
+                    </div>
+                    <div class="mb-3">
+                        <label for="usuario-estado"
+                               class="col-form-label">Estado:</label>
 
+                        <select class="form-control form-control-sm"
+                                id="usuario-estado"
+                        @bind="creacionUsuario.estado">
+                            <option value="">(Seleccione el estado)</option>
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                        </select>
 
                     </div>
                     <div class="mb-3">
@@ -346,6 +376,21 @@
 
                     </div>
                     <div class="mb-3">
+                        <label for="usuario-estado"
+                               class="col-form-label">Estado:</label>
+
+                        <select class="form-control form-control-sm"
+                                id="usuario-estado"
+                        @bind="edicionUsuario.estado">
+                            <option value="">(Seleccione el estado)</option>
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                        </select>
+
+
+
+                    </div>
+                    <div class="mb-3">
                         <label for="usuario-telefono"
                                class="col-form-label">Teléfono:</label>
                         <input type="text"
@@ -414,7 +459,8 @@
                 rolId = roles.FirstOrDefault(r => r.NombreRol == u.nombreRol).IdRol,
                 email = u.email,
                 telefono = u.telefono,
-                userName = u.userName
+                userName = u.userName,
+                estado = u.estado
             }).FirstOrDefault();
     }
 
@@ -427,18 +473,38 @@
 
             if (resultado != null)
             {
-                creacionUsuario = new();
-                await OnInitializedAsync();
+                var confirmacion = await Swal.FireAsync(new SweetAlertOptions()
+                    {
+                        Title = "Confirma Crear usuario",
+                        Html = $"<strong>Seguro que quieres Crear el usuario?</strong>",
+                        Footer = """Confirmacion""",
+                        Icon = SweetAlertIcon.Question,
+                        ShowConfirmButton = true,
+                        ShowCancelButton = true,
+                        ConfirmButtonText = "Si",
+                        ConfirmButtonColor = "green",
+                        CancelButtonText = "No",
+                        CancelButtonColor = "Red",
+                        Timer = 10000
+                    });
 
-                await Swal.FireAsync(new SweetAlertOptions()
+                    if (confirmacion.IsConfirmed)
                 {
-                    Title = "Info",
-                    Color = "DarkGreen",
-                    Html = $"<strong>Se creo con exito</strong>",
-                    Toast = true,
-                    Icon = SweetAlertIcon.Success,
-                    Timer = 2000
-                });
+
+                    creacionUsuario = new();
+                    await OnInitializedAsync();
+
+                    await Swal.FireAsync(new SweetAlertOptions()
+                        {
+                            Title = "Info",
+                            Color = "DarkGreen",
+                            Html = $"<strong>Se creo con exito</strong>",
+                            Toast = true,
+                            Icon = SweetAlertIcon.Success,
+                            Timer = 2000
+                        });
+                }
+
             }
         }
         catch (Exception ex)
@@ -470,18 +536,38 @@
 
         if (resultado)
         {
-            edicionUsuario = new();
-            await OnInitializedAsync();
 
-            await Swal.FireAsync(new SweetAlertOptions()
+            var confirmacion = await Swal.FireAsync(new SweetAlertOptions()
                 {
-                    Title = "Info",
-                    Color = "DarkGreen",
-                    Html = $"<strong>Se edito con exito</strong>",
-                    Toast = true,
-                    Icon = SweetAlertIcon.Success,
-                    Timer = 2000
+                    Title = "Confirma Eliminar usuario",
+                    Html = $"<strong>Seguro que quieres inhabilitar el usuario?</strong>",
+                    Footer = """Confirmacion""",
+                    Icon = SweetAlertIcon.Question,
+                    ShowConfirmButton = true,
+                    ShowCancelButton = true,
+                    ConfirmButtonText = "Si",
+                    ConfirmButtonColor = "green",
+                    CancelButtonText = "No",
+                    CancelButtonColor = "Red",
+                    Timer = 10000
                 });
+
+            if (confirmacion.IsConfirmed)
+            {
+                edicionUsuario = new();
+                await OnInitializedAsync();
+
+                await Swal.FireAsync(new SweetAlertOptions()
+                    {
+                        Title = "Info",
+                        Color = "DarkGreen",
+                        Html = $"<strong>Se edito con exito</strong>",
+                        Toast = true,
+                        Icon = SweetAlertIcon.Success,
+                        Timer = 2000
+                    });
+            }
+
         }
 
     }
@@ -506,36 +592,54 @@
 
     private async Task EliminarUsuario(string cedula)
     {
-
-        var confirmacion = await Swal.FireAsync(new SweetAlertOptions()
-            {
-                Title = "Confirma Eliminar usuario",
-                Html = $"<strong>Seguro que quieres eliminar la prueba de laboratorio?</strong>",
-                Footer = """Confirmacion""",
-                Icon = SweetAlertIcon.Question,
-                ShowConfirmButton = true,
-                ShowCancelButton = true,
-                ConfirmButtonText = "Si",
-                ConfirmButtonColor = "green",
-                CancelButtonText = "No",
-                CancelButtonColor = "Red",
-                Timer = 10000
-            });
-        if (confirmacion.IsConfirmed)
+        if (true)
         {
-            // var resultado = await UsuarioService.Eliminar(cedula);
+
+            var confirmacion = await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Confirma Inhabilitar usuario",
+                    Html = $"<strong>Seguro que quieres inhabilitar el usuario?</strong>",
+                    Footer = """Confirmacion""",
+                    Icon = SweetAlertIcon.Question,
+                    ShowConfirmButton = true,
+                    ShowCancelButton = true,
+                    ConfirmButtonText = "Si",
+                    ConfirmButtonColor = "green",
+                    CancelButtonText = "No",
+                    CancelButtonColor = "Red",
+                    Timer = 10000
+                });
+
+            await Swal.FireAsync(new SweetAlertOptions()
+                {
+                    Title = "Alerta",
+                    Color = "DarkBlue",
+                    Html = $"<strong>Para Inhabilitar un usuario hagalo desde el panel de edicion.</strong>",
+                    Toast = true,
+                    Icon = SweetAlertIcon.Warning,
+                    Timer = 2000
+                });
+        }else
+        {
+
+            var resultado = await UsuarioService.Eliminar(cedula);
             await OnInitializedAsync();
 
             await Swal.FireAsync(new SweetAlertOptions()
                 {
                     Title = "Info",
                     Color = "DarkGreen",
-                    Html = $"<strong>Actualmente esta funcion esta inhabilitada, estamos trabajando en ella.</strong>",
+                    Html = $"<strong>Usuario Inabilitado.</strong>",
                     Toast = true,
                     Icon = SweetAlertIcon.Warning,
                     Timer = 2000
                 });
         }
+ 
+        
+
+
+        
 
     }
 

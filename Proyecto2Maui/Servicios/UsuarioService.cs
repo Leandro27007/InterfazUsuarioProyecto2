@@ -129,7 +129,29 @@ namespace Proyecto2Maui.Servicios
             var accessTokenClaim = user.FindFirst("access_token");
             var accessToken = accessTokenClaim.Value!;
 
-            throw new NotImplementedException();
+
+            try
+            {
+                using var client = _httpClientFactory.CreateClient();
+
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+                var respuesta = await client.DeleteAsync(this._Url + $"EliminarUsuario/{cedula}");
+
+                var contenido = await respuesta.Content.ReadAsStringAsync();
+
+                var seElimino = System.Text.Json.JsonSerializer.Deserialize<bool>(contenido);
+
+                return seElimino;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
         }
 
         public async Task<List<UsuarioDTO>> ObtenerUsuarios()

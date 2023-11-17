@@ -18,6 +18,7 @@ namespace DTOs
         public int idRol { get; set; }
         public string telefono { get; set; }
         public string? email { get; set; }
+        public string? estado { get; set; }
 
     }
 }
